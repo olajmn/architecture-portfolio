@@ -5,33 +5,263 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In the Quarry — Ola Jin Myhre Nymoen</title>
     <link rel="stylesheet" href="../../style.css">
+    <style>
+        nav { display: none; }
+
+        /* ---- TOPP-BAR ---- */
+        .project-top {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--white);
+            padding: 20px 60px;
+        }
+
+        .project-back {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .project-back:hover { color: var(--black); }
+
+        /* ---- TITTEL — sticky under topp-baren ---- */
+        .project-title-block {
+            position: sticky;
+            top: 61px;
+            z-index: 90;
+            padding: 24px 60px 20px;
+        }
+
+        .project-title-block h1 {
+            font-size: clamp(48px, 7vw, 96px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: var(--black);
+            line-height: 1;
+            transform-origin: top left;   /* krymper fra øverste venstre hjørne */
+        }
+
+        /* Tittelen som klikkbar lenke tilbake til toppen */
+        .project-title-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
+        }
+
+        .project-title-link:hover h1 {
+            opacity: 0.4;
+        }
+
+        /* Aktiv seksjon — sticker under tittelen */
+        .project-section-label {
+            display: block;
+            font-size: clamp(48px, 7vw, 96px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            line-height: 1;
+            transform-origin: top left;
+            opacity: 0;
+            transition: color 0.2s;
+        }
+
+        .project-section-label:hover { color: var(--black); }
+
+        /* ---- HERO BILDE ---- */
+        .image-hero {
+            padding: 48px 60px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .image-hero img {
+            width: 30%;
+            display: block;
+        }
+
+        /* ---- INTRO + FAKTA ---- */
+        .project-intro-block {
+            padding: 80px 60px 100px 36%;
+            max-width: 100%;
+        }
+
+        .project-intro {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--black);
+            margin-bottom: 60px;
+        }
+
+        .project-facts {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 12px 0;
+        }
+
+        .project-facts dt {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .project-facts dt::after {
+            content: ':';
+        }
+
+        .project-facts dd {
+            font-size: 14px;
+            color: var(--black);
+            margin: 0;
+        }
+
+        /* ---- BILDER ---- */
+
+        /* Full bredde med romslige marger */
+        .img-full {
+            padding: 0 60px 80px;
+        }
+
+        .img-full img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Offset høyre — plan/tekniske tegninger */
+        .img-right {
+            padding: 0 60px 80px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .img-right img {
+            width: 65%;
+            display: block;
+        }
+
+        /* Offset venstre */
+        .img-left {
+            padding: 0 60px 80px;
+        }
+
+        .img-left img {
+            width: 65%;
+            display: block;
+        }
+
+        /* Sentrert, litt smalere */
+        .img-center {
+            padding: 0 60px 80px;
+        }
+
+        .img-center img {
+            width: 75%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* ---- SEKSJONSHEADER ---- */
+        .section-header {
+            border-top: 1px solid #e8e8e8;
+            padding: 40px 60px 60px;
+            margin-top: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        /* ---- FOOTER-NAV ---- */
+        .project-end {
+            border-top: 1px solid #e8e8e8;
+            margin: 60px 60px 0;
+            padding: 48px 0 80px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .project-end a {
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .project-end a:hover { color: var(--black); }
+
+        footer {
+            border-top: none;
+            padding: 0 60px 40px;
+        }
+
+        .img-edge { display: none; }
+
+        /* Liten, sentrert */
+        .img-small {
+            padding: 0 60px 80px;
+        }
+
+        .img-small img {
+            width: 45%;
+            display: block;
+            margin: 0 auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        /* Alle bilder passer innenfor skjermen — aldri høyere enn 90vh */
+        .img-full img,
+        .img-right img,
+        .img-left img,
+        .img-center img,
+        .image-hero img {
+            max-height: 90vh;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- NAVIGATION -->
-    <nav>
-        <a href="index.html" class="nav-name">Ola Jin Myhre Nymoen</a>
-        <div class="nav-links">
-            <a href="../../index.html#projects">Work</a>
-            <a href="../../about.html">About</a>
-            <a href="../../index.html#contact">Contact</a>
-        </div>
-    </nav>
+    <!-- ================================================================
+         SEKSJON 1: INTRO
+         Inneholder: topp-bar, tittel, hero-bilde, beskrivelse, fakta
+         Status: FERDIG — ikke rør uten grunn
+    ================================================================ -->
 
-    <!-- PROJECT HEADER — sticky del (meta + tittel) -->
-    <div class="project-header-sticky">
-        <div class="project-header-inner">
-            <div class="project-meta">
-                <span>2023</span>
-                <span>Cultural Architecture</span>
-                <span>Ústí nad Labem, Czech Republic</span>
-            </div>
+    <!-- Topp-bar -->
+    <header class="project-top">
+        <a href="../../index.html" class="project-back">Selected works</a>
+    </header>
+
+    <!-- Tittel -->
+    <div class="project-title-block" id="top">
+        <a href="#top" class="project-title-link">
             <h1>In the Quarry</h1>
-        </div>
+        </a>
+        <a href="#section" class="project-section-label" id="sectionLabel">Section</a>
     </div>
 
-    <!-- PROJECT INTRO — scroller bort normalt -->
-    <section class="project-header">
+    <!-- Hero-bilde -->
+    <div class="image-hero" id="intro">
+        <img src="../../images/in-the-quarry/cover.jpg" alt="In the Quarry">
+    </div>
+
+    <!-- Beskrivelse + fakta -->
+    <div class="project-intro-block">
         <p class="project-intro">
             Ústí nad Labem is a city with deep historical roots and a strong connection
             to its iconic quarry, which was operated until the 1970s for the extraction
@@ -39,60 +269,132 @@
             within this abandoned industrial site — giving the quarry an opportunity to
             generate new value for the city's residents and visitors.
         </p>
-    </section>
-
-    <!-- PROJECT IMAGES -->
-    <div class="project-images">
-
-        <div class="image-full">
-            <img src="../../images/in-the-quarry/cover.jpg" alt="In the Quarry — overview">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/in-the-quarry/axonometry.png" alt="In the Quarry — axonometry">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/in-the-quarry/plan.png" alt="In the Quarry — plan">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/in-the-quarry/snitt-landskap.png" alt="In the Quarry — landscape section">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/in-the-quarry/snitt-lang.png" alt="In the Quarry — long section">
-        </div>
-
-        <div class="image-caption-block">
-            <img src="../../images/in-the-quarry/interior-entrance.jpg" alt="In the Quarry — interior entrance">
-            <p>The auditorium offers a vantage point from which the entire quarry can be observed
-            from the inside out. The space can also be used for cultural gatherings such as
-            exhibitions or film screenings.</p>
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/in-the-quarry/interior-movie.jpg" alt="In the Quarry — interior film screening">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/in-the-quarry/interior-no-movie.jpg" alt="In the Quarry — interior">
-        </div>
-
+        <dl class="project-facts">
+            <dt>Location</dt>
+            <dd>Ústí nad Labem, Czech Republic</dd>
+            <dt>Status</dt>
+            <dd>Academic project</dd>
+            <dt>Program</dt>
+            <dd>Cultural Architecture</dd>
+            <dt>Year</dt>
+            <dd>2023</dd>
+        </dl>
     </div>
 
-    <!-- PROJECT NAVIGATION — back/next -->
-    <div class="project-nav">
-        <a href="index.html">← All architecture projects</a>
+    <!-- Snitt under intro -->
+    <div class="img-full" id="section">
+        <img src="../../images/in-the-quarry/snitt-landskap.png" alt="In the Quarry — landskap snitt">
+    </div>
+
+    <div class="img-full">
+        <img src="../../images/in-the-quarry/snitt-lang.png" alt="In the Quarry — snitt">
+    </div>
+
+    <!-- END SEKSJON 1 ============================================== -->
+
+    <!-- AXONOMETRY — offset høyre -->
+    <div class="img-right">
+        <img src="../../images/in-the-quarry/axonometry.png" alt="Axonometry">
+    </div>
+
+    <!-- INTERIØR — sentrert, liten størrelse -->
+    <div class="img-small">
+        <img src="../../images/in-the-quarry/interior-entrance.jpg" alt="Interior entrance">
+    </div>
+
+    <div class="img-center">
+        <img src="../../images/in-the-quarry/interior-movie.jpg" alt="Interior — film screening">
+    </div>
+
+    <div class="img-full">
+        <img src="../../images/in-the-quarry/interior-no-movie.jpg" alt="Interior">
+    </div>
+
+    <!-- PLAN -->
+    <div class="section-header" id="plan">
+        <h2>Plan</h2>
+    </div>
+
+    <div class="img-right">
+        <img src="../../images/in-the-quarry/plan.png" alt="Plan">
+    </div>
+
+    <!-- SNITT -->
+    <div class="section-header" id="snitt">
+        <h2>Snitt</h2>
+    </div>
+
+    <div class="img-full">
+        <img src="../../images/in-the-quarry/snitt-landskap.png" alt="Landscape section">
+    </div>
+
+    <div class="img-full">
+        <img src="../../images/in-the-quarry/snitt-lang.png" alt="Long section">
+    </div>
+
+    <!-- BUNN-NAVIGASJON -->
+    <div class="project-end">
+        <a href="../../index.html">← Selected works</a>
         <a href="sagvag-senior-garden.html">Sagvåg Senior Garden →</a>
     </div>
 
-    <script src="../../app.js"></script>
-
-    <!-- FOOTER -->
     <footer>
         <p>© 2025 Ola Jin Myhre Nymoen</p>
     </footer>
+
+    <script src="../../app.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            const title        = document.querySelector('.project-title-block h1');
+            const sectionLabel = document.getElementById('sectionLabel');
+
+            const startSize   = title.offsetHeight;
+            const targetScale = startSize > 0 ? 11 / startSize : 0.1;
+            const fadeOver    = 300;
+
+            // Seksjoner: navn, ankerpunkt, og hvor langt nede de starter
+            const sections = [
+                { id: 'section', label: 'Section', href: '#section' },
+                { id: 'plan',    label: 'Plan',    href: '#plan'    },
+                { id: 'snitt',   label: 'Snitt',   href: '#snitt'   },
+            ];
+
+            // "In the Quarry" → scroller til toppen
+            document.querySelector('.project-title-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', () => {
+                const scrollY  = window.scrollY;
+                const progress = Math.min(scrollY / fadeOver, 1);
+
+                // Tittel: krymper og fader
+                const scale   = 1 - progress * (1 - targetScale);
+                const opacity = 1 - progress * (1 - 0.2);
+                title.style.transform = `scale(${scale})`;
+                title.style.opacity   = opacity;
+
+                // Seksjonslenke: fader inn når snitt-seksjonen nærmer seg toppen
+                const sectionEl = document.getElementById('section');
+                if (sectionEl) {
+                    const dist = sectionEl.getBoundingClientRect().top;
+                    const sectionProgress = Math.min(Math.max((300 - dist) / 300, 0), 1);
+                    sectionLabel.style.opacity   = sectionProgress;
+                    sectionLabel.style.transform = `scale(${scale})`;
+                }
+
+                // Oppdater tekst og lenke basert på aktiv seksjon
+                let current = sections[0];
+                sections.forEach(s => {
+                    const el = document.getElementById(s.id);
+                    if (el && el.getBoundingClientRect().top <= 140) current = s;
+                });
+                sectionLabel.textContent = current.label;
+                sectionLabel.href        = current.href;
+            });
+        });
+    </script>
 
 </body>
 </html>
