@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ola Jin Myhre Nymoen</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Disse stilene gjelder bare denne siden */
+
+        /* Sticky overskrift — glir fast øverst når man scroller */
+        .index-hero {
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 24px 0;
+        }
+
+        .index-hero-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .index-subtitle {
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            color: var(--gray);
+
+            /* Animasjonen glir teksten inn nedenfra ved sidelasting */
+            opacity: 0;
+            animation: slideUp 0.9s ease-out forwards;
+        }
+
+        /* Prosjektlisten — en kolonne, stakket vertikalt */
+        .index-projects {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 60px 100px;
+        }
+
+        /* Hvert prosjektkort: bilde til venstre, tekst til høyre */
+        .index-card {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            padding: 24px 0;
+            border-top: 1px solid #e8e8e8;
+            transition: opacity 0.2s;
+
+            /* Start usynlig, gli inn ved sidelasting */
+            opacity: 0;
+            animation: slideUp 0.9s ease-out forwards;
+        }
+
+        /* Siste kort får border nederst også */
+        .index-card:last-child {
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .index-card:hover {
+            opacity: 0.5;
+        }
+
+        /* Forsinkelse per kort — hvert kort dukker opp litt etter det forrige */
+        .index-card:nth-child(1) { animation-delay: 0.05s; }
+        .index-card:nth-child(2) { animation-delay: 0.20s; }
+        .index-card:nth-child(3) { animation-delay: 0.35s; }
+        .index-card:nth-child(4) { animation-delay: 0.50s; }
+        .index-card:nth-child(5) { animation-delay: 0.65s; }
+
+        .index-card-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: var(--light-gray);
+        }
+
+        .index-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .index-card-year {
+            font-size: 11px;
+            color: var(--gray);
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .index-card-title {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+
+        .index-card-desc {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* Animasjon: glir opp fra 100px nedenfor, fades inn */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .index-hero-inner,
+            .index-projects {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .index-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGASJON -->
+    <nav>
+        <a href="index.html" class="nav-home" aria-label="Home">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+                <path d="M9 21V12h6v9"/>
+            </svg>
+        </a>
+        <span class="nav-divider"></span>
+        <span class="nav-links">
+            <a href="#">Ola Jin Myhre Nymoen</a>
+        </span>
+    </nav>
+
+    <!-- Mellomrom så innholdet ikke starter bak den faste navigasjonen -->
+    <div style="height: 80px;"></div>
+
+    <!-- STICKY OVERSKRIFT -->
+    <header class="index-hero">
+        <div class="index-hero-inner">
+            <p class="index-subtitle">Selected works 2021–2024</p>
+        </div>
+    </header>
+
+    <!-- PROSJEKTLISTE -->
+    <div class="index-projects">
+
+        <a href="projects/architecture/sagvag-senior-garden.html" class="index-card">
+            <div class="index-card-image">
+                <!-- Gråboks inntil bilde legges til -->
+            </div>
+            <div>
+                <span class="index-card-year">2024</span>
+                <h3 class="index-card-title">Sagvåg Senior Garden</h3>
+                <p class="index-card-desc">Master Thesis — Sagvåg, Norway</p>
+            </div>
+        </a>
+
+        <a href="projects/architecture/in-the-quarry.html" class="index-card">
+            <div class="index-card-image">
+                <img src="images/in-the-quarry/cover.jpg" alt="In the Quarry">
+            </div>
+            <div>
+                <span class="index-card-year">2023</span>
+                <h3 class="index-card-title">In the Quarry</h3>
+                <p class="index-card-desc">Cultural Architecture — Ústí nad Labem, Czech Republic</p>
+            </div>
+        </a>
+
+        <a href="projects/architecture/shifted.html" class="index-card">
+            <div class="index-card-image">
+                <!-- Gråboks -->
+            </div>
+            <div>
+                <span class="index-card-year">2022</span>
+                <h3 class="index-card-title">Shifted</h3>
+                <p class="index-card-desc">Bachelor Thesis — Prague, Czech Republic</p>
+            </div>
+        </a>
+
+        <a href="projects/architecture/lean-to.html" class="index-card">
+            <div class="index-card-image">
+                <!-- Gråboks -->
+            </div>
+            <div>
+                <span class="index-card-year">2021</span>
+                <h3 class="index-card-title">Lean-to</h3>
+                <p class="index-card-desc">Student Project — Prague, Czech Republic</p>
+            </div>
+        </a>
+
+        <a href="projects/architecture/womens-house.html" class="index-card">
+            <div class="index-card-image">
+                <!-- Gråboks -->
+            </div>
+            <div>
+                <span class="index-card-year">2021</span>
+                <h3 class="index-card-title">Women's House</h3>
+                <p class="index-card-desc">Student Project — Baghere Village, Senegal</p>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 Ola Jin Myhre Nymoen</p>
+    </footer>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
