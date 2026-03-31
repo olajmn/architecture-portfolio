@@ -1,16 +1,16 @@
 /* ============================================================
-   particles.js — Flow field animasjon for forsiden
+   particles.js — Flow field animation for the front page
 
-   Konsepter:
-   - Canvas: et HTML-element vi kan tegne på piksel for piksel
-   - Flow field: hvert punkt i rommet har en "retning" — partikler følger den
-   - requestAnimationFrame: ber nettleseren kalle animate() igjen neste frame (60x/sek)
+   Concepts:
+   - Canvas: an HTML element we can draw on pixel by pixel
+   - Flow field: every point in space has a "direction" — particles follow it
+   - requestAnimationFrame: asks the browser to call animate() again next frame (60x/sec)
 ============================================================ */
 
 const canvas = document.getElementById('canvas');
 const ctx    = canvas.getContext('2d');
 
-// Gjør canvas like stor som vinduet
+// Match canvas size to window
 canvas.width  = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -20,17 +20,17 @@ window.addEventListener('resize', () => {
 });
 
 
-// ── FARGEPALLETTE ──
+// ── COLOUR PALETTE ──
 const colors = [
-    'rgba(255, 255, 255, ',   // ren hvit
-    'rgba(255, 255, 255, ',   // ren hvit (dobbel vekt = oftere)
-    'rgba(220, 235, 255, ',   // hvit med svak blå-tint
-    'rgba(180, 215, 255, ',   // lys blå-hvit
-    'rgba(100, 180, 255, ',   // blå aksent — sjelden
+    'rgba(255, 255, 255, ',   // pure white
+    'rgba(255, 255, 255, ',   // pure white (double weight = more frequent)
+    'rgba(220, 235, 255, ',   // white with faint blue tint
+    'rgba(180, 215, 255, ',   // light blue-white
+    'rgba(100, 180, 255, ',   // blue accent — rare
 ];
 
 
-// ── PARTIKLER ──
+// ── PARTICLES ──
 const COUNT = 1700;
 const particles = [];
 
@@ -39,30 +39,37 @@ for (let i = 0; i < COUNT; i++) {
 }
 
 function spawnParticle() {
-    // 5% gnist — hvit og lys
+    // 5% chance of becoming a bright star — blue-white and intense
     const bright = Math.random() < 0.05;
-    // 4% gyllen — varm gul/amber, lengre hale og levetid
+    // 4% chance of becoming an ice-blue particle — longer tail and lifespan
     const golden = !bright && Math.random() < 0.04;
+    // 0.3% chance of becoming a rare flare — blazing white, very long lifespan
+    const flare  = !bright && !golden && Math.random() < 0.001;
     return {
         x:     Math.random() * canvas.width,
         y:     Math.random() * canvas.height,
         vx:    0,
         vy:    0,
         life:  Math.random(),
-        speed: 2.0 + Math.random() * 4.0,
+        speed: flare  ? 4.0 + Math.random() * 4.0
+             : bright ? 3.5 + Math.random() * 4.0
+             :          2.0 + Math.random() * 4.0,
         size:  bright ? 1.2 + Math.random() * 0.8
              : golden ? 0.6 + Math.random() * 0.8
+             : flare  ? 2.0 + Math.random() * 1.5
              :          0.2 + Math.random() * 0.9,
         color: bright ? 'rgba(190, 225, 255, '
              : golden ? 'rgba(100, 200, 255, '
+             : flare  ? 'rgba(255, 255, 255, '
              :          colors[Math.floor(Math.random() * colors.length)],
         bright,
-        golden
+        golden,
+        flare
     };
 }
 
 
-// ── MUS-POSISJON ──
+// ── MOUSE POSITION ──
 const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
 
 window.addEventListener('mousemove', e => {
@@ -72,19 +79,19 @@ window.addEventListener('mousemove', e => {
 
 
 // ── FLOW FIELD ──
-// Globalt flow field — partikler fyker organisk over skjermen.
-// Musen tilfører en subtil "tilt" på hele feltet — endrer vinkel, ikke sentrum.
+// Global flow field — particles move organically across the screen.
+// The mouse adds a subtle tilt to the whole field — changes angle, not centre.
 let time = 0;
 
 function getAngle(x, y) {
-    // Normaliser museposisjon til -1 → +1 (0 = ingen påvirkning når musen er i midten)
+    // Normalise mouse position to -1 → +1 (0 = no effect when mouse is centred)
     const mx = (mouse.x / canvas.width  - 0.5) * 2;
     const my = (mouse.y / canvas.height - 0.5) * 2;
 
-    // Musen vrir hele feltet litt — lineær, ingen hopp
+    // Mouse tilts the whole field slightly — linear, no discontinuities
     const tilt = (mx + my) * 0.5;
 
-    // Organisk flow field — lav multiplier gir jevne, kontinuerlige kurver
+    // Organic flow field — low multiplier produces smooth, continuous curves
     const s = 0.0008;
     const flow = Math.sin(x * s + time * 0.2) * Math.PI
                + Math.cos(y * s + time * 0.15) * Math.PI * 0.5;
@@ -93,20 +100,20 @@ function getAngle(x, y) {
 }
 
 
-// ── ANIMASJON ──
+// ── ANIMATION ──
 function animate() {
-    // Gjennomsiktig svart lag — "fader" gamle streker ut sakte (hale-effekt)
+    // Semi-transparent black layer — fades old strokes out slowly (tail effect)
     ctx.fillStyle = 'rgba(13, 13, 13, 0.35)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     particles.forEach(p => {
         const angle = getAngle(p.x, p.y);
 
-        // Bare flow field — ingen suging mot musen
+        // Pure flow field — no mouse attraction
         p.vx += Math.cos(angle) * 0.22;
         p.vy += Math.sin(angle) * 0.22;
 
-        // Begrens farten
+        // Cap speed
         const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
         if (spd > p.speed) {
             p.vx = (p.vx / spd) * p.speed;
@@ -118,26 +125,27 @@ function animate() {
         p.x += p.vx;
         p.y += p.vy;
 
-        p.life -= p.golden ? 0.0008 : p.bright ? 0.0014 : 0.0025;
+        p.life -= p.flare ? 0.0003 : p.golden ? 0.0008 : p.bright ? 0.0014 : 0.0025;
 
-        // Spawn ny partikkel hvis denne er "død" eller ute av skjermen
+        // Respawn if dead or off screen
         if (p.life <= 0 || p.x < -10 || p.x > canvas.width + 10 ||
                             p.y < -10 || p.y > canvas.height + 10) {
             Object.assign(p, spawnParticle());
             return;
         }
 
-        // Tegn linje fra forrige til ny posisjon — dette er "tråden"
+        // Draw line from previous to new position — this is the "strand"
         const pulse = 1 + Math.sin(time * 4 + p.life * 10) * 0.4;
 
-        // Avstand til skjermens sentrum — nær = mer intens
+        // Distance to screen centre — closer = more intense
         const cx = p.x - canvas.width  / 2;
         const cy = p.y - canvas.height / 2;
         const centreDist = Math.sqrt(cx * cx + cy * cy);
         const maxDist    = Math.sqrt((canvas.width / 2) ** 2 + (canvas.height / 2) ** 2);
-        const intensity  = 1 - (centreDist / maxDist) * 0.6; // 1.0 i midten, 0.4 i hjørnene
+        const intensity  = 1 - (centreDist / maxDist) * 0.6; // 1.0 at centre, 0.4 at corners
 
-        const alpha = p.bright  ? Math.min(1, p.life * 1.4) * intensity
+        const alpha = p.flare   ? Math.min(1, p.life * 1.8) * intensity
+                    : p.bright  ? Math.min(1, p.life * 1.4) * intensity
                     : p.golden  ? p.life * 0.9 * intensity
                     :             p.life * 0.75 * intensity;
         ctx.strokeStyle = p.color + alpha + ')';

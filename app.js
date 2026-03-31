@@ -1,47 +1,47 @@
 /* ============================================================
-   app.js — Interaksjoner for Ola Jin Myhre Nymoen sitt portfolio
+   app.js — Interactions for Ola Jin Myhre Nymoen's portfolio
 
-   Denne filen håndterer fire ting:
-     1. Navigasjonens lyseffekt (muspeking)
-     2. Skrivemaskin-effekten i hero-seksjonen
-     3. Språkbytte (NO / EN)
-     4. Krymping av tittelen på prosjektsider ved scrolling
+   This file handles four things:
+     1. Navigation light effect (mouse hover)
+     2. Typewriter effect in the hero section
+     3. Language switching (NO / EN)
+     4. Title shrinking on project pages when scrolling
 
-   Konseptet "document.querySelector()" er som å si:
-   "Finn dette HTML-elementet på siden for meg."
+   "document.querySelector()" means:
+   "Find this HTML element on the page for me."
 ============================================================ */
 
 
 /* ============================================================
-   1. NAVIGASJON — LYSEFFEKT VED MUSPEKING
+   1. NAVIGATION — LIGHT EFFECT ON HOVER
    ============================================================
-   Navigasjonsboksen har en CSS-variabel --mouse-x og --mouse-y.
-   CSS bruker disse til å lage en liten "lyskjegle" der musen er.
+   The nav box has CSS variables --mouse-x and --mouse-y.
+   CSS uses these to create a small "light cone" where the mouse is.
 
-   Her oppdaterer vi disse variablene i sanntid mens musen beveger seg.
+   Here we update these variables in real time as the mouse moves.
 
-   Konsepter:
-   - addEventListener: "Lytt etter denne hendelsen og kjør denne funksjonen"
-   - getBoundingClientRect(): "Gi meg koordinatene til dette elementet"
-   - style.setProperty(): "Endre en CSS-variabel via JavaScript"
+   Concepts:
+   - addEventListener: "Listen for this event and run this function"
+   - getBoundingClientRect(): "Give me the coordinates of this element"
+   - style.setProperty(): "Change a CSS variable via JavaScript"
 ============================================================ */
 
 const nav = document.querySelector('nav');
 
 if (nav) {
-    // 'mousemove' hendelsen skjer hundrevis av ganger per sekund
-    // mens musen beveger seg over navigasjonsboksen
+    // The 'mousemove' event fires hundreds of times per second
+    // while the mouse moves over the nav box
     nav.addEventListener('mousemove', function(e) {
-        // getBoundingClientRect() returnerer et objekt med
-        // top, left, right, bottom til elementet i piksler fra hjørnet av skjermen
+        // getBoundingClientRect() returns an object with
+        // top, left, right, bottom of the element in pixels from the screen edge
         const rect = nav.getBoundingClientRect();
 
-        // Beregn musens posisjon RELATIVT til nav-boksen
-        // (ikke fra hele skjermen)
+        // Calculate mouse position RELATIVE to the nav box
+        // (not from the entire screen)
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // Oppdater CSS-variablene som styrer lyseffekten
+        // Update the CSS variables that control the light effect
         nav.style.setProperty('--mouse-x', x + 'px');
         nav.style.setProperty('--mouse-y', y + 'px');
     });
@@ -49,57 +49,57 @@ if (nav) {
 
 
 /* ============================================================
-   2. SKRIVEMASKIN-EFFEKT
+   2. TYPEWRITER EFFECT
    ============================================================
-   Denne funksjonen skriver tekst ett tegn om gangen.
+   This function writes text one character at a time.
 
-   Konsepter:
-   - Funksjon med parametere: typeText(element, tekst, hastighet)
-   - setTimeout(): "Vent X millisekunder, kjør så denne funksjonen"
-   - Rekursjon: funksjonen kaller seg selv — slik "looper" den
-   - textContent: egenskapen som holder teksten inne i et element
+   Concepts:
+   - Function with parameters: typeText(element, text, speed)
+   - setTimeout(): "Wait X milliseconds, then run this function"
+   - Recursion: the function calls itself — this is how it "loops"
+   - textContent: the property that holds the text inside an element
 
-   Slik ser dataflyten ut:
-   Start → skriv 'A' → vent 80ms → skriv 'R' → vent 80ms → ... → ferdig
+   Data flow:
+   Start → write 'A' → wait 80ms → write 'R' → wait 80ms → ... → done
 ============================================================ */
 
 function typeText(element, text, speed) {
-    // i holder styr på HVOR LANGT vi har kommet i teksten
-    // Vi starter på 0 (første tegn)
+    // i keeps track of HOW FAR we are in the text
+    // We start at 0 (first character)
     let i = 0;
 
-    // En lokal hjelpefunksjon som skriver neste tegn
+    // A local helper function that writes the next character
     function writeNextCharacter() {
-        // Har vi nådd slutten av teksten?
+        // Have we reached the end of the text?
         if (i < text.length) {
-            // Legg til neste tegn
-            // text[i] henter tegnet på posisjon i — som array-indeks
+            // Add the next character
+            // text[i] gets the character at position i — like an array index
             element.textContent += text[i];
 
-            // Flytt til neste tegn
+            // Move to the next character
             i++;
 
-            // Planlegg å kalle denne funksjonen igjen etter 'speed' ms
-            // Dette er rekursjon — funksjonen kaller seg selv!
+            // Schedule this function to be called again after 'speed' ms
+            // This is recursion — the function calls itself!
             setTimeout(writeNextCharacter, speed);
         }
-        // Hvis i >= text.length, stopper vi bare — ingen flere kall
+        // If i >= text.length, we simply stop — no more calls
     }
 
-    // Start skrivingen
+    // Start writing
     writeNextCharacter();
 }
 
-// Finn span-elementet med id="typewriter-text" i HTML
+// Find the span element with id="typewriter-text" in the HTML
 const typewriterEl = document.getElementById('typewriter-text');
 
-// Kjør kun hvis elementet faktisk finnes
-// (det er bare på index.html, ikke på prosjektsidene)
+// Only run if the element actually exists
+// (it's only on index.html, not on project pages)
 if (typewriterEl) {
-    // Vent 400ms før vi starter — gir siden tid til å laste inn
-    // Hvert tegn tar 90ms — prøv å endre dette tallet og se hva som skjer!
+    // Wait 400ms before starting — gives the page time to load
+    // Each character takes 90ms — try changing this number and see what happens!
     setTimeout(function() {
-        // Sjekk gjeldende språk og skriv riktig tittel
+        // Check current language and write the correct title
         const lang = document.documentElement.lang;
         const text = lang === 'en' ? 'ARCHITECT' : 'ARKITEKT';
         typeText(typewriterEl, text, 90);
@@ -108,55 +108,55 @@ if (typewriterEl) {
 
 
 /* ============================================================
-   3. SPRÅKBYTTE — NO / EN
+   3. LANGUAGE SWITCHING — NO / EN
    ============================================================
-   Når brukeren trykker "NO" eller "EN"-knappene, skal vi:
-     a) Markere riktig knapp som aktiv (CSS-klassen 'active')
-     b) Bytte all tekst på siden til riktig språk
+   When the user clicks the "NO" or "EN" buttons, we:
+     a) Mark the correct button as active (CSS class 'active')
+     b) Switch all text on the page to the correct language
 
-   Teksten hentes fra data-no og data-en attributtene i HTML.
-   Eksempel: <a data-no="Prosjekter" data-en="Work">Prosjekter</a>
+   Text is fetched from the data-no and data-en attributes in HTML.
+   Example: <a data-no="Prosjekter" data-en="Work">Prosjekter</a>
 
-   Konsepter:
-   - querySelectorAll(): finner ALLE elementer som matcher (returnerer en liste)
-   - forEach(): "Gjør dette for hvert element i listen"
-   - classList.toggle(): legger til/fjerner en CSS-klasse
-   - dataset: et objekt med alle data-* attributtene til et element
-   - innerHTML: som textContent, men tolker HTML-koder som <br>
+   Concepts:
+   - querySelectorAll(): finds ALL matching elements (returns a list)
+   - forEach(): "Do this for each element in the list"
+   - classList.toggle(): adds/removes a CSS class
+   - dataset: an object with all data-* attributes of an element
+   - innerHTML: like textContent, but interprets HTML tags like <br>
 ============================================================ */
 
-// querySelectorAll('.lang-btn') finner BEGGE språkknappene
+// querySelectorAll('.lang-btn') finds BOTH language buttons
 const langBtns = document.querySelectorAll('.lang-btn');
 
 langBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
-        // Hvilket språk klikket brukeren på?
-        // btn.dataset.lang leser data-lang="no" eller data-lang="en" fra HTML
+        // Which language did the user click?
+        // btn.dataset.lang reads data-lang="no" or data-lang="en" from HTML
         const chosenLang = btn.dataset.lang;
 
-        // --- a) Oppdater knappenes utseende ---
+        // --- a) Update button appearance ---
         langBtns.forEach(function(b) {
-            // classList.toggle(klasse, sannVerdi):
-            // Legg til klassen hvis sannVerdi er true, fjern den hvis false
+            // classList.toggle(class, booleanValue):
+            // Add the class if booleanValue is true, remove it if false
             b.classList.toggle('active', b.dataset.lang === chosenLang);
         });
 
-        // --- b) Bytt all tekst på siden ---
-        // Finn alle elementer som har BEGGE data-no og data-en attributter
+        // --- b) Switch all text on the page ---
+        // Find all elements that have BOTH data-no and data-en attributes
         const translatableElements = document.querySelectorAll('[data-no][data-en]');
 
         translatableElements.forEach(function(el) {
-            // el.dataset er et objekt: { no: "Prosjekter", en: "Work" }
-            // el.dataset[chosenLang] henter riktig oversettelse dynamisk
+            // el.dataset is an object: { no: "Prosjekter", en: "Work" }
+            // el.dataset[chosenLang] dynamically fetches the right translation
             el.textContent = el.dataset[chosenLang];
         });
 
-        // --- c) Oppdater <html lang="..."> ---
-        // Forteller nettleser og hjelpemiddelteknologi hvilket språk siden er på
+        // --- c) Update <html lang="..."> ---
+        // Tells the browser and assistive technology what language the page is in
         document.documentElement.lang = chosenLang;
 
-        // --- d) Oppdater typewriter-teksten ---
-        // Siden .textContent overskrev den, nullstill og skriv på nytt
+        // --- d) Update typewriter text ---
+        // Since .textContent overwrote it, reset and rewrite
         if (typewriterEl) {
             typewriterEl.textContent = '';
             const text = chosenLang === 'en' ? 'ARCHITECT' : 'ARKITEKT';
@@ -167,19 +167,19 @@ langBtns.forEach(function(btn) {
 
 
 /* ============================================================
-   4. PROSJEKTSIDE — KRYMPING AV TITTEL VED SCROLLING
+   4. PROJECT PAGE — TITLE SHRINKING ON SCROLL
    ============================================================
-   På individuelle prosjektsider (f.eks. in-the-quarry.html) er
-   tittelen sticky øverst. Mens man scroller ned, krymper tittelen
-   gradvis fra 72px til 32px.
+   On individual project pages (e.g. in-the-quarry.html) the
+   title is sticky at the top. As you scroll down, the title
+   gradually shrinks from 72px to 32px.
 
-   Konseptet:
-   - window.scrollY: pikslene man har scrollet ned
-   - Math.max(a, b): returnerer det STØRSTE av to tall (brukes som gulv)
-   - Math.min(a, b): returnerer det MINSTE av to tall (brukes som tak)
+   Concepts:
+   - window.scrollY: pixels scrolled down
+   - Math.max(a, b): returns the LARGEST of two numbers (used as a floor)
+   - Math.min(a, b): returns the SMALLEST of two numbers (used as a ceiling)
 
-   Formelen: størrelse = 72 - (scrollY * 0.1)
-   Eksempel: ved 400px scroll → 72 - 40 = 32px (minimum)
+   Formula: size = 72 - (scrollY * 0.1)
+   Example: at 400px scroll → 72 - 40 = 32px (minimum)
 ============================================================ */
 
 const stickyTitle = document.querySelector('.project-header-sticky h1');
@@ -188,31 +188,11 @@ if (stickyTitle) {
     window.addEventListener('scroll', function() {
         const scrolled = window.scrollY;
 
-        // Regn ut ny skriftstørrelse
-        // Math.max sikrer at vi aldri går under 32px
+        // Calculate new font size
+        // Math.max ensures we never go below 32px
         const newSize = Math.max(32, 72 - scrolled * 0.1);
 
-        // Sett ny font-size direkte på elementet
+        // Set new font-size directly on the element
         stickyTitle.style.fontSize = newSize + 'px';
     });
 }
-
-
-/* ============================================================
-   BONUSFORKLARING: Forskjellen på de tre typene kode
-
-   HTML (index.html):
-     Strukturen — "hva er på siden?"
-     <h1>Ola Jin</h1>
-
-   CSS (style.css):
-     Utseendet — "hvordan ser det ut?"
-     h1 { font-size: 96px; font-weight: 300; }
-
-   JavaScript (app.js):
-     Oppførselen — "hva skjer når brukeren interagerer?"
-     h1.style.fontSize = '32px';   ← endrer CSS via JS
-
-   Alle tre snakker med hverandre gjennom CSS-klasser og
-   HTML-elementer som bindeledd.
-============================================================ */
