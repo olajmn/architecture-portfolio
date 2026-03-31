@@ -49,12 +49,12 @@ function spawnParticle() {
         vx:    0,
         vy:    0,
         life:  Math.random(),
-        speed: 1.0 + Math.random() * 2.5,
+        speed: 2.0 + Math.random() * 4.0,
         size:  bright ? 1.2 + Math.random() * 0.8
              : golden ? 0.6 + Math.random() * 0.8
              :          0.2 + Math.random() * 0.9,
         color: bright ? 'rgba(190, 225, 255, '
-             : golden ? 'rgba(255, 210, 80,  '
+             : golden ? 'rgba(100, 200, 255, '
              :          colors[Math.floor(Math.random() * colors.length)],
         bright,
         golden
@@ -130,9 +130,16 @@ function animate() {
         // Tegn linje fra forrige til ny posisjon — dette er "tråden"
         const pulse = 1 + Math.sin(time * 4 + p.life * 10) * 0.4;
 
-        const alpha = p.bright  ? Math.min(1, p.life * 1.4)
-                    : p.golden  ? p.life * 0.9
-                    :             p.life * 0.75;
+        // Avstand til skjermens sentrum — nær = mer intens
+        const cx = p.x - canvas.width  / 2;
+        const cy = p.y - canvas.height / 2;
+        const centreDist = Math.sqrt(cx * cx + cy * cy);
+        const maxDist    = Math.sqrt((canvas.width / 2) ** 2 + (canvas.height / 2) ** 2);
+        const intensity  = 1 - (centreDist / maxDist) * 0.6; // 1.0 i midten, 0.4 i hjørnene
+
+        const alpha = p.bright  ? Math.min(1, p.life * 1.4) * intensity
+                    : p.golden  ? p.life * 0.9 * intensity
+                    :             p.life * 0.75 * intensity;
         ctx.strokeStyle = p.color + alpha + ')';
         ctx.lineWidth   = p.size * pulse;
         ctx.beginPath();
