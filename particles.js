@@ -77,6 +77,17 @@ window.addEventListener('mousemove', e => {
     mouse.y = e.clientY;
 });
 
+// ── SCROLL ROTATION ──
+// scrollAngle adds a global rotation to the flow field.
+// Mouse wheel nudges it, then it slowly drifts back to 0.
+let scrollAngle = 0;
+
+window.addEventListener('wheel', e => {
+    // e.deltaY is positive scrolling down, negative scrolling up
+    // 0.001 keeps the nudge subtle
+    scrollAngle += e.deltaY * 0.001;
+});
+
 
 // ── FLOW FIELD ──
 // Global flow field — particles move organically across the screen.
@@ -96,7 +107,7 @@ function getAngle(x, y) {
     const flow = Math.sin(x * s + time * 0.2) * Math.PI
                + Math.cos(y * s + time * 0.15) * Math.PI * 0.5;
 
-    return flow + tilt;
+    return flow + tilt + scrollAngle;
 }
 
 
@@ -155,6 +166,9 @@ function animate() {
         ctx.lineTo(p.x, p.y);
         ctx.stroke();
     });
+
+    // Slowly drift scroll rotation back to 0
+    scrollAngle *= 0.97;
 
     time += 0.003;
     requestAnimationFrame(animate);
