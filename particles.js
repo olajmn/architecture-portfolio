@@ -22,16 +22,16 @@ window.addEventListener('resize', () => {
 
 // ── FARGEPALLETTE ──
 const colors = [
-    'rgba(0,   200, 255, ',   // cyan neon
-    'rgba(30,  120, 255, ',   // elektrisk blå
-    'rgba(100, 180, 255, ',   // lys himmelblå
-    'rgba(0,   80,  200, ',   // dyp blå
-    'rgba(180, 240, 255, ',   // nesten hvit-blå
+    'rgba(255, 255, 255, ',   // ren hvit
+    'rgba(255, 255, 255, ',   // ren hvit (dobbel vekt = oftere)
+    'rgba(220, 235, 255, ',   // hvit med svak blå-tint
+    'rgba(180, 215, 255, ',   // lys blå-hvit
+    'rgba(100, 180, 255, ',   // blå aksent — sjelden
 ];
 
 
 // ── PARTIKLER ──
-const COUNT = 1200;
+const COUNT = 1700;
 const particles = [];
 
 for (let i = 0; i < COUNT; i++) {
@@ -39,15 +39,25 @@ for (let i = 0; i < COUNT; i++) {
 }
 
 function spawnParticle() {
+    // 5% gnist — hvit og lys
+    const bright = Math.random() < 0.05;
+    // 4% gyllen — varm gul/amber, lengre hale og levetid
+    const golden = !bright && Math.random() < 0.04;
     return {
         x:     Math.random() * canvas.width,
         y:     Math.random() * canvas.height,
         vx:    0,
         vy:    0,
-        life:  Math.random(),           // starter på tilfeldig punkt i livet
+        life:  Math.random(),
         speed: 1.0 + Math.random() * 2.5,
-        size:  0.2 + Math.random() * 0.9,
-        color: colors[Math.floor(Math.random() * colors.length)]
+        size:  bright ? 1.2 + Math.random() * 0.8
+             : golden ? 0.6 + Math.random() * 0.8
+             :          0.2 + Math.random() * 0.9,
+        color: bright ? 'rgba(190, 225, 255, '
+             : golden ? 'rgba(255, 210, 80,  '
+             :          colors[Math.floor(Math.random() * colors.length)],
+        bright,
+        golden
     };
 }
 
@@ -62,40 +72,39 @@ window.addEventListener('mousemove', e => {
 
 
 // ── FLOW FIELD ──
-// getAngle() returnerer en retning (vinkel i radianer) for et punkt (x, y).
-// Sinus og cosinus av posisjon + tid skaper organiske, flytende kurver.
+// Globalt flow field — partikler fyker organisk over skjermen.
+// Musen tilfører en subtil "tilt" på hele feltet — endrer vinkel, ikke sentrum.
 let time = 0;
 
 function getAngle(x, y) {
-    const s = 0.0012;
-    return (
-        Math.sin(x * s       + time * 0.25) *
-        Math.cos(y * s * 0.9 + time * 0.18) *
-        Math.PI * 3.5
-    );
+    // Normaliser museposisjon til -1 → +1 (0 = ingen påvirkning når musen er i midten)
+    const mx = (mouse.x / canvas.width  - 0.5) * 2;
+    const my = (mouse.y / canvas.height - 0.5) * 2;
+
+    // Musen vrir hele feltet litt — lineær, ingen hopp
+    const tilt = (mx + my) * 0.5;
+
+    // Organisk flow field — lav multiplier gir jevne, kontinuerlige kurver
+    const s = 0.0008;
+    const flow = Math.sin(x * s + time * 0.2) * Math.PI
+               + Math.cos(y * s + time * 0.15) * Math.PI * 0.5;
+
+    return flow + tilt;
 }
 
 
 // ── ANIMASJON ──
 function animate() {
     // Gjennomsiktig svart lag — "fader" gamle streker ut sakte (hale-effekt)
-    ctx.fillStyle = 'rgba(13, 13, 13, 0.15)';
+    ctx.fillStyle = 'rgba(13, 13, 13, 0.35)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     particles.forEach(p => {
         const angle = getAngle(p.x, p.y);
 
-        // Regn ut retning og avstand mot musen
-        const dx   = mouse.x - p.x;
-        const dy   = mouse.y - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        // Tiltrekning avtar med avstand — maks innenfor 350px
-        const pull = Math.max(0, 1 - dist / 350) * 0.06;
-
-        // Bland flow field med svak tiltrekning mot mus
-        p.vx += Math.cos(angle) * 0.22 + (dx / dist || 0) * pull;
-        p.vy += Math.sin(angle) * 0.22 + (dy / dist || 0) * pull;
+        // Bare flow field — ingen suging mot musen
+        p.vx += Math.cos(angle) * 0.22;
+        p.vy += Math.sin(angle) * 0.22;
 
         // Begrens farten
         const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
@@ -109,7 +118,7 @@ function animate() {
         p.x += p.vx;
         p.y += p.vy;
 
-        p.life -= 0.0025;
+        p.life -= p.golden ? 0.0008 : p.bright ? 0.0014 : 0.0025;
 
         // Spawn ny partikkel hvis denne er "død" eller ute av skjermen
         if (p.life <= 0 || p.x < -10 || p.x > canvas.width + 10 ||
@@ -119,9 +128,13 @@ function animate() {
         }
 
         // Tegn linje fra forrige til ny posisjon — dette er "tråden"
-        const alpha = p.life * 0.65;
+        const pulse = 1 + Math.sin(time * 4 + p.life * 10) * 0.4;
+
+        const alpha = p.bright  ? Math.min(1, p.life * 1.4)
+                    : p.golden  ? p.life * 0.9
+                    :             p.life * 0.75;
         ctx.strokeStyle = p.color + alpha + ')';
-        ctx.lineWidth   = p.size;
+        ctx.lineWidth   = p.size * pulse;
         ctx.beginPath();
         ctx.moveTo(px, py);
         ctx.lineTo(p.x, p.y);
