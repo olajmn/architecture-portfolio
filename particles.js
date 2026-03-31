@@ -20,21 +20,22 @@ window.addEventListener('resize', () => {
 });
 
 
-// ── COLOUR PALETTE ──
+// ── COLOUR PALETTE — three shades of blue ──
 const colors = [
-    'rgba(200, 220, 255, ',   // blue-white
-    'rgba(180, 210, 255, ',   // blue-white (double weight = more frequent)
-    'rgba(160, 200, 255, ',   // soft blue
-    'rgba(140, 185, 255, ',   // medium blue-white
-    'rgba(100, 160, 255, ',   // blue accent — rare
+    'rgba(40,  70, 160, ',    // shade 1 — dim deep blue (most common)
+    'rgba(40,  70, 160, ',    // shade 1 — dim deep blue (extra weight)
+    'rgba(40,  70, 160, ',    // shade 1 — dim deep blue (extra weight)
+    'rgba(70, 120, 220, ',    // shade 2 — medium blue
+    'rgba(100,160, 255, ',    // shade 3 — bright blue (rare)
 ];
 
 
 // ── PARTICLES ──
-const COUNT = 1700;
-const particles = [];
+const BASE_COUNT = 800;   // partikler ved lav hastighet
+const MAX_COUNT  = 2500;  // partikler ved maks hastighet
+const particles  = [];
 
-for (let i = 0; i < COUNT; i++) {
+for (let i = 0; i < BASE_COUNT; i++) {
     particles.push(spawnParticle());
 }
 
@@ -45,6 +46,8 @@ function spawnParticle() {
     const golden = !bright && Math.random() < 0.04;
     // 0.3% chance of becoming a rare flare — blazing white, very long lifespan
     const flare  = !bright && !golden && Math.random() < 0.001;
+    // 3% chance of becoming an elder — same look as normal, but lives much longer
+    const elder  = !bright && !golden && !flare && Math.random() < 0.12;
     return {
         x:     Math.random() * canvas.width,
         y:     Math.random() * canvas.height,
@@ -58,13 +61,14 @@ function spawnParticle() {
              : golden ? 0.6 + Math.random() * 0.8
              : flare  ? 2.0 + Math.random() * 1.5
              :          0.2 + Math.random() * 0.9,
-        color: bright ? 'rgba(80, 150, 255, '    // vivid electric blue
-             : golden ? 'rgba(60, 120, 255, '    // deep blue
-             : flare  ? 'rgba(180, 210, 255, '   // bright blue-white
+        color: bright ? 'rgba(100, 160, 255, '   // bright blue
+             : golden ? 'rgba(70,  120, 220, '   // medium blue
+             : flare  ? 'rgba(140, 190, 255, '   // pale blue-white
              :          colors[Math.floor(Math.random() * colors.length)],
         bright,
         golden,
-        flare
+        flare,
+        elder
     };
 }
 
@@ -74,6 +78,8 @@ function spawnParticle() {
 // speedMultiplier controls how fast particles move — slow by default, boosts on scroll.
 let scrollAngle     = 0;
 let speedMultiplier = 0.05; // 0.05 = slow base speed
+let prevSpeed       = 0.05;
+let speedRising     = false;
 
 window.addEventListener('wheel', e => {
     // e.deltaY is signed — down = positive (speed up), up = negative (slow/reverse)
@@ -83,14 +89,13 @@ window.addEventListener('wheel', e => {
 
 // ── FLOW FIELD ──
 // Global flow field — particles move organically across the screen.
-// The mouse adds a subtle tilt to the whole field — changes angle, not centre.
 let time = 0;
 
 function getAngle(x, y) {
-    // Organic flow field — low multiplier produces smooth, continuous curves
-    const s = 0.0008;
-    const flow = Math.sin(x * s + time * 0.2) * Math.PI
-               + Math.cos(y * s + time * 0.15) * Math.PI * 0.5;
+    // Low s = large smooth curves = river-like streams
+    const s = 0.001;
+    const flow = Math.sin(x * s + y * s * 0.5  + time * 0.07) * Math.PI * 1.2
+               + Math.cos(x * s * 0.4 - y * s  + time * 0.05) * Math.PI * 0.4;
 
     return flow + scrollAngle;
 }
@@ -101,7 +106,7 @@ function animate() {
     // Fade opacity scales with speed — no tail at rest, long tail when fast
     // normalizedSpeed: 0 at base (0.25), 1 at max (2.0)
     const normalizedSpeed = Math.min(1, (speedMultiplier - 0.25) / 1.75);
-    const fadeOpacity = 1.0 - normalizedSpeed * 0.75;
+    const fadeOpacity = 0.78 - normalizedSpeed * 0.48; // subtle trail at rest, long at speed
     ctx.fillStyle = `rgba(1, 2, 8, ${fadeOpacity})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -128,14 +133,18 @@ function animate() {
         p.x += p.vx;
         p.y += p.vy;
 
-        p.life -= p.flare ? 0.0003 : p.golden ? 0.0008 : p.bright ? 0.0014 : 0.0025;
-
-        // Respawn if dead or off screen
-        if (p.life <= 0 || p.x < -10 || p.x > canvas.width + 10 ||
-                            p.y < -10 || p.y > canvas.height + 10) {
+        // bright particles die when they leave the screen
+        if (p.bright && (p.x < -10 || p.x > canvas.width + 10 ||
+                         p.y < -10 || p.y > canvas.height + 10)) {
             Object.assign(p, spawnParticle());
             return;
         }
+
+        // all other particles wrap around screen edges instead of dying
+        if (p.x < -10)               p.x = canvas.width  + 10;
+        if (p.x > canvas.width  + 10) p.x = -10;
+        if (p.y < -10)               p.y = canvas.height + 10;
+        if (p.y > canvas.height + 10) p.y = -10;
 
         // Draw line from previous to new position — this is the "strand"
         const pulse = 1 + Math.sin(time * 4 + p.life * 10) * 0.4;
@@ -154,22 +163,52 @@ function animate() {
                     : p.golden  ? p.life * 0.9 * intensity
                     :             p.life * 0.75 * intensity;
         const radius = p.size;
-        ctx.fillStyle = p.color + alpha + ')';
 
-        // shadowBlur only on rare particles — too expensive for all 1700
-        if (p.flare || p.bright) {
-            ctx.shadowBlur  = glowFactor * 16 * p.size;
+        // bright/flare always glow — normal particles only glow when accelerating
+        const glowStrength = Math.min(1, (speedMultiplier - 0.05) / 1.0);
+        if (p.bright || p.flare || (glowStrength > 0.15 && Math.random() < 0.25)) {
+            const baseGlow  = p.bright || p.flare ? 8 : 0;
+            ctx.shadowBlur  = (baseGlow + glowFactor * 12 * glowStrength) * p.size;
             ctx.shadowColor = p.color + Math.min(1, alpha * 2) + ')';
         }
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
-        ctx.fill();
+        // Core — small light hint, mostly blue
         ctx.shadowBlur = 0;
+        ctx.fillStyle  = 'rgba(180, 210, 255, ' + alpha * 0.5 + ')';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, radius * 0.4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Diffraction spikes — 4-pointed diamond, only on larger/special particles
+        if (p.bright || p.golden || p.flare || radius > 0.7) {
+            const spike = radius * 5;
+            const w     = radius * 0.3; // width of the spike at centre
+            ctx.fillStyle = p.color + alpha * 0.85 + ')';
+
+            // Vertical spike (top + bottom)
+            ctx.beginPath();
+            ctx.moveTo(p.x,     p.y - spike);
+            ctx.lineTo(p.x + w, p.y);
+            ctx.lineTo(p.x,     p.y + spike);
+            ctx.lineTo(p.x - w, p.y);
+            ctx.closePath();
+            ctx.fill();
+
+            // Horizontal spike (left + right)
+            ctx.beginPath();
+            ctx.moveTo(p.x - spike, p.y);
+            ctx.lineTo(p.x,         p.y - w);
+            ctx.lineTo(p.x + spike, p.y);
+            ctx.lineTo(p.x,         p.y + w);
+            ctx.closePath();
+            ctx.fill();
+        }
     });
 
     // Slowly drift scroll rotation and speed back to base values
     scrollAngle     *= 0.97;
+    speedRising      = speedMultiplier > prevSpeed + 0.001;
+    prevSpeed        = speedMultiplier;
     speedMultiplier += (0.05 - speedMultiplier) * 0.02;
 
     time += 0.003;
