@@ -3,199 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Architecture — Ola Jin Myhre Nymoen</title>
+    <title>Projects — Ola Jin Myhre Nymoen</title>
     <link rel="stylesheet" href="../../style.css">
     <style>
-        body {
-            overflow-x: hidden;
-        }
+        nav { display: none; }
 
-        .arch-hero {
+        /* Sticky header */
+        .index-hero {
             position: sticky;
             top: 0;
             z-index: 90;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 24px 0;
-        }
-
-        .arch-hero-inner {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 60px;
-        }
-
-        .arch-subtitle {
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            color: var(--gray);
-            opacity: 0;
-            animation: slideUp 0.9s ease-out forwards;
-            animation-delay: 0s;
-        }
-
-        .arch-projects {
-            padding: 0 60px 100px;
+            background: var(--white);
+            padding: 20px 40px;
             display: flex;
-            flex-direction: column;
-            gap: 0;
-            max-width: var(--max-width);
-            margin: 0 auto;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .arch-card {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 32px;
             align-items: center;
+            justify-content: space-between;
+        }
+
+        .index-subtitle {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        .back-btn {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: var(--black);
+        }
+
+        /* 3-kolonne galleri-grid */
+        .index-projects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px 0;
+            align-items: start;
+            padding: 40px 0 120px;
+        }
+
+        .index-card {
+            display: block;
             text-decoration: none;
             color: inherit;
-            padding: 24px 0;
-            transition: opacity 0.2s;
-
             opacity: 0;
-            animation: slideUp 0.9s ease-out forwards;
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .arch-card:nth-child(1) { animation-delay: 0.05s; }
-        .arch-card:nth-child(2) { animation-delay: 0.25s; }
-        .arch-card:nth-child(3) { animation-delay: 0.45s; }
-        .arch-card:nth-child(4) { animation-delay: 0.65s; }
-        .arch-card:nth-child(5) { animation-delay: 0.85s; }
+        .index-card:nth-child(1) { animation-delay: 0.0s; }
+        .index-card:nth-child(2) { animation-delay: 0.15s; }
+        .index-card:nth-child(3) { animation-delay: 0.30s; }
+        .index-card:nth-child(4) { animation-delay: 0.45s; }
+        .index-card:nth-child(5) { animation-delay: 0.60s; }
 
-        .arch-card:last-child {
-            border-bottom: 1px solid #e8e8e8;
-        }
-
-        .arch-card:hover {
-            opacity: 0.5;
-        }
-
-        .arch-card-image {
+        .index-card-image {
             width: 100%;
-            aspect-ratio: 4 / 3;
             overflow: hidden;
+            background: var(--light-gray);
+            position: relative;
         }
 
-        .arch-card-image img {
+        .index-card-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.7s ease;
         }
 
-        .arch-card-year {
+        .index-card:hover .index-card-image img {
+            transform: scale(1.03);
+        }
+
+        /* Tekst-overlay — usynlig til hover */
+        .index-card-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .index-card:hover .index-card-text {
+            opacity: 1;
+        }
+
+        .index-card-year {
             font-size: 11px;
-            color: var(--gray);
-            letter-spacing: 0.05em;
+            color: var(--black);
+            letter-spacing: 0.1em;
             display: block;
             margin-bottom: 8px;
         }
 
-        .arch-card-title {
-            font-size: 18px;
-            font-weight: 400;
-            margin-bottom: 6px;
+        .index-card-title {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1.3;
         }
 
-        .arch-card-desc {
-            font-size: 13px;
-            color: var(--gray);
+        .index-card-desc {
+            font-size: 11px;
+            color: #555;
+            margin-top: 6px;
+            letter-spacing: 0.04em;
+        }
+
+        /* Individuell størrelse og offset per kort */
+        .index-card--1 { margin-top: 120px; padding: 0 40px; }
+        .index-card--1 .index-card-image { aspect-ratio: 3 / 4; }
+
+        .index-card--2 { margin-top: 120px; padding: 0 40px; }
+        .index-card--2 .index-card-image { aspect-ratio: 1 / 1; }
+
+        .index-card--3 { margin-top: 120px; padding: 0 40px; }
+        .index-card--3 .index-card-image { aspect-ratio: 2 / 3; }
+
+        .index-card--4 { margin-top: 60px; padding: 0 40px; }
+        .index-card--4 .index-card-image { aspect-ratio: 4 / 3; }
+
+        .index-card--5 { margin-top: 100px; padding: 0 40px; }
+        .index-card--5 .index-card-image { aspect-ratio: 3 / 4; }
+
+        @keyframes fadeIn {
+            0%   {
+                opacity: 0;
+                transform: scale(1.04);
+                filter: blur(12px);
+            }
+            60%  {
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .index-projects {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 24px 24px 80px;
+                gap: 16px 24px;
+            }
+            .index-card--1, .index-card--2, .index-card--3,
+            .index-card--4, .index-card--5 { margin-top: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION -->
-    <nav>
-        <a href="../../index.html" class="nav-home" aria-label="Home">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
-                <path d="M9 21V12h6v9"/>
-            </svg>
-        </a>
-        <span class="nav-divider"></span>
-        <span class="nav-links">
-            <a href="#">Architecture Portfolio</a>
-        </span>
-    </nav>
-
-    <div style="height: 80px;"></div>
-
-    <!-- STICKY HEADER -->
-    <header class="arch-hero">
-        <div class="arch-hero-inner">
-            <p class="arch-subtitle">Selected works 2021–2024</p>
-        </div>
+    <!-- STICKY OVERSKRIFT -->
+    <header class="index-hero">
+        <p class="index-subtitle">Selected works 2021–2024</p>
+        <a href="../../index.html" class="back-btn">← Back</a>
     </header>
 
-    <!-- PROJECT LIST -->
-    <div class="arch-projects">
+    <!-- PROSJEKTLISTE — 3-kolonne galleri -->
+    <div class="index-projects">
 
-        <a href="sagvag-senior-garden.html" class="arch-card">
-            <div class="arch-card-image">
-                <img src="../../images/project-images/side-07.png" alt="Sagvåg Senior Garden">
-            </div>
-            <div>
-                <span class="arch-card-year">2024</span>
-                <h3 class="arch-card-title">Sagvåg Senior Garden</h3>
-                <p class="arch-card-desc">Master Thesis — Sagvåg, Norway</p>
+        <a href="sagvag-senior-garden.html" class="index-card index-card--1">
+            <div class="index-card-image">
+                <div class="index-card-text">
+                    <span class="index-card-year">2024</span>
+                    <h3 class="index-card-title">Sagvåg Senior Garden</h3>
+                    <p class="index-card-desc">Master Thesis — Sagvåg, Norway</p>
+                </div>
             </div>
         </a>
 
-        <a href="in-the-quarry.html" class="arch-card">
-            <div class="arch-card-image">
+        <a href="in-the-quarry.html" class="index-card index-card--2">
+            <div class="index-card-image">
                 <img src="../../images/in-the-quarry/cover.jpg" alt="In the Quarry">
-            </div>
-            <div>
-                <span class="arch-card-year">2023</span>
-                <h3 class="arch-card-title">In the Quarry</h3>
-                <p class="arch-card-desc">Cultural Architecture — Ústí nad Labem, Czech Republic</p>
-            </div>
-        </a>
-
-        <a href="shifted.html" class="arch-card">
-            <div class="arch-card-image">
-                <img src="../../images/project-images/side-15.png" alt="Shifted">
-            </div>
-            <div>
-                <span class="arch-card-year">2022</span>
-                <h3 class="arch-card-title">Shifted</h3>
-                <p class="arch-card-desc">Bachelor Thesis — Prague, Czech Republic</p>
+                <div class="index-card-text">
+                    <span class="index-card-year">2023</span>
+                    <h3 class="index-card-title">In the Quarry</h3>
+                    <p class="index-card-desc">Cultural Architecture — Ústí nad Labem, Czech Republic</p>
+                </div>
             </div>
         </a>
 
-        <a href="lean-to.html" class="arch-card">
-            <div class="arch-card-image">
-                <img src="../../images/project-images/side-17.png" alt="Lean-to">
-            </div>
-            <div>
-                <span class="arch-card-year">2021</span>
-                <h3 class="arch-card-title">Lean-to</h3>
-                <p class="arch-card-desc">Student Project — Prague, Czech Republic</p>
+        <a href="shifted.html" class="index-card index-card--3">
+            <div class="index-card-image">
+                <div class="index-card-text">
+                    <span class="index-card-year">2022</span>
+                    <h3 class="index-card-title">Shifted</h3>
+                    <p class="index-card-desc">Bachelor Thesis — Prague, Czech Republic</p>
+                </div>
             </div>
         </a>
 
-        <a href="womens-house.html" class="arch-card">
-            <div class="arch-card-image">
-                <img src="../../images/project-images/side-19.png" alt="Women's House">
+        <a href="lean-to.html" class="index-card index-card--4">
+            <div class="index-card-image">
+                <div class="index-card-text">
+                    <span class="index-card-year">2021</span>
+                    <h3 class="index-card-title">Lean-to</h3>
+                    <p class="index-card-desc">Student Project — Prague, Czech Republic</p>
+                </div>
             </div>
-            <div>
-                <span class="arch-card-year">2021</span>
-                <h3 class="arch-card-title">Women's House</h3>
-                <p class="arch-card-desc">Student Project — Baghere Village, Senegal</p>
+        </a>
+
+        <a href="womens-house.html" class="index-card index-card--5">
+            <div class="index-card-image">
+                <div class="index-card-text">
+                    <span class="index-card-year">2021</span>
+                    <h3 class="index-card-title">Women's House</h3>
+                    <p class="index-card-desc">Student Project — Baghere Village, Senegal</p>
+                </div>
             </div>
         </a>
 

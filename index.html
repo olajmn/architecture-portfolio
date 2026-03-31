@@ -6,239 +6,188 @@
     <title>Ola Jin Myhre Nymoen</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Skjul nav-pillen på forsiden */
-        nav { display: none; }
-
-        /* Sticky header — henger fast øverst mens man scroller */
-        .index-hero {
-            position: sticky;
-            top: 0;
-            z-index: 90;
-            background: var(--white);
-            padding: 20px 0 20px 40px;  /* 40px = linje med venstre bildekant */
-        }
-
-        .index-subtitle {
-            font-size: 12px;
-            letter-spacing: 0.12em;
-            color: var(--gray);
-            text-transform: uppercase;
-        }
-
-        /* 3-kolonne galleri-grid */
-        .index-projects {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px 0;
-            align-items: start;
-            padding: 40px 0 120px;
-        }
-
-        .index-card {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            opacity: 0;
-            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        /* Alle starter samtidig */
-        .index-card:nth-child(1),
-        .index-card:nth-child(2),
-        .index-card:nth-child(3),
-        .index-card:nth-child(4),
-        .index-card:nth-child(5) { animation-delay: 0s; }
-
-        /* Bildet er position: relative så teksten kan legges oppå */
-        .index-card-image {
-            width: 100%;
+        body {
+            background: #0d0d0d;
+            height: 100vh;
             overflow: hidden;
-            background: var(--light-gray);
-            position: relative;
         }
 
-        .index-card-image img {
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.7s ease;
+            z-index: 0;
         }
 
-        .index-card:hover .index-card-image img {
-            transform: scale(1.03);
-        }
-
-        /* Tekst-overlay — ligger sentrert over bildet, usynlig til hover */
-        .index-card-text {
-            position: absolute;      /* løftes ut av normal flyt, legges oppå */
-            inset: 0;                /* fyller hele bildet (top/right/bottom/left: 0) */
+        nav {
+            all: unset;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 28px 36px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 24px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            z-index: 100;
+            box-sizing: border-box;
         }
 
-        .index-card:hover .index-card-text {
-            opacity: 1;
-        }
-
-        .index-card-year {
-            font-size: 11px;
-            color: var(--black);
-            letter-spacing: 0.1em;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .index-card-title {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+        .room-name {
+            font-size: 12px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            line-height: 1.3;
+            color: rgba(255, 255, 255, 0.45);
         }
 
-        .index-card-desc {
-            font-size: 11px;
-            color: #555;
-            margin-top: 6px;
-            letter-spacing: 0.04em;
+        .room-projects {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            transition: color 0.4s ease;
         }
 
-        /* --- Individuell størrelse og offset per kort --- */
-
-        .index-card--1 { margin-top: 120px; padding: 0 40px; }
-        .index-card--1 .index-card-image { aspect-ratio: 3 / 4; }
-
-        .index-card--2 { margin-top: 120px; padding: 0 40px; }
-        .index-card--2 .index-card-image { aspect-ratio: 1 / 1; }
-
-        .index-card--3 { margin-top: 120px; padding: 0 40px; }
-        .index-card--3 .index-card-image { aspect-ratio: 2 / 3; }
-
-        .index-card--4 { margin-top: 60px; padding: 0 40px; }
-        .index-card--4 .index-card-image { aspect-ratio: 4 / 3; }
-
-        .index-card--5 { margin-top: 100px; padding: 0 40px; }
-        .index-card--5 .index-card-image { aspect-ratio: 3 / 4; }
-
-        @keyframes fadeIn {
-            0%   {
-                opacity: 0;
-                transform: scale(1.04);
-                filter: blur(12px);
-            }
-            60%  {
-                filter: blur(2px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0px);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .index-projects {
-                grid-template-columns: repeat(2, 1fr);
-                padding: 24px 24px 80px;
-                gap: 16px 24px;
-            }
-            /* Fjern offset på mobil — ser rart ut i 2 kolonner */
-            .index-card--1, .index-card--2, .index-card--3,
-            .index-card--4, .index-card--5 { margin-top: 0; }
+        .room-projects:hover {
+            color: rgba(255, 255, 255, 0.95);
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGASJON -->
+    <canvas id="canvas"></canvas>
+
     <nav>
-        <a href="index.html" class="nav-home" aria-label="Home">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
-                <path d="M9 21V12h6v9"/>
-            </svg>
-        </a>
-        <span class="nav-divider"></span>
-        <span class="nav-links">
-            <a href="#">Ola Jin Myhre Nymoen</a>
-        </span>
+        <span class="room-name">Selected works 2021–2024</span>
+        <a href="projects/architecture/index.html" class="room-projects">Projects</a>
     </nav>
 
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx    = canvas.getContext('2d');
 
-    <!-- STICKY OVERSKRIFT -->
-    <header class="index-hero">
-        <p class="index-subtitle">Selected works 2021–2024</p>
-    </header>
+        // Gjør canvas like stor som vinduet
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-    <!-- PROSJEKTLISTE — 3-kolonne galleri -->
-    <div class="index-projects">
+        window.addEventListener('resize', () => {
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
 
-        <a href="projects/architecture/sagvag-senior-garden.html" class="index-card index-card--1">
-            <div class="index-card-image">
-                <div class="index-card-text">
-                    <span class="index-card-year">2024</span>
-                    <h3 class="index-card-title">Sagvåg Senior Garden</h3>
-                    <p class="index-card-desc">Master Thesis — Sagvåg, Norway</p>
-                </div>
-            </div>
-        </a>
+        // ── FARGEPALLETTE ──
+        // Varme hvit/beige/amber-toner — som glødende tråder
+        const colors = [
+            'rgba(0,   200, 255, ',   // cyan neon
+            'rgba(30,  120, 255, ',   // elektrisk blå
+            'rgba(100, 180, 255, ',   // lys himmelblå
+            'rgba(0,   80,  200, ',   // dyp blå
+            'rgba(180, 240, 255, ',   // nesten hvit-blå
+        ];
 
-        <a href="projects/architecture/in-the-quarry.html" class="index-card index-card--2">
-            <div class="index-card-image">
-                <img src="images/in-the-quarry/cover.jpg" alt="In the Quarry">
-                <div class="index-card-text">
-                    <span class="index-card-year">2023</span>
-                    <h3 class="index-card-title">In the Quarry</h3>
-                    <p class="index-card-desc">Cultural Architecture — Ústí nad Labem, Czech Republic</p>
-                </div>
-            </div>
-        </a>
+        // ── PARTIKLER ──
+        const COUNT = 1200;
+        const particles = [];
 
-        <a href="projects/architecture/shifted.html" class="index-card index-card--3">
-            <div class="index-card-image">
-                <div class="index-card-text">
-                    <span class="index-card-year">2022</span>
-                    <h3 class="index-card-title">Shifted</h3>
-                    <p class="index-card-desc">Bachelor Thesis — Prague, Czech Republic</p>
-                </div>
-            </div>
-        </a>
+        for (let i = 0; i < COUNT; i++) {
+            particles.push(spawnParticle());
+        }
 
-        <a href="projects/architecture/lean-to.html" class="index-card index-card--4">
-            <div class="index-card-image">
-                <div class="index-card-text">
-                    <span class="index-card-year">2021</span>
-                    <h3 class="index-card-title">Lean-to</h3>
-                    <p class="index-card-desc">Student Project — Prague, Czech Republic</p>
-                </div>
-            </div>
-        </a>
+        function spawnParticle() {
+            return {
+                x:     Math.random() * canvas.width,
+                y:     Math.random() * canvas.height,
+                vx:    0,
+                vy:    0,
+                life:  Math.random(),                         // starter på tilfeldig punkt i livet
+                speed: 1.0 + Math.random() * 2.5,
+                size:  0.2 + Math.random() * 0.9,
+                color: colors[Math.floor(Math.random() * colors.length)]
+            };
+        }
 
-        <a href="projects/architecture/womens-house.html" class="index-card index-card--5">
-            <div class="index-card-image">
-                <div class="index-card-text">
-                    <span class="index-card-year">2021</span>
-                    <h3 class="index-card-title">Women's House</h3>
-                    <p class="index-card-desc">Student Project — Baghere Village, Senegal</p>
-                </div>
-            </div>
-        </a>
+        // ── MUS-POSISJON ──
+        const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
 
-    </div>
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
 
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2025 Ola Jin Myhre Nymoen</p>
-    </footer>
+        // ── FLOW FIELD ──
+        let time = 0;
 
-    <script src="app.js"></script>
+        function getAngle(x, y) {
+            const s = 0.0012;
+            return (
+                Math.sin(x * s       + time * 0.25) *
+                Math.cos(y * s * 0.9 + time * 0.18) *
+                Math.PI * 3.5
+            );
+        }
+
+        // ── ANIMASJON ──
+        function animate() {
+            ctx.fillStyle = 'rgba(13, 13, 13, 0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                const angle = getAngle(p.x, p.y);
+
+                // Regn ut retning mot musen
+                const dx = mouse.x - p.x;
+                const dy = mouse.y - p.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                // Styrken på tiltrekning avtar med avstand
+                // Maks påvirkning innenfor 350px, ingen utenfor
+                const pull = Math.max(0, 1 - dist / 350) * 0.06;
+
+                // Bland flow field-akselerasjon med svak tiltrekning mot mus
+                p.vx += Math.cos(angle) * 0.22 + (dx / dist || 0) * pull;
+                p.vy += Math.sin(angle) * 0.22 + (dy / dist || 0) * pull;
+
+                // Begrens farten så partikler ikke flyr av gårde
+                const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                if (spd > p.speed) {
+                    p.vx = (p.vx / spd) * p.speed;
+                    p.vy = (p.vy / spd) * p.speed;
+                }
+
+                const px = p.x;
+                const py = p.y;
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Partikkelen eldes
+                p.life -= 0.0025;
+
+                // Hvis den er "død" eller ute av skjermen — spawn ny
+                if (p.life <= 0 || p.x < -10 || p.x > canvas.width + 10 ||
+                                    p.y < -10 || p.y > canvas.height + 10) {
+                    Object.assign(p, spawnParticle());
+                    return;
+                }
+
+                // Tegn en linje fra forrige posisjon til ny posisjon
+                const alpha = p.life * 0.65;
+                ctx.strokeStyle = p.color + alpha + ')';
+                ctx.lineWidth   = p.size;
+                ctx.beginPath();
+                ctx.moveTo(px, py);
+                ctx.lineTo(p.x, p.y);
+                ctx.stroke();
+            });
+
+            time += 0.003;
+            requestAnimationFrame(animate);  // kall animate igjen neste frame
+        }
+
+        animate();
+    </script>
 
 </body>
 </html>
