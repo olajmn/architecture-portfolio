@@ -22,11 +22,11 @@ window.addEventListener('resize', () => {
 
 // ── COLOUR PALETTE ──
 const colors = [
-    'rgba(255, 255, 255, ',   // pure white
-    'rgba(255, 255, 255, ',   // pure white (double weight = more frequent)
-    'rgba(220, 235, 255, ',   // white with faint blue tint
-    'rgba(180, 215, 255, ',   // light blue-white
-    'rgba(100, 180, 255, ',   // blue accent — rare
+    'rgba(200, 220, 255, ',   // blue-white
+    'rgba(180, 210, 255, ',   // blue-white (double weight = more frequent)
+    'rgba(160, 200, 255, ',   // soft blue
+    'rgba(140, 185, 255, ',   // medium blue-white
+    'rgba(100, 160, 255, ',   // blue accent — rare
 ];
 
 
@@ -40,7 +40,7 @@ for (let i = 0; i < COUNT; i++) {
 
 function spawnParticle() {
     // 5% chance of becoming a bright star — blue-white and intense
-    const bright = Math.random() < 0.05;
+    const bright = Math.random() < 0.01;
     // 4% chance of becoming an ice-blue particle — longer tail and lifespan
     const golden = !bright && Math.random() < 0.04;
     // 0.3% chance of becoming a rare flare — blazing white, very long lifespan
@@ -58,9 +58,9 @@ function spawnParticle() {
              : golden ? 0.6 + Math.random() * 0.8
              : flare  ? 2.0 + Math.random() * 1.5
              :          0.2 + Math.random() * 0.9,
-        color: bright ? 'rgba(190, 225, 255, '
-             : golden ? 'rgba(100, 200, 255, '
-             : flare  ? 'rgba(255, 255, 255, '
+        color: bright ? 'rgba(80, 150, 255, '    // vivid electric blue
+             : golden ? 'rgba(60, 120, 255, '    // deep blue
+             : flare  ? 'rgba(180, 210, 255, '   // bright blue-white
              :          colors[Math.floor(Math.random() * colors.length)],
         bright,
         golden,
@@ -69,23 +69,15 @@ function spawnParticle() {
 }
 
 
-// ── MOUSE POSITION ──
-const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
-
-window.addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-});
-
-// ── SCROLL ROTATION ──
-// scrollAngle adds a global rotation to the flow field.
-// Mouse wheel nudges it, then it slowly drifts back to 0.
-let scrollAngle = 0;
+// ── SCROLL ROTATION + SPEED ──
+// scrollAngle rotates the flow field.
+// speedMultiplier controls how fast particles move — slow by default, boosts on scroll.
+let scrollAngle     = 0;
+let speedMultiplier = 0.05; // 0.05 = slow base speed
 
 window.addEventListener('wheel', e => {
-    // e.deltaY is positive scrolling down, negative scrolling up
-    // 0.001 keeps the nudge subtle
-    scrollAngle += e.deltaY * 0.001;
+    // e.deltaY is signed — down = positive (speed up), up = negative (slow/reverse)
+    speedMultiplier = Math.max(0.05, Math.min(2.0, speedMultiplier + e.deltaY * 0.005));
 });
 
 
@@ -95,40 +87,40 @@ window.addEventListener('wheel', e => {
 let time = 0;
 
 function getAngle(x, y) {
-    // Normalise mouse position to -1 → +1 (0 = no effect when mouse is centred)
-    const mx = (mouse.x / canvas.width  - 0.5) * 2;
-    const my = (mouse.y / canvas.height - 0.5) * 2;
-
-    // Mouse tilts the whole field slightly — linear, no discontinuities
-    const tilt = (mx + my) * 0.5;
-
     // Organic flow field — low multiplier produces smooth, continuous curves
     const s = 0.0008;
     const flow = Math.sin(x * s + time * 0.2) * Math.PI
                + Math.cos(y * s + time * 0.15) * Math.PI * 0.5;
 
-    return flow + tilt + scrollAngle;
+    return flow + scrollAngle;
 }
 
 
 // ── ANIMATION ──
 function animate() {
-    // Semi-transparent black layer — fades old strokes out slowly (tail effect)
-    ctx.fillStyle = 'rgba(13, 13, 13, 0.35)';
+    // Fade opacity scales with speed — no tail at rest, long tail when fast
+    // normalizedSpeed: 0 at base (0.25), 1 at max (2.0)
+    const normalizedSpeed = Math.min(1, (speedMultiplier - 0.25) / 1.75);
+    const fadeOpacity = 1.0 - normalizedSpeed * 0.75;
+    ctx.fillStyle = `rgba(1, 2, 8, ${fadeOpacity})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Computed once per frame, not once per particle
+    const maxDist = Math.sqrt((canvas.width / 2) ** 2 + (canvas.height / 2) ** 2);
 
     particles.forEach(p => {
         const angle = getAngle(p.x, p.y);
 
-        // Pure flow field — no mouse attraction
-        p.vx += Math.cos(angle) * 0.22;
-        p.vy += Math.sin(angle) * 0.22;
+        // Pure flow field — acceleration scaled by speedMultiplier
+        p.vx += Math.cos(angle) * 0.22 * speedMultiplier;
+        p.vy += Math.sin(angle) * 0.22 * speedMultiplier;
 
-        // Cap speed
+        // Cap speed — use Math.abs so cap is always a positive number
         const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        if (spd > p.speed) {
-            p.vx = (p.vx / spd) * p.speed;
-            p.vy = (p.vy / spd) * p.speed;
+        const cap = p.speed * Math.abs(speedMultiplier);
+        if (spd > cap) {
+            p.vx = (p.vx / spd) * cap;
+            p.vy = (p.vy / spd) * cap;
         }
 
         const px = p.x;
@@ -152,23 +144,33 @@ function animate() {
         const cx = p.x - canvas.width  / 2;
         const cy = p.y - canvas.height / 2;
         const centreDist = Math.sqrt(cx * cx + cy * cy);
-        const maxDist    = Math.sqrt((canvas.width / 2) ** 2 + (canvas.height / 2) ** 2);
         const intensity  = 1 - (centreDist / maxDist) * 0.6; // 1.0 at centre, 0.4 at corners
+
+        // Glow factor: 1 at centre, falls to 0 at ~45% of screen radius
+        const glowFactor = Math.max(0, 1 - centreDist / (maxDist * 0.45));
 
         const alpha = p.flare   ? Math.min(1, p.life * 1.8) * intensity
                     : p.bright  ? Math.min(1, p.life * 1.4) * intensity
                     : p.golden  ? p.life * 0.9 * intensity
                     :             p.life * 0.75 * intensity;
-        ctx.strokeStyle = p.color + alpha + ')';
-        ctx.lineWidth   = p.size * pulse;
+        const radius = p.size;
+        ctx.fillStyle = p.color + alpha + ')';
+
+        // shadowBlur only on rare particles — too expensive for all 1700
+        if (p.flare || p.bright) {
+            ctx.shadowBlur  = glowFactor * 16 * p.size;
+            ctx.shadowColor = p.color + Math.min(1, alpha * 2) + ')';
+        }
+
         ctx.beginPath();
-        ctx.moveTo(px, py);
-        ctx.lineTo(p.x, p.y);
-        ctx.stroke();
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
     });
 
-    // Slowly drift scroll rotation back to 0
-    scrollAngle *= 0.97;
+    // Slowly drift scroll rotation and speed back to base values
+    scrollAngle     *= 0.97;
+    speedMultiplier += (0.05 - speedMultiplier) * 0.02;
 
     time += 0.003;
     requestAnimationFrame(animate);
