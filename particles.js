@@ -38,7 +38,7 @@ const colors = [
 
 
 // ── PARTICLES ──
-const COUNT = 400;
+const COUNT = 180;
 const particles = [];
 
 for (let i = 0; i < COUNT; i++) {
@@ -46,8 +46,8 @@ for (let i = 0; i < COUNT; i++) {
 }
 
 function spawnParticle() {
-    // 8%  chance of a large "block"
-    const large  = Math.random() < 0.08;
+    // 4%  chance of a large "block"
+    const large  = Math.random() < 0.04;
     // 25% chance of a medium square — new middle tier
     const medium = !large && Math.random() < 0.25;
     // 4% chance of a bright highlight
@@ -79,7 +79,7 @@ function spawnParticle() {
 
 
 // ── SCROLL SPEED ──
-let speedMultiplier = 2.0; // starts fast on load, decays naturally to 0.4
+let speedMultiplier = 2.0; // starts fast on load, decays naturally to 0.15
 
 window.addEventListener('wheel', e => {
     if (e.deltaY > 0) {
@@ -88,7 +88,7 @@ window.addEventListener('wheel', e => {
     } else {
         // Scrolling UP — slow down, floor at default speed (0.4)
         // e.deltaY is negative here, so adding it subtracts from speedMultiplier
-        speedMultiplier = Math.max(0.4, speedMultiplier + e.deltaY * 0.005);
+        speedMultiplier = Math.max(0.15, speedMultiplier + e.deltaY * 0.005);
     }
 });
 
@@ -204,7 +204,7 @@ function animate() {
     });
 
     // Slowly return speed to default
-    speedMultiplier += (0.4 - speedMultiplier) * 0.02;
+    speedMultiplier += (0.15 - speedMultiplier) * 0.02;
 
     time += 0.003;
     requestAnimationFrame(animate);
