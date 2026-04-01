@@ -89,23 +89,29 @@ window.addEventListener('wheel', e => {
 
 
 // ── FLOW FIELD ──
-// Base direction: diagonal top-right (-π/4 = 45° upward-right)
-// Noise makes it organic — particles drift and curve instead of going in straight lines
+// Base direction: straight right (angle 0)
+// Noise adds gentle up/down drift — kept small so particles never reverse direction
+// Max noise ≈ ±0.75 radians (±43°), so x-component (cos) is always positive = always rightward
 let time = 0;
 
 function getAngle(x, y) {
-    const baseAngle = -Math.PI / 4;  // 45° toward top-right
+    const baseAngle = -Math.PI / 6;  // 30° upward-right
     const s = 0.0010;
-    const noise = Math.sin(x * s + time * 0.12) * 0.6
-                + Math.cos(y * s + time * 0.10) * 0.4;
+    const noise = Math.sin(x * s + time * 0.12) * 0.45
+                + Math.cos(y * s + time * 0.10) * 0.30;
     return baseAngle + noise;
 }
 
 
 // ── ANIMATION ──
 function animate() {
-    // Clear canvas each frame — no tails, just crisp squares each frame
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Tail effect — paint a semi-transparent black layer over the previous frame.
+    // At default speed: fully opaque (alpha 1.0) = no tail, canvas looks clean.
+    // At max speed:     more transparent (alpha 0.2) = previous frame lingers = tail.
+    // Formula maps speedMultiplier (0.4 → 2.0) to fadeAlpha (1.0 → 0.2)
+    const fadeAlpha = 1 - ((speedMultiplier - 0.4) / 1.6) * 0.8;
+    ctx.fillStyle = `rgba(1, 2, 8, ${fadeAlpha})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // ── DIAGONAL BAND ──
     // We define a diagonal line across the screen: x + y = bandCenter
