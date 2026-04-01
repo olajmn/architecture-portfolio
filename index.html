@@ -10,21 +10,22 @@
         nav {
             all: unset;
             position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            transform: none !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
             background: none !important;
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
             border: none !important;
             border-radius: 0 !important;
-            padding: 28px 36px !important;
             display: flex !important;
-            justify-content: space-between !important;
+            justify-content: center !important;
             align-items: center !important;
             z-index: 100 !important;
-            box-sizing: border-box !important;
+        }
+
+        nav::before {
+            display: none !important;
         }
 
         .room-name {
@@ -53,7 +54,6 @@
     <canvas id="canvas"></canvas>
 
     <nav>
-        <a href="index.html" class="room-name" style="text-decoration:none; cursor:pointer;">Selected Works</a>
         <a href="projects/architecture/index.html" class="room-projects">Projects</a>
     </nav>
 

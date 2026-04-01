@@ -74,7 +74,7 @@ function spawnParticle() {
 
 
 // ── SCROLL SPEED ──
-let speedMultiplier = 0.4;
+let speedMultiplier = 2.0; // starts fast on load, decays naturally to 0.4
 
 window.addEventListener('wheel', e => {
     if (e.deltaY > 0) {
@@ -164,15 +164,38 @@ function animate() {
         // Add a boost near the band — this creates the bright river effect
         const alpha = Math.min(1, baseAlpha + bandFactor * 0.55);
 
-        // ── DRAW: filled square instead of a line ──
-        // Math.round() snaps to the nearest pixel — makes small squares look crisp
-        ctx.fillStyle = p.color + alpha + ')';
-        ctx.fillRect(
-            Math.round(p.x - p.size / 2),
-            Math.round(p.y - p.size / 2),
-            Math.round(p.size),
-            Math.round(p.size)
-        );
+        // ── DRAW ──
+        const rx = Math.round(p.x - p.size / 2);
+        const ry = Math.round(p.y - p.size / 2);
+        const rs = Math.round(p.size);
+
+        // Outer square — slightly dimmer (the "bezel")
+        ctx.fillStyle = p.color + alpha * 0.6 + ')';
+        ctx.fillRect(rx, ry, rs, rs);
+
+        // Inner square — brighter (the "screen"), only on medium and large
+        // inset pulls each edge inward by ~25% of the size
+        if (p.large || p.medium) {
+            const inset = Math.max(1, Math.round(p.size * 0.15));
+            const iw = rs - inset * 2;  // inner width
+            const ix = rx + inset;      // inner x
+            const iy = ry + inset;      // inner y
+
+            // Screen fill
+            ctx.fillStyle = p.color + Math.min(1, alpha * 1.4) + ')';
+            ctx.fillRect(ix, iy, iw, iw);
+
+            // Large only: extra refinement
+            if (p.large) {
+                // Bright reflection line along the top edge of the screen
+                ctx.fillStyle = p.color + Math.min(1, alpha * 2.2) + ')';
+                ctx.fillRect(ix, iy, iw, 1);
+
+                // Tiny indicator dot — bottom-right corner of the bezel
+                ctx.fillStyle = p.color + Math.min(1, alpha * 1.8) + ')';
+                ctx.fillRect(rx + rs - inset, ry + rs - inset, 1, 1);
+            }
+        }
     });
 
     // Slowly return speed to default
