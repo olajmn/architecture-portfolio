@@ -1,3 +1,4 @@
+
 /* ============================================================
    particles.js — Flow field animation for the front page
 
@@ -20,196 +21,156 @@ window.addEventListener('resize', () => {
 });
 
 
-// ── COLOUR PALETTE — three shades of blue ──
+// ── COLOUR PALETTE ──
+// Blue shades — from dark to light, drawn randomly
 const colors = [
-    'rgba(40,  70, 160, ',    // shade 1 — dim deep blue (most common)
-    'rgba(40,  70, 160, ',    // shade 1 — dim deep blue (extra weight)
-    'rgba(40,  70, 160, ',    // shade 1 — dim deep blue (extra weight)
-    'rgba(70, 120, 220, ',    // shade 2 — medium blue
-    'rgba(100,160, 255, ',    // shade 3 — bright blue (rare)
+    'rgba(60,  110, 220, ',   // deep blue
+    'rgba(80,  140, 255, ',   // medium blue   (double weight = more common)
+    'rgba(80,  140, 255, ',
+    'rgba(120, 170, 255, ',   // light blue
+    'rgba(130, 175, 255, ',   // pale blue
 ];
 
 
 // ── PARTICLES ──
-const BASE_COUNT = 800;   // partikler ved lav hastighet
-const MAX_COUNT  = 2500;  // partikler ved maks hastighet
-const particles  = [];
+const COUNT = 400;
+const particles = [];
 
-for (let i = 0; i < BASE_COUNT; i++) {
+for (let i = 0; i < COUNT; i++) {
     particles.push(spawnParticle());
 }
 
 function spawnParticle() {
-    // 5% chance of becoming a bright star — blue-white and intense
-    const bright = Math.random() < 0.01;
-    // 4% chance of becoming an ice-blue particle — longer tail and lifespan
-    const golden = !bright && Math.random() < 0.04;
-    // 0.3% chance of becoming a rare flare — blazing white, very long lifespan
-    const flare  = !bright && !golden && Math.random() < 0.001;
-    // 3% chance of becoming an elder — same look as normal, but lives much longer
-    const elder  = !bright && !golden && !flare && Math.random() < 0.12;
+    // 8%  chance of a large "block"
+    const large  = Math.random() < 0.08;
+    // 25% chance of a medium square — new middle tier
+    const medium = !large && Math.random() < 0.25;
+    // 4% chance of a bright highlight
+    const bright = !large && !medium && Math.random() < 0.04;
+
     return {
         x:     Math.random() * canvas.width,
         y:     Math.random() * canvas.height,
         vx:    0,
         vy:    0,
         life:  Math.random(),
-        speed: flare  ? 4.0 + Math.random() * 4.0
-             : bright ? 3.5 + Math.random() * 4.0
-             :          2.0 + Math.random() * 4.0,
-        size:  bright ? 1.2 + Math.random() * 0.8
-             : golden ? 0.6 + Math.random() * 0.8
-             : flare  ? 2.0 + Math.random() * 1.5
-             :          0.2 + Math.random() * 0.9,
-        color: bright ? 'rgba(100, 160, 255, '   // bright blue
-             : golden ? 'rgba(70,  120, 220, '   // medium blue
-             : flare  ? 'rgba(140, 190, 255, '   // pale blue-white
+        speed: large  ? 0.4 + Math.random() * 0.8
+             : medium ? 0.7 + Math.random() * 1.0
+             : bright ? 1.2 + Math.random() * 1.5
+             :          0.6 + Math.random() * 1.2,
+        // size controls the square dimensions (in pixels)
+        size:  large  ? 5 + Math.random() * 5     // 5–10px
+             : medium ? 3 + Math.random() * 2      // 3–5px  ← new
+             : bright ? 1.5 + Math.random() * 1.5  // 1.5–3px
+             :          0.8 + Math.random() * 1.2,  // 0.8–2px (tiny dots)
+        color: bright ? 'rgba(100, 160, 255, '
+             : large  ? 'rgba(60,  120, 220, '
              :          colors[Math.floor(Math.random() * colors.length)],
+        large,
+        medium,
         bright,
-        golden,
-        flare,
-        elder
     };
 }
 
 
-// ── SCROLL ROTATION + SPEED ──
-// scrollAngle rotates the flow field.
-// speedMultiplier controls how fast particles move — slow by default, boosts on scroll.
-let scrollAngle     = 0;
-let speedMultiplier = 0.05; // 0.05 = slow base speed
-let prevSpeed       = 0.05;
-let speedRising     = false;
+// ── SCROLL SPEED ──
+let speedMultiplier = 0.4;
 
 window.addEventListener('wheel', e => {
-    // e.deltaY is signed — down = positive (speed up), up = negative (slow/reverse)
-    speedMultiplier = Math.max(0.05, Math.min(2.0, speedMultiplier + e.deltaY * 0.005));
+    if (e.deltaY > 0) {
+        // Scrolling DOWN — speed up, max 2.0
+        speedMultiplier = Math.min(2.0, speedMultiplier + e.deltaY * 0.005);
+    } else {
+        // Scrolling UP — slow down, floor at default speed (0.4)
+        // e.deltaY is negative here, so adding it subtracts from speedMultiplier
+        speedMultiplier = Math.max(0.4, speedMultiplier + e.deltaY * 0.005);
+    }
 });
 
 
 // ── FLOW FIELD ──
-// Global flow field — particles move organically across the screen.
+// Base direction: diagonal top-right (-π/4 = 45° upward-right)
+// Noise makes it organic — particles drift and curve instead of going in straight lines
 let time = 0;
 
 function getAngle(x, y) {
-    // Low s = large smooth curves = river-like streams
-    const s = 0.001;
-    const flow = Math.sin(x * s + y * s * 0.5  + time * 0.07) * Math.PI * 1.2
-               + Math.cos(x * s * 0.4 - y * s  + time * 0.05) * Math.PI * 0.4;
-
-    return flow + scrollAngle;
+    const baseAngle = -Math.PI / 4;  // 45° toward top-right
+    const s = 0.0010;
+    const noise = Math.sin(x * s + time * 0.12) * 0.6
+                + Math.cos(y * s + time * 0.10) * 0.4;
+    return baseAngle + noise;
 }
 
 
 // ── ANIMATION ──
 function animate() {
-    // Fade opacity scales with speed — no tail at rest, long tail when fast
-    // normalizedSpeed: 0 at base (0.25), 1 at max (2.0)
-    const normalizedSpeed = Math.min(1, (speedMultiplier - 0.25) / 1.75);
-    const fadeOpacity = 0.78 - normalizedSpeed * 0.48; // subtle trail at rest, long at speed
-    ctx.fillStyle = `rgba(1, 2, 8, ${fadeOpacity})`;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Clear canvas each frame — no tails, just crisp squares each frame
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Computed once per frame, not once per particle
-    const maxDist = Math.sqrt((canvas.width / 2) ** 2 + (canvas.height / 2) ** 2);
+    // ── DIAGONAL BAND ──
+    // We define a diagonal line across the screen: x + y = bandCenter
+    // This line goes from bottom-left to top-right, like in the reference image.
+    // For each particle, we measure its distance from this line.
+    // Particles close to the line get a brightness boost → creates the glowing river.
+    const bandCenter = (canvas.width + canvas.height) * 0.52;
+    const bandWidth  = Math.min(canvas.width, canvas.height) * 0.38;
 
     particles.forEach(p => {
         const angle = getAngle(p.x, p.y);
 
-        // Pure flow field — acceleration scaled by speedMultiplier
-        p.vx += Math.cos(angle) * 0.22 * speedMultiplier;
-        p.vy += Math.sin(angle) * 0.22 * speedMultiplier;
+        // Accelerate the particle in the flow direction
+        p.vx += Math.cos(angle) * 0.12 * speedMultiplier;
+        p.vy += Math.sin(angle) * 0.12 * speedMultiplier;
 
-        // Cap speed — use Math.abs so cap is always a positive number
+        // Cap speed so particles don't fly off too fast
         const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        const cap = p.speed * Math.abs(speedMultiplier);
-        if (spd > cap) {
-            p.vx = (p.vx / spd) * cap;
-            p.vy = (p.vy / spd) * cap;
+        if (spd > p.speed * speedMultiplier) {
+            p.vx = (p.vx / spd) * p.speed * speedMultiplier;
+            p.vy = (p.vy / spd) * p.speed * speedMultiplier;
         }
 
-        const px = p.x;
-        const py = p.y;
         p.x += p.vx;
         p.y += p.vy;
 
-        // bright particles die when they leave the screen
-        if (p.bright && (p.x < -10 || p.x > canvas.width + 10 ||
-                         p.y < -10 || p.y > canvas.height + 10)) {
+        // Each frame the particle gets a little closer to dying
+        p.life -= p.large ? 0.0005 : p.bright ? 0.0015 : 0.0020;
+
+        // Respawn if dead or off screen
+        if (p.life <= 0 || p.x < -10 || p.x > canvas.width + 10 ||
+                            p.y < -10 || p.y > canvas.height + 10) {
             Object.assign(p, spawnParticle());
             return;
         }
 
-        // all other particles wrap around screen edges instead of dying
-        if (p.x < -10)               p.x = canvas.width  + 10;
-        if (p.x > canvas.width  + 10) p.x = -10;
-        if (p.y < -10)               p.y = canvas.height + 10;
-        if (p.y > canvas.height + 10) p.y = -10;
+        // ── How close is this particle to the diagonal band? ──
+        // The perpendicular distance from point (x,y) to the line x+y=bandCenter
+        // is: |x + y - bandCenter| / sqrt(2)
+        // Math.SQRT2 is JavaScript's built-in value for √2 (≈ 1.414)
+        const bandDist   = Math.abs(p.x + p.y - bandCenter) / Math.SQRT2;
+        // bandFactor: 1.0 when right on the band, 0.0 when far away
+        const bandFactor = Math.max(0, 1 - bandDist / bandWidth);
 
-        // Draw line from previous to new position — this is the "strand"
-        const pulse = 1 + Math.sin(time * 4 + p.life * 10) * 0.4;
+        // Base transparency based on how much "life" the particle has left
+        const baseAlpha = p.bright ? p.life * 0.85
+                        : p.large  ? p.life * 0.65
+                        :            p.life * 0.55;
 
-        // Distance to screen centre — closer = more intense
-        const cx = p.x - canvas.width  / 2;
-        const cy = p.y - canvas.height / 2;
-        const centreDist = Math.sqrt(cx * cx + cy * cy);
-        const intensity  = 1 - (centreDist / maxDist) * 0.6; // 1.0 at centre, 0.4 at corners
+        // Add a boost near the band — this creates the bright river effect
+        const alpha = Math.min(1, baseAlpha + bandFactor * 0.55);
 
-        // Glow factor: 1 at centre, falls to 0 at ~45% of screen radius
-        const glowFactor = Math.max(0, 1 - centreDist / (maxDist * 0.45));
-
-        const alpha = p.flare   ? Math.min(1, p.life * 1.8) * intensity
-                    : p.bright  ? Math.min(1, p.life * 1.4) * intensity
-                    : p.golden  ? p.life * 0.9 * intensity
-                    :             p.life * 0.75 * intensity;
-        const radius = p.size;
-
-        // bright/flare always glow — normal particles only glow when accelerating
-        const glowStrength = Math.min(1, (speedMultiplier - 0.05) / 1.0);
-        if (p.bright || p.flare || (glowStrength > 0.15 && Math.random() < 0.25)) {
-            const baseGlow  = p.bright || p.flare ? 8 : 0;
-            ctx.shadowBlur  = (baseGlow + glowFactor * 12 * glowStrength) * p.size;
-            ctx.shadowColor = p.color + Math.min(1, alpha * 2) + ')';
-        }
-
-        // Core — small light hint, mostly blue
-        ctx.shadowBlur = 0;
-        ctx.fillStyle  = 'rgba(180, 210, 255, ' + alpha * 0.5 + ')';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, radius * 0.4, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Diffraction spikes — 4-pointed diamond, only on larger/special particles
-        if (p.bright || p.golden || p.flare || radius > 0.7) {
-            const spike = radius * 5;
-            const w     = radius * 0.3; // width of the spike at centre
-            ctx.fillStyle = p.color + alpha * 0.85 + ')';
-
-            // Vertical spike (top + bottom)
-            ctx.beginPath();
-            ctx.moveTo(p.x,     p.y - spike);
-            ctx.lineTo(p.x + w, p.y);
-            ctx.lineTo(p.x,     p.y + spike);
-            ctx.lineTo(p.x - w, p.y);
-            ctx.closePath();
-            ctx.fill();
-
-            // Horizontal spike (left + right)
-            ctx.beginPath();
-            ctx.moveTo(p.x - spike, p.y);
-            ctx.lineTo(p.x,         p.y - w);
-            ctx.lineTo(p.x + spike, p.y);
-            ctx.lineTo(p.x,         p.y + w);
-            ctx.closePath();
-            ctx.fill();
-        }
+        // ── DRAW: filled square instead of a line ──
+        // Math.round() snaps to the nearest pixel — makes small squares look crisp
+        ctx.fillStyle = p.color + alpha + ')';
+        ctx.fillRect(
+            Math.round(p.x - p.size / 2),
+            Math.round(p.y - p.size / 2),
+            Math.round(p.size),
+            Math.round(p.size)
+        );
     });
 
-    // Slowly drift scroll rotation and speed back to base values
-    scrollAngle     *= 0.97;
-    speedRising      = speedMultiplier > prevSpeed + 0.001;
-    prevSpeed        = speedMultiplier;
-    speedMultiplier += (0.05 - speedMultiplier) * 0.02;
+    // Slowly return speed to default
+    speedMultiplier += (0.4 - speedMultiplier) * 0.02;
 
     time += 0.003;
     requestAnimationFrame(animate);
