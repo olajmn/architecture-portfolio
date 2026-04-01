@@ -1,7 +1,9 @@
 /* ============================================================
-   app.js — Interactions for Ola Jin Myhre Nymoen's portfolio
+   FIL:      app.js
+   TILHØRER: alle sider unntatt forsiden (delt interaksjonsfil)
+   BRUKES:   prosjektsider, prosjektoversikt
 
-   This file handles four things:
+   Hva den gjør:
      1. Navigation light effect (mouse hover)
      2. Typewriter effect in the hero section
      3. Language switching (NO / EN)

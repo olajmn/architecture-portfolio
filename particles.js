@@ -1,6 +1,11 @@
-
 /* ============================================================
-   particles.js — Flow field animation for the front page
+   FIL:      particles.js
+   TILHØRER: index.html (forsiden)
+   BRUKES:   kun på forsiden — ikke på prosjektsider
+
+   Hva den gjør:
+   - Tegner partikkelanimasjonen (de flygende firkantene)
+   - Håndterer scroll-hastighet og organisk flow field
 
    Concepts:
    - Canvas: an HTML element we can draw on pixel by pixel
@@ -176,7 +181,7 @@ function animate() {
         // Inner square — brighter (the "screen"), only on medium and large
         // inset pulls each edge inward by ~25% of the size
         if (p.large || p.medium) {
-            const inset = Math.max(1, Math.round(p.size * 0.15));
+            const inset = Math.max(1, Math.round(p.size * 0.08));
             const iw = rs - inset * 2;  // inner width
             const ix = rx + inset;      // inner x
             const iy = ry + inset;      // inner y

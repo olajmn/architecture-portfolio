@@ -1,7 +1,13 @@
 /* ============================================================
-   PORTFOLIO — Ola Jin Myhre Nymoen
-   Style: Minimalist, black & white, Helvetica
-   ============================================================ */
+   FIL:      style.css
+   TILHØRER: alle sider (delt stilark)
+   BRUKES:   prosjektsider, prosjektoversikt — ikke forsiden
+
+   Hva den gjør:
+   - Felles stiler: typografi, farger, layout, navigasjon
+   - Prosjektkort, timeline, kontakt, footer
+   - Responsivt design (mobil)
+============================================================ */
 
 
 /* ===========================
@@ -540,6 +546,7 @@ h2 {
     text-transform: uppercase;
     color: var(--gray);
 }
+
 
 .project-header-inner h1 {
     font-size: 72px;              /* starter stor — JS krymper denne */

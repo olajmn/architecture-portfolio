@@ -1,6 +1,10 @@
 /* ============================================================
-   particles.css — Styling for flow field particle animasjon
-   Bruk sammen med particles.js og en <canvas id="canvas">
+   FIL:      particles.css
+   TILHØRER: index.html (forsiden)
+   BRUKES:   kun på forsiden — ikke på prosjektsider
+
+   Hva den gjør:
+   - Setter svart bakgrunn og full-skjerm canvas for partikkelanimasjonen
 ============================================================ */
 
 body {
