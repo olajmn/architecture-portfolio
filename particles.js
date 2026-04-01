@@ -38,7 +38,7 @@ const colors = [
 
 
 // ── PARTICLES ──
-const COUNT = 180;
+const COUNT = 90;
 const particles = [];
 
 for (let i = 0; i < COUNT; i++) {
@@ -48,8 +48,8 @@ for (let i = 0; i < COUNT; i++) {
 function spawnParticle() {
     // 4%  chance of a large "block"
     const large  = Math.random() < 0.04;
-    // 25% chance of a medium square — new middle tier
-    const medium = !large && Math.random() < 0.25;
+    // 35% chance of a medium square — new middle tier
+    const medium = !large && Math.random() < 0.35;
     // 4% chance of a bright highlight
     const bright = !large && !medium && Math.random() < 0.04;
 
@@ -74,6 +74,7 @@ function spawnParticle() {
         large,
         medium,
         bright,
+        fadeIn: 0,   // starts invisible, fades up to 1 over ~80 frames
     };
 }
 
@@ -143,8 +144,11 @@ function animate() {
         p.x += p.vx;
         p.y += p.vy;
 
+        // Fade in gradually — prevents the "pop" when a particle spawns
+        if (p.fadeIn < 1) p.fadeIn = Math.min(1, p.fadeIn + 0.012);
+
         // Each frame the particle gets a little closer to dying
-        p.life -= p.large ? 0.0005 : p.bright ? 0.0015 : 0.0020;
+        p.life -= p.large ? 0.00012 : p.bright ? 0.0004 : 0.0005;
 
         // Respawn if dead or off screen
         if (p.life <= 0 || p.x < -10 || p.x > canvas.width + 10 ||
@@ -167,12 +171,16 @@ function animate() {
                         :            p.life * 0.55;
 
         // Add a boost near the band — this creates the bright river effect
-        const alpha = Math.min(1, baseAlpha + bandFactor * 0.55);
+        const alpha = Math.min(1, baseAlpha + bandFactor * 0.55) * p.fadeIn;
 
         // ── DRAW ──
         const rx = Math.round(p.x - p.size / 2);
         const ry = Math.round(p.y - p.size / 2);
         const rs = Math.round(p.size);
+
+        // Glow — larger particles glow more
+        ctx.shadowColor = p.color + Math.min(1, alpha * 1.2) + ')';
+        ctx.shadowBlur  = p.large ? 12 : p.medium ? 7 : p.bright ? 9 : 4;
 
         // Outer square — slightly dimmer (the "bezel")
         ctx.fillStyle = p.color + alpha * 0.6 + ')';
@@ -201,6 +209,9 @@ function animate() {
                 ctx.fillRect(rx + rs - inset, ry + rs - inset, 1, 1);
             }
         }
+
+        // Reset glow so it doesn't bleed into other drawing operations
+        ctx.shadowBlur = 0;
     });
 
     // Slowly return speed to default
