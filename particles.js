@@ -147,11 +147,8 @@ function animate() {
         // Fade in gradually — prevents the "pop" when a particle spawns
         if (p.fadeIn < 1) p.fadeIn = Math.min(1, p.fadeIn + 0.012);
 
-        // Each frame the particle gets a little closer to dying
-        p.life -= p.large ? 0.00012 : p.bright ? 0.0004 : 0.0005;
-
-        // Respawn if dead or off screen
-        if (p.life <= 0 || p.x < -10 || p.x > canvas.width + 10 ||
+        // Respawn if off screen
+        if (p.x < -10 || p.x > canvas.width + 10 ||
                             p.y < -10 || p.y > canvas.height + 10) {
             Object.assign(p, spawnParticle());
             return;
