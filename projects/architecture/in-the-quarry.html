@@ -14,6 +14,9 @@
             top: 0;
             z-index: 100;
             padding: 20px 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .project-back {
@@ -27,12 +30,41 @@
 
         .project-back:hover { color: var(--black); }
 
-        /* ---- TITTEL — sticky under topp-baren ---- */
+        /* Liten tittel i topp-baren — fader inn på scroll */
+        .project-top-title {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--black);
+            font-weight: 600;
+            opacity: 0;
+            filter: blur(6px);
+        }
+
+        /* Seksjonslenker under tittelen */
+        .project-top-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            opacity: 0;
+            filter: blur(6px);
+        }
+
+        .project-top-nav a {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .project-top-nav a:hover { color: var(--black); }
+
+        /* ---- STOR SENTRERT TITTEL ---- */
         .project-title-block {
-            position: sticky;
-            top: 61px;
-            z-index: 90;
-            padding: 24px 60px 20px;
+            padding: 60px 60px 60px;
+            text-align: center;
         }
 
         .project-title-block h1 {
@@ -42,37 +74,8 @@
             text-transform: uppercase;
             color: var(--black);
             line-height: 1;
-            transform-origin: top left;   /* krymper fra øverste venstre hjørne */
-        }
-
-        /* Tittelen som klikkbar lenke tilbake til toppen */
-        .project-title-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            cursor: pointer;
-        }
-
-        .project-title-link:hover h1 {
-            opacity: 0.4;
-        }
-
-        /* Aktiv seksjon — sticker under tittelen */
-        .project-section-label {
-            display: block;
-            font-size: clamp(48px, 7vw, 96px);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            color: var(--gray);
-            text-decoration: none;
-            line-height: 1;
-            transform-origin: top left;
             opacity: 0;
-            transition: color 0.2s;
         }
-
-        .project-section-label:hover { color: var(--black); }
 
         /* ---- HERO BILDE ---- */
         .image-hero {
@@ -244,14 +247,17 @@
     <!-- Topp-bar -->
     <header class="project-top">
         <a href="../../index.html" class="project-back">Selected works</a>
+        <span class="project-top-title" id="topTitle">In the Quarry</span>
+        <div class="project-top-nav" id="topNav">
+            <a href="#axo">Axo</a>
+            <a href="#section">Section</a>
+            <a href="#plan">Plan</a>
+        </div>
     </header>
 
-    <!-- Tittel -->
+    <!-- Stor sentrert tittel -->
     <div class="project-title-block" id="top">
-        <a href="#top" class="project-title-link">
-            <h1>In the Quarry</h1>
-        </a>
-        <a href="#section" class="project-section-label" id="sectionLabel">Section</a>
+        <h1>In the Quarry</h1>
     </div>
 
     <!-- Hero-bilde -->
@@ -281,7 +287,7 @@
     </div>
 
     <!-- AXONOMETRY -->
-    <div class="img-full" style="padding-left: 20%; padding-bottom: 160px;">
+    <div class="img-full" id="axo" style="padding-left: 20%; padding-bottom: 160px;">
         <img src="../../images/in-the-quarry/AD9-axonometry.jpg" alt="Axonometry">
     </div>
 
@@ -296,7 +302,7 @@
     </div>
 
     <!-- PLAN -->
-    <div class="img-full" style="padding-left: 36%; padding-bottom: 160px;">
+    <div class="img-full" id="plan" style="padding-left: 36%; padding-bottom: 160px;">
         <img src="../../images/in-the-quarry/AD9-plan.jpg" alt="Plan">
     </div>
 
@@ -331,53 +337,47 @@
     <script src="../../app.js"></script>
     <script>
         window.addEventListener('load', () => {
-            const title        = document.querySelector('.project-title-block h1');
-            const sectionLabel = document.getElementById('sectionLabel');
+            const bigTitle   = document.querySelector('.project-title-block h1');
+            const smallTitle = document.getElementById('topTitle');
+            const topNav     = document.getElementById('topNav');
+            const fadeOver   = 80;
+            let loadDone     = false;
 
-            const startSize   = title.offsetHeight;
-            const targetScale = startSize > 0 ? 11 / startSize : 0.1;
-            const fadeOver    = 300;
+            // Load-animasjon via JS — setter starttilstand og animerer inn
+            bigTitle.style.opacity   = '0';
+            bigTitle.style.filter    = 'blur(12px)';
+            bigTitle.style.transform = 'scale(1.04)';
 
-            // Seksjoner: navn, ankerpunkt, og hvor langt nede de starter
-            const sections = [
-                { id: 'section', label: 'Section', href: '#section' },
-                { id: 'plan',    label: 'Plan',    href: '#plan'    },
-                { id: 'snitt',   label: 'Snitt',   href: '#snitt'   },
-            ];
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                bigTitle.style.transition = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+                bigTitle.style.opacity   = '1';
+                bigTitle.style.filter    = 'blur(0px)';
+                bigTitle.style.transform = 'scale(1)';
+            }));
 
-            // "In the Quarry" → scroller til toppen
-            document.querySelector('.project-title-link').addEventListener('click', (e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+            // Fjern transition etter animasjonen så scroll styrer direkte
+            setTimeout(() => {
+                bigTitle.style.transition = 'none';
+                loadDone = true;
+            }, 900);
 
             window.addEventListener('scroll', () => {
-                const scrollY  = window.scrollY;
-                const progress = Math.min(scrollY / fadeOver, 1);
-
-                // Tittel: krymper og fader
-                const scale   = 1 - progress * (1 - targetScale);
-                const opacity = 1 - progress * (1 - 0.2);
-                title.style.transform = `scale(${scale})`;
-                title.style.opacity   = opacity;
-
-                // Seksjonslenke: fader inn når snitt-seksjonen nærmer seg toppen
-                const sectionEl = document.getElementById('section');
-                if (sectionEl) {
-                    const dist = sectionEl.getBoundingClientRect().top;
-                    const sectionProgress = Math.min(Math.max((300 - dist) / 300, 0), 1);
-                    sectionLabel.style.opacity   = sectionProgress;
-                    sectionLabel.style.transform = `scale(${scale})`;
+                if (!loadDone) {
+                    bigTitle.style.transition = 'none';
+                    loadDone = true;
                 }
+                const progress = Math.min(window.scrollY / fadeOver, 1);
 
-                // Oppdater tekst og lenke basert på aktiv seksjon
-                let current = sections[0];
-                sections.forEach(s => {
-                    const el = document.getElementById(s.id);
-                    if (el && el.getBoundingClientRect().top <= 140) current = s;
-                });
-                sectionLabel.textContent = current.label;
-                sectionLabel.href        = current.href;
+                // Stor tittel: ghostes ut
+                bigTitle.style.opacity   = 1 - progress;
+                bigTitle.style.filter    = `blur(${progress * 12}px)`;
+                bigTitle.style.transform = `scale(${1 + progress * 0.04})`;
+
+                // Liten tittel + nav: blurrer inn
+                smallTitle.style.opacity = progress;
+                smallTitle.style.filter  = `blur(${(1 - progress) * 6}px)`;
+                topNav.style.opacity     = progress;
+                topNav.style.filter      = `blur(${(1 - progress) * 6}px)`;
             });
         });
     </script>
