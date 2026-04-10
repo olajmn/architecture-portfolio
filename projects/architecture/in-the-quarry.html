@@ -343,19 +343,31 @@
             const fadeOver   = 80;
             let loadDone     = false;
 
-            // Load-animasjon via JS — setter starttilstand og animerer inn
-            bigTitle.style.opacity   = '0';
-            bigTitle.style.filter    = 'blur(12px)';
-            bigTitle.style.transform = 'scale(1.04)';
+            // Load-animasjon via JS — alt ghoster inn samtidig
+            bigTitle.style.opacity    = '0';
+            bigTitle.style.filter     = 'blur(12px)';
+            bigTitle.style.transform  = 'scale(1.04)';
+            smallTitle.style.opacity  = '0';
+            smallTitle.style.filter   = 'blur(12px)';
+            topNav.style.opacity      = '0';
+            topNav.style.filter       = 'blur(12px)';
 
             requestAnimationFrame(() => requestAnimationFrame(() => {
-                bigTitle.style.transition = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
-                bigTitle.style.opacity   = '1';
-                bigTitle.style.filter    = 'blur(0px)';
-                bigTitle.style.transform = 'scale(1)';
+                const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+                bigTitle.style.transition   = t;
+                smallTitle.style.transition = t;
+                topNav.style.transition     = t;
+
+                bigTitle.style.opacity    = '1';
+                bigTitle.style.filter     = 'blur(0px)';
+                bigTitle.style.transform  = 'scale(1)';
+                smallTitle.style.opacity  = '1';
+                smallTitle.style.filter   = 'blur(0px)';
+                topNav.style.opacity      = '1';
+                topNav.style.filter       = 'blur(0px)';
             }));
 
-            // Fjern transition etter animasjonen så scroll styrer direkte
+            // Fjern transition etter animasjonen så scroll styrer bigTitle direkte
             setTimeout(() => {
                 bigTitle.style.transition = 'none';
                 loadDone = true;
@@ -372,12 +384,6 @@
                 bigTitle.style.opacity   = 1 - progress;
                 bigTitle.style.filter    = `blur(${progress * 12}px)`;
                 bigTitle.style.transform = `scale(${1 + progress * 0.04})`;
-
-                // Liten tittel + nav: blurrer inn
-                smallTitle.style.opacity = progress;
-                smallTitle.style.filter  = `blur(${(1 - progress) * 6}px)`;
-                topNav.style.opacity     = progress;
-                topNav.style.filter      = `blur(${(1 - progress) * 6}px)`;
             });
         });
     </script>
