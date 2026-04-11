@@ -423,6 +423,15 @@
                 window.addEventListener('scroll', updateMinimap);
             }, 950);
 
+            // Klikk på "IN THE QUARRY" — scroll til der tittelblokken slutter
+            // (ikke til toppen, men til starten av cover-bildet)
+            smallTitle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const heroImage = document.getElementById('intro');
+                const scrollTarget = heroImage.offsetTop - window.innerHeight * 0.08;
+                window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+            });
+
             window.addEventListener('scroll', () => {
                 if (!loadDone) {
                     bigTitle.style.transition = 'none';
