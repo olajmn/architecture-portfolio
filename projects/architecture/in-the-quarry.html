@@ -298,7 +298,7 @@
     </div>
 
     <!-- SECTION LONG -->
-    <div class="img-full" style="padding-left: 36%; padding-bottom: 160px;">
+    <div class="img-full" id="section-long" style="padding-left: 36%; padding-bottom: 160px;">
         <img src="../../images/in-the-quarry/AD9-section-long.jpg" alt="In the Quarry — long section">
     </div>
 
@@ -384,11 +384,12 @@
             setTimeout(() => {
                 const navLinks = document.querySelectorAll('.project-top-nav a');
                 const sectionMap = [
-                    { id: 'intro',    link: smallTitle },
-                    { id: 'axo',      link: navLinks[0] },
-                    { id: 'section',  link: navLinks[1] },
-                    { id: 'plan',     link: navLinks[2] },
-                    { id: 'interior', link: null },
+                    { id: 'intro',        link: smallTitle },
+                    { id: 'axo',          link: navLinks[0] },
+                    { id: 'section',      link: navLinks[1] },
+                    { id: 'section-long', link: navLinks[1] },
+                    { id: 'plan',         link: navLinks[2] },
+                    { id: 'interior',     link: null },
                 ];
 
                 // Gi hvert element sin egen opacity-overgang
