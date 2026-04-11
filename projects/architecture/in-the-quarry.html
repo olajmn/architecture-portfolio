@@ -343,44 +343,71 @@
 
     <script src="../../app.js"></script>
     <script>
+        history.scrollRestoration = 'manual';
+
         window.addEventListener('load', () => {
+
             const bigTitle   = document.querySelector('.project-title-block h1');
             const smallTitle = document.getElementById('topTitle');
             const topNav     = document.getElementById('topNav');
             const fadeOver   = 80;
             let loadDone     = false;
 
-            // Load-animasjon via JS — alt ghoster inn samtidig
-            bigTitle.style.opacity    = '0';
-            bigTitle.style.filter     = 'blur(12px)';
-            bigTitle.style.transform  = 'scale(1.04)';
-            smallTitle.style.opacity  = '0';
-            smallTitle.style.filter   = 'blur(12px)';
-            topNav.style.opacity      = '0';
-            topNav.style.filter       = 'blur(12px)';
-
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
-                bigTitle.style.transition   = t;
-                smallTitle.style.transition = t;
-                topNav.style.transition     = t;
-
-                bigTitle.style.opacity    = '1';
-                bigTitle.style.filter     = 'blur(0px)';
-                bigTitle.style.transform  = 'scale(1)';
-                smallTitle.style.opacity  = '1';
-                smallTitle.style.filter   = 'blur(0px)';
-                topNav.style.opacity      = '1';
-                topNav.style.filter       = 'blur(0px)';
-            }));
-
-            // Fjern transition etter animasjonen så scroll styrer bigTitle direkte
-            setTimeout(() => {
+            // Er siden allerede scrollet forbi tittelen ved reload? Gjem den med en gang.
+            if (window.scrollY >= fadeOver) {
+                bigTitle.style.opacity    = '0';
+                bigTitle.style.filter     = 'blur(12px)';
+                bigTitle.style.transform  = 'scale(1.04)';
                 bigTitle.style.transition = 'none';
+                smallTitle.style.opacity  = '0';
+                smallTitle.style.filter   = 'blur(12px)';
+                topNav.style.opacity      = '0';
+                topNav.style.filter       = 'blur(12px)';
                 loadDone = true;
-            }, 900);
 
-            // Minimap — start etter load-animasjonen er ferdig
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1)';
+                    smallTitle.style.transition = t;
+                    topNav.style.transition     = t;
+                    smallTitle.style.opacity    = '1';
+                    smallTitle.style.filter     = 'blur(0px)';
+                    topNav.style.opacity        = '1';
+                    topNav.style.filter         = 'blur(0px)';
+                }));
+            } else {
+                // Load-animasjon via JS — alt ghoster inn samtidig
+                bigTitle.style.opacity    = '0';
+                bigTitle.style.filter     = 'blur(12px)';
+                bigTitle.style.transform  = 'scale(1.04)';
+                smallTitle.style.opacity  = '0';
+                smallTitle.style.filter   = 'blur(12px)';
+                topNav.style.opacity      = '0';
+                topNav.style.filter       = 'blur(12px)';
+
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+                    bigTitle.style.transition   = t;
+                    smallTitle.style.transition = t;
+                    topNav.style.transition     = t;
+
+                    bigTitle.style.opacity    = '1';
+                    bigTitle.style.filter     = 'blur(0px)';
+                    bigTitle.style.transform  = 'scale(1)';
+                    smallTitle.style.opacity  = '1';
+                    smallTitle.style.filter   = 'blur(0px)';
+                    topNav.style.opacity      = '1';
+                    topNav.style.filter       = 'blur(0px)';
+                }));
+
+                // Fjern transition etter animasjonen så scroll styrer bigTitle direkte
+                setTimeout(() => {
+                    bigTitle.style.transition = 'none';
+                    loadDone = true;
+                }, 900);
+            }
+
+            // Minimap — start umiddelbart ved reload scrollet ned, ellers vent på animasjonen
+            const minimapDelay = 950;
             setTimeout(() => {
                 const navLinks = document.querySelectorAll('.project-top-nav a');
                 const sectionMap = [
@@ -443,7 +470,7 @@
                     const scrollTarget = planEl.offsetTop - window.innerHeight * 0.04;
                     window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
                 });
-            }, 950);
+            }, minimapDelay);
 
             // Klikk på "IN THE QUARRY" — scroll til der tittelblokken slutter
             // (ikke til toppen, men til starten av cover-bildet)
@@ -461,10 +488,16 @@
                 }
                 const progress = Math.min(window.scrollY / fadeOver, 1);
 
-                // Stor tittel: ghostes ut
-                bigTitle.style.opacity   = 1 - progress;
-                bigTitle.style.filter    = `blur(${progress * 12}px)`;
-                bigTitle.style.transform = `scale(${1 + progress * 0.04})`;
+                // Stor tittel: ghostes ut med chromatic aberration
+                const shift = progress * 8;
+                bigTitle.style.opacity    = 1 - progress;
+                bigTitle.style.filter     = `blur(${progress * 12}px)`;
+                bigTitle.style.transform  = `scale(${1 + progress * 0.04})`;
+                bigTitle.style.textShadow = `
+                    ${shift}px 0 rgba(255,40,40,${progress * 0.8}),
+                    -${shift}px 0 rgba(40,40,255,${progress * 0.8}),
+                    0 ${shift * 0.4}px rgba(255,210,0,${progress * 0.5})
+                `;
             });
         });
     </script>
