@@ -46,8 +46,6 @@
             display: flex;
             flex-direction: column;
             gap: 0.3px;
-            opacity: 0;
-            filter: blur(6px);
         }
 
         .project-top-nav a {
@@ -208,8 +206,38 @@
 
         footer {
             border-top: none;
-            padding: 0 60px 40px;
+            padding: 0 60px 150px;
         }
+
+        .back-fixed {
+            position: fixed;
+            bottom: 20px;
+            left: 60px;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+            z-index: 100;
+        }
+
+        .back-fixed:hover { color: var(--black); }
+
+        .next-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 60px;
+            font-size: 30px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+            z-index: 100;
+        }
+
+        .next-fixed:hover { color: var(--black); }
 
         .img-edge { display: none; }
 
@@ -246,8 +274,10 @@
     ================================================================ -->
 
     <!-- Topp-bar -->
+    <a href="index.html" class="back-fixed">Selected works</a>
+    <a href="sagvag-senior-garden.html" class="next-fixed">›</a>
+
     <header class="project-top">
-        <a href="index.html" class="project-back">Selected works</a>
         <div class="project-top-nav" id="topNav">
             <a href="#intro" class="project-top-title" id="topTitle" style="text-decoration:none;">In the Quarry</a>
             <a href="#axo">Axo</a>
@@ -331,15 +361,8 @@
     </div>
     <!-- ═══ SLUTT INTERIØR-GRUPPE ═══ -->
 
-    <!-- BUNN-NAVIGASJON -->
-    <div class="project-end">
-        <a href="index.html">← Selected works</a>
-        <a href="sagvag-senior-garden.html">Sagvåg Senior Garden →</a>
-    </div>
 
-    <footer>
-        <p>© 2025 Ola Jin Myhre Nymoen</p>
-    </footer>
+    <footer></footer>
 
     <script src="../../app.js"></script>
     <script>
@@ -361,18 +384,13 @@
                 bigTitle.style.transition = 'none';
                 smallTitle.style.opacity  = '0';
                 smallTitle.style.filter   = 'blur(12px)';
-                topNav.style.opacity      = '0';
-                topNav.style.filter       = 'blur(12px)';
                 loadDone = true;
 
                 requestAnimationFrame(() => requestAnimationFrame(() => {
                     const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1)';
                     smallTitle.style.transition = t;
-                    topNav.style.transition     = t;
                     smallTitle.style.opacity    = '1';
                     smallTitle.style.filter     = 'blur(0px)';
-                    topNav.style.opacity        = '1';
-                    topNav.style.filter         = 'blur(0px)';
                 }));
             } else {
                 // Load-animasjon via JS — alt ghoster inn samtidig
@@ -381,22 +399,17 @@
                 bigTitle.style.transform  = 'scale(1.04)';
                 smallTitle.style.opacity  = '0';
                 smallTitle.style.filter   = 'blur(12px)';
-                topNav.style.opacity      = '0';
-                topNav.style.filter       = 'blur(12px)';
 
                 requestAnimationFrame(() => requestAnimationFrame(() => {
                     const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
                     bigTitle.style.transition   = t;
                     smallTitle.style.transition = t;
-                    topNav.style.transition     = t;
 
                     bigTitle.style.opacity    = '1';
                     bigTitle.style.filter     = 'blur(0px)';
                     bigTitle.style.transform  = 'scale(1)';
                     smallTitle.style.opacity  = '1';
                     smallTitle.style.filter   = 'blur(0px)';
-                    topNav.style.opacity      = '1';
-                    topNav.style.filter       = 'blur(0px)';
                 }));
 
                 // Fjern transition etter animasjonen så scroll styrer bigTitle direkte
