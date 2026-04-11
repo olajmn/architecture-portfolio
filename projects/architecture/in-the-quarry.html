@@ -37,8 +37,6 @@
             text-transform: uppercase;
             color: var(--black);
             font-weight: 600;
-            opacity: 0;
-            filter: blur(6px);
         }
 
         /* Seksjonslenker under tittelen */
@@ -46,6 +44,8 @@
             display: flex;
             flex-direction: column;
             gap: 0.3px;
+            opacity: 0;
+            filter: blur(6px);
         }
 
         .project-top-nav a {
@@ -384,13 +384,18 @@
                 bigTitle.style.transition = 'none';
                 smallTitle.style.opacity  = '0';
                 smallTitle.style.filter   = 'blur(12px)';
+                topNav.style.opacity      = '0';
+                topNav.style.filter       = 'blur(12px)';
                 loadDone = true;
 
                 requestAnimationFrame(() => requestAnimationFrame(() => {
                     const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1)';
                     smallTitle.style.transition = t;
+                    topNav.style.transition     = t;
                     smallTitle.style.opacity    = '1';
                     smallTitle.style.filter     = 'blur(0px)';
+                    topNav.style.opacity        = '1';
+                    topNav.style.filter         = 'blur(0px)';
                 }));
             } else {
                 // Load-animasjon via JS — alt ghoster inn samtidig
@@ -399,17 +404,22 @@
                 bigTitle.style.transform  = 'scale(1.04)';
                 smallTitle.style.opacity  = '0';
                 smallTitle.style.filter   = 'blur(12px)';
+                topNav.style.opacity      = '0';
+                topNav.style.filter       = 'blur(12px)';
 
                 requestAnimationFrame(() => requestAnimationFrame(() => {
                     const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
                     bigTitle.style.transition   = t;
                     smallTitle.style.transition = t;
+                    topNav.style.transition     = t;
 
                     bigTitle.style.opacity    = '1';
                     bigTitle.style.filter     = 'blur(0px)';
                     bigTitle.style.transform  = 'scale(1)';
                     smallTitle.style.opacity  = '1';
                     smallTitle.style.filter   = 'blur(0px)';
+                    topNav.style.opacity      = '1';
+                    topNav.style.filter       = 'blur(0px)';
                 }));
 
                 // Fjern transition etter animasjonen så scroll styrer bigTitle direkte
