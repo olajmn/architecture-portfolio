@@ -45,7 +45,7 @@
         .project-top-nav {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 0.3px;
             opacity: 0;
             filter: blur(6px);
         }
@@ -248,8 +248,8 @@
     <!-- Topp-bar -->
     <header class="project-top">
         <a href="index.html" class="project-back">Selected works</a>
-        <a href="#intro" class="project-top-title" id="topTitle" style="text-decoration:none;">In the Quarry</a>
         <div class="project-top-nav" id="topNav">
+            <a href="#intro" class="project-top-title" id="topTitle" style="text-decoration:none;">In the Quarry</a>
             <a href="#axo">Axo</a>
             <a href="#section">Section</a>
             <a href="#plan">Plan</a>
@@ -384,30 +384,28 @@
             setTimeout(() => {
                 const navLinks = document.querySelectorAll('.project-top-nav a');
                 const sectionMap = [
-                    { id: 'intro',        link: smallTitle },
-                    { id: 'axo',          link: navLinks[0] },
-                    { id: 'section',      link: navLinks[1] },
-                    { id: 'section-long', link: navLinks[1] },
-                    { id: 'plan',         link: navLinks[2] },
-                    { id: 'interior',     link: null },
+                    { id: 'intro',        link: smallTitle,  threshold: 0.35 },
+                    { id: 'axo',          link: navLinks[1], threshold: 0.35 },
+                    { id: 'section',      link: navLinks[2], threshold: 0.35 },
+                    { id: 'section-long', link: navLinks[2], threshold: 0.35 },
+                    { id: 'plan',         link: navLinks[3], threshold: 0.35 },
+                    { id: 'interior',     link: null,        threshold: 0.35 },
                 ];
 
                 // Gi hvert element sin egen opacity-overgang
                 sectionMap.forEach(({ link }) => {
-                    if (link) link.style.transition = 'opacity 0.4s ease';
+                    if (link) link.style.transition = 'opacity 0.7s cubic-bezier(0.16,1,0.3,1)';
                 });
 
                 function updateMinimap() {
                     let active = sectionMap[0];
-                    let minDist = Infinity;
+                    const trigger = window.innerHeight * 0.5;
 
                     sectionMap.forEach(item => {
                         const el = document.getElementById(item.id);
                         if (!el) return;
                         const rect = el.getBoundingClientRect();
-                        const dist = Math.abs(rect.top - window.innerHeight * 0.35);
-                        if (dist < minDist) {
-                            minDist = dist;
+                        if (rect.top < trigger) {
                             active = item;
                         }
                     });
@@ -423,7 +421,7 @@
                 window.addEventListener('scroll', updateMinimap);
 
                 // Klikk på "AXO" — scroll med litt luft over bildet
-                navLinks[0].addEventListener('click', (e) => {
+                navLinks[1].addEventListener('click', (e) => {
                     e.preventDefault();
                     const axoEl = document.getElementById('axo');
                     const scrollTarget = axoEl.offsetTop - window.innerHeight * 0.06;
@@ -431,7 +429,7 @@
                 });
 
                 // Klikk på "SECTION" — scroll med litt luft over bildet
-                navLinks[1].addEventListener('click', (e) => {
+                navLinks[2].addEventListener('click', (e) => {
                     e.preventDefault();
                     const sectionEl = document.getElementById('section');
                     const scrollTarget = sectionEl.offsetTop - window.innerHeight * 0.2;
@@ -439,7 +437,7 @@
                 });
 
                 // Klikk på "PLAN" — scroll med litt luft over bildet
-                navLinks[2].addEventListener('click', (e) => {
+                navLinks[3].addEventListener('click', (e) => {
                     e.preventDefault();
                     const planEl = document.getElementById('plan');
                     const scrollTarget = planEl.offsetTop - window.innerHeight * 0.04;
