@@ -414,7 +414,7 @@
 
                     sectionMap.forEach(item => {
                         if (item.link) {
-                            item.link.style.opacity = item === active ? '1' : '0.35';
+                            item.link.style.opacity = (item.link === active.link) ? '1' : '0.35';
                         }
                     });
                 }
@@ -422,6 +422,14 @@
                 updateMinimap(); // sett riktig aktiv seksjon med en gang
                 window.addEventListener('scroll', updateMinimap);
             }, 950);
+
+            // Klikk på "SECTION" — scroll med litt luft over bildet
+            navLinks[1].addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionEl = document.getElementById('section');
+                const scrollTarget = sectionEl.offsetTop - window.innerHeight * 0.10;
+                window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+            });
 
             // Klikk på "IN THE QUARRY" — scroll til der tittelblokken slutter
             // (ikke til toppen, men til starten av cover-bildet)
