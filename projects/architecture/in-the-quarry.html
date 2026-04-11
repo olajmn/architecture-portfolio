@@ -247,7 +247,7 @@
 
     <!-- Topp-bar -->
     <header class="project-top">
-        <a href="../../index.html" class="project-back">Selected works</a>
+        <a href="index.html" class="project-back">Selected works</a>
         <a href="#intro" class="project-top-title" id="topTitle" style="text-decoration:none;">In the Quarry</a>
         <div class="project-top-nav" id="topNav">
             <a href="#axo">Axo</a>
@@ -333,7 +333,7 @@
 
     <!-- BUNN-NAVIGASJON -->
     <div class="project-end">
-        <a href="../../index.html">← Selected works</a>
+        <a href="index.html">← Selected works</a>
         <a href="sagvag-senior-garden.html">Sagvåg Senior Garden →</a>
     </div>
 
@@ -421,15 +421,31 @@
 
                 updateMinimap(); // sett riktig aktiv seksjon med en gang
                 window.addEventListener('scroll', updateMinimap);
-            }, 950);
 
-            // Klikk på "SECTION" — scroll med litt luft over bildet
-            navLinks[1].addEventListener('click', (e) => {
-                e.preventDefault();
-                const sectionEl = document.getElementById('section');
-                const scrollTarget = sectionEl.offsetTop - window.innerHeight * 0.10;
-                window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
-            });
+                // Klikk på "AXO" — scroll med litt luft over bildet
+                navLinks[0].addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const axoEl = document.getElementById('axo');
+                    const scrollTarget = axoEl.offsetTop - window.innerHeight * 0.06;
+                    window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+                });
+
+                // Klikk på "SECTION" — scroll med litt luft over bildet
+                navLinks[1].addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionEl = document.getElementById('section');
+                    const scrollTarget = sectionEl.offsetTop - window.innerHeight * 0.2;
+                    window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+                });
+
+                // Klikk på "PLAN" — scroll med litt luft over bildet
+                navLinks[2].addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const planEl = document.getElementById('plan');
+                    const scrollTarget = planEl.offsetTop - window.innerHeight * 0.04;
+                    window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+                });
+            }, 950);
 
             // Klikk på "IN THE QUARRY" — scroll til der tittelblokken slutter
             // (ikke til toppen, men til starten av cover-bildet)
