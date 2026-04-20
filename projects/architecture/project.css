@@ -60,7 +60,7 @@ nav { display: none; }
     line-height: 1.8;
     color: var(--black);
     margin-bottom: 60px;
-    text-align: center;
+    text-align: left;
 }
 
 .project-facts {
@@ -128,6 +128,19 @@ nav { display: none; }
 }
 
 /* ---- FASTE BUNNKNAPPER (alltid synlige nederst på skjermen) ---- */
+/* Tekst under et bilde — legg til caption: "..." på bildet i HTML-filen */
+.img-caption {
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    color: var(--gray);
+    line-height: 2;
+    text-align: left;
+    margin-top: 16px;
+    max-width: 750px;
+    margin: 16px auto 180px;                                                                                                                                                                                                                  
+    padding: 0 60px;
+}
+
 .back-fixed {
     position: fixed;
     bottom: 20px;

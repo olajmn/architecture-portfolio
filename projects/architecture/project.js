@@ -33,7 +33,8 @@ function render(data) {
     // img.padding gir ekstra luft under ett spesifikt bilde
     const galleryHTML = galleryImages.map(img =>
         `<div class="img-${img.size || 'wide'}" ${img.padding ? `style="padding-bottom:${img.padding}"` : ''}>
-            <img src="../../images/${data.folder}/${img.src}" alt="">
+            <img src="../../images/${data.folder}/${img.src}" alt="" ${img.width ? `style="width:${img.width}"` : ''}>
+            ${img.caption ? `<p class="img-caption">${img.caption}</p>` : ''}
         </div>`
     ).join('');
 
