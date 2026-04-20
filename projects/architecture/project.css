@@ -1,0 +1,162 @@
+/* ============================================================
+   project.css — delt styling for alle prosjektsider
+   Brukes sammen med project.js og den minimale HTML-filen.
+   Endre her for å oppdatere layout på ALLE prosjektsider.
+   ============================================================ */
+
+/* Skjul hovednavigeringen — prosjektsider har sin egen nav */
+nav { display: none; }
+
+/* ---- TOPP-NAV (sticky, vises når du scroller ned) ---- */
+.project-top {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 20px 60px;
+}
+
+.project-top-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3px;
+    opacity: 0;
+    filter: blur(6px);
+}
+
+.project-top-nav a {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--black);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* ---- STOR TITTEL (ghostes ut når du begynner å scrolle) ---- */
+.project-title-block {
+    padding: 60px;
+    text-align: center;
+}
+
+.project-title-block h1 {
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--black);
+    line-height: 1;
+    opacity: 0;
+}
+
+/* ---- INTRO-BLOKK (beskrivelse + fakta) ---- */
+.project-intro-block {
+    padding: 0 60px 180px;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.project-intro {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--black);
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.project-facts {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 12px 0;
+}
+
+.project-facts dt {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--black);
+}
+
+.project-facts dt::after { content: ':'; }
+
+.project-facts dd {
+    font-size: 14px;
+    color: var(--black);
+    margin: 0;
+}
+
+/* ---- BILDEKLASSER ----
+   Velg størrelse per bilde i HTML-filen:
+   img-wide   = 80% bred
+   img-narrow = 55% bred
+   img-small  = 40% bred
+   ---- */
+.img-wide {
+    padding: 0 60px 80px;
+}
+
+.img-wide img {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+.img-narrow {
+    padding: 0 60px 80px;
+}
+
+.img-narrow img {
+    width: 55%;
+    display: block;
+    margin: 0 auto;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+.img-small {
+    padding: 0 60px 80px;
+}
+
+.img-small img {
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+/* ---- FASTE BUNNKNAPPER (alltid synlige nederst på skjermen) ---- */
+.back-fixed {
+    position: fixed;
+    bottom: 20px;
+    left: 60px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+    z-index: 100;
+}
+
+.back-fixed:hover { color: var(--black); }
+
+.next-fixed {
+    position: fixed;
+    bottom: 20px;
+    right: 60px;
+    font-size: 30px;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+    z-index: 100;
+}
+
+.next-fixed:hover { color: var(--black); }
+
+footer {
+    border-top: none;
+    padding: 0 60px 150px;
+}

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagvåg Senior Garden — Ola Jin Myhre Nymoen</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        nav { display: none; }
+
+        .project-top {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 20px 60px;
+        }
+
+        .project-top-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3px;
+            opacity: 0;
+            filter: blur(6px);
+        }
+
+        .project-top-nav a {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--black);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .project-title-block {
+            padding: 60px 60px 60px;
+            text-align: center;
+        }
+
+        .project-title-block h1 {
+            font-size: clamp(48px, 7vw, 96px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: var(--black);
+            line-height: 1;
+            opacity: 0;
+        }
+
+        .project-intro-block {
+            padding: 0 60px 180px;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .project-intro {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--black);
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .project-facts {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 12px 0;
+        }
+
+        .project-facts dt {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .project-facts dt::after { content: ':'; }
+
+        .project-facts dd {
+            font-size: 14px;
+            color: var(--black);
+            margin: 0;
+        }
+
+        .img-wide {
+            padding: 0 60px 80px;
+        }
+
+        .img-wide img {
+            width: 80%;
+            display: block;
+            margin: 0 auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .img-narrow {
+            padding: 0 60px 80px;
+        }
+
+        .img-narrow img {
+            width: 55%;
+            display: block;
+            margin: 0 auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .img-small {
+            padding: 0 60px 80px;
+        }
+
+        .img-small img {
+            width: 40%;
+            display: block;
+            margin: 0 auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .back-fixed {
+            position: fixed;
+            bottom: 20px;
+            left: 60px;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+            z-index: 100;
+        }
+
+        .back-fixed:hover { color: var(--black); }
+
+        .next-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 60px;
+            font-size: 30px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+            z-index: 100;
+        }
+
+        .next-fixed:hover { color: var(--black); }
+
+        footer {
+            border-top: none;
+            padding: 0 60px 150px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-fixed">Selected works</a>
+    <a href="shifted.html" class="next-fixed">›</a>
+
+    <header class="project-top">
+        <div class="project-top-nav" id="topNav">
+            <a href="#intro" id="topTitle">Sagvåg Senior Garden</a>
+        </div>
+    </header>
+
+    <div class="project-title-block">
+        <h1>Sagvåg Senior Garden</h1>
+    </div>
+
+    <div class="img-wide" id="intro">
+        <img src="../../images/sagvaag-senior-garden/01-cover-sagvaag.jpg" alt="Sagvåg Senior Garden">
+    </div>
+
+    <div class="project-intro-block">
+        <p class="project-intro">
+            SKRIV BESKRIVELSE HER.
+        </p>
+        <dl class="project-facts">
+            <dt>Location</dt>
+            <dd>Sagvåg, Norway</dd>
+            <dt>Status</dt>
+            <dd>Master Thesis</dd>
+            <dt>Program</dt>
+            <dd>Housing</dd>
+            <dt>Year</dt>
+            <dd>2024</dd>
+        </dl>
+    </div>
+
+    <!-- ========================
+         BILDER — bytt img-wide / img-narrow / img-small etter smak
+         ======================== -->
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/02-plan-sagvaag.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/shed-sagvaag.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/AD10_SHD_Exploded axonometry.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/AD10_SHD_Plan.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/AD10_SHD_Section.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/Render_CH_exterior.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/AD10_Commonhouse_Plan -1.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/AD10_Commonhouse_Plan 0.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/AD10_Commonhouse_Plan 1.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/AD10_Commonhouse_Section long.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/Render_CH_kitchen.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/Render_CH_spise.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/03-apt-sagvaag.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/04-apt-sagvaag.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/05-apt-sagvaag.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/06-apt-sagvaag.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/07-apt-sagvaag.jpg" alt="">
+    </div>
+
+    <div class="img-wide">
+        <img src="../../images/sagvaag-senior-garden/08-apt-sagvaag.jpg" alt="">
+    </div>
+
+    <footer></footer>
+
+    <script src="../../app.js"></script>
+    <script>
+        history.scrollRestoration = 'manual';
+
+        window.addEventListener('load', () => {
+            const bigTitle   = document.querySelector('.project-title-block h1');
+            const smallTitle = document.getElementById('topTitle');
+            const topNav     = document.getElementById('topNav');
+            const fadeOver   = 80;
+            let loadDone     = false;
+
+            if (window.scrollY >= fadeOver) {
+                bigTitle.style.opacity    = '0';
+                bigTitle.style.filter     = 'blur(12px)';
+                bigTitle.style.transform  = 'scale(1.04)';
+                bigTitle.style.transition = 'none';
+                topNav.style.opacity      = '0';
+                topNav.style.filter       = 'blur(12px)';
+                loadDone = true;
+
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1)';
+                    topNav.style.transition = t;
+                    topNav.style.opacity    = '1';
+                    topNav.style.filter     = 'blur(0px)';
+                }));
+            } else {
+                bigTitle.style.opacity   = '0';
+                bigTitle.style.filter    = 'blur(12px)';
+                bigTitle.style.transform = 'scale(1.04)';
+                topNav.style.opacity     = '0';
+                topNav.style.filter      = 'blur(12px)';
+
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+                    bigTitle.style.transition = t;
+                    topNav.style.transition   = t;
+
+                    bigTitle.style.opacity   = '1';
+                    bigTitle.style.filter    = 'blur(0px)';
+                    bigTitle.style.transform = 'scale(1)';
+                    topNav.style.opacity     = '1';
+                    topNav.style.filter      = 'blur(0px)';
+                }));
+
+                setTimeout(() => {
+                    bigTitle.style.transition = 'none';
+                    loadDone = true;
+                }, 900);
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!loadDone) {
+                    bigTitle.style.transition = 'none';
+                    loadDone = true;
+                }
+                const progress = Math.min(window.scrollY / fadeOver, 1);
+                const shift = progress * 8;
+                bigTitle.style.opacity    = 1 - progress;
+                bigTitle.style.filter     = `blur(${progress * 12}px)`;
+                bigTitle.style.transform  = `scale(${1 + progress * 0.04})`;
+                bigTitle.style.textShadow = `
+                    ${shift}px 0 rgba(255,40,40,${progress * 0.8}),
+                    -${shift}px 0 rgba(40,40,255,${progress * 0.8}),
+                    0 ${shift * 0.4}px rgba(255,210,0,${progress * 0.5})
+                `;
+            });
+        });
+    </script>
+
+</body>
+</html>

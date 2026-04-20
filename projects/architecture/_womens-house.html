@@ -3,313 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROSJEKTNAVN — Ola Jin Myhre Nymoen</title>
+    <title>Women's House — Ola Jin Myhre Nymoen</title>
     <link rel="stylesheet" href="../../style.css">
-    <style>
-        nav { display: none; }
-
-        .project-top {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 20px 60px;
-        }
-
-        .project-top-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3px;
-            opacity: 0;
-            filter: blur(6px);
-        }
-
-        .project-top-nav a {
-            font-size: 11px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--black);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .project-title-block {
-            padding: 60px 60px 60px;
-            text-align: center;
-        }
-
-        .project-title-block h1 {
-            font-size: clamp(48px, 7vw, 96px);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            color: var(--black);
-            line-height: 1;
-            opacity: 0;
-        }
-
-        /* ---- INTRO + FAKTA ---- */
-        .project-intro-block {
-            padding: 0 60px 180px;
-            max-width: 750px;
-            margin: 0 auto;
-            width: 1000px;
-        }
-
-        .project-intro {
-            font-size: 18px;
-            line-height: 1.8;
-            color: var(--black);
-            margin-bottom: 60px;
-        }
-
-        .project-facts {
-            display: grid;
-            grid-template-columns: 140px 1fr;
-            gap: 12px 0;
-        }
-
-        .project-facts dt {
-            font-size: 14px;
-            font-weight: 400;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--black);
-        }
-
-        .project-facts dt::after { content: ':'; }
-
-        .project-facts dd {
-            font-size: 14px;
-            color: var(--black);
-            margin: 0;
-        }
-
-        /* ---- BILDER ---- */
-
-        /* Bredt bilde — 80% av siden, sentrert */
-        .img-wide {
-            padding: 0 60px 200px;
-        }
-
-        .img-wide img {
-            width: 75%;
-            display: block;
-            margin: 0 auto;
-            max-height: 90vh;
-            object-fit: contain;
-        }
-
-        /* Smalt bilde — 55% av siden, sentrert */
-        .img-narrow {
-            padding: 0 60px 80px;
-        }
-
-        .img-narrow img {
-            width: 55%;
-            display: block;
-            margin: 0 auto;
-            max-height: 90vh;
-            object-fit: contain;
-        }
-
-        .img-small {
-            padding: 0 60px 80px;
-        }
-
-        .img-small img {
-            width: 40%;
-            display: block;
-            margin: 0 auto;
-            max-height: 90vh;
-            max-width: 750px;
-            object-fit: contain;
-        
-        }
-
-        /* ---- BUNNKNAPPER ---- */
-        .back-fixed {
-            position: fixed;
-            bottom: 20px;
-            left: 60px;
-            font-size: 11px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.2s;
-            z-index: 100;
-        }
-
-        .back-fixed:hover { color: var(--black); }
-
-        .next-fixed {
-            position: fixed;
-            bottom: 20px;
-            right: 60px;
-            font-size: 30px;
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.2s;
-            z-index: 100;
-        }
-
-        .next-fixed:hover { color: var(--black); }
-
-        footer {
-            border-top: none;
-            padding: 0 60px 150px;
-        }
-    </style>
+    <link rel="stylesheet" href="project.css">
+    <script src="project.js"></script>
 </head>
 <body>
-
-    <!-- BUNNKNAPPER: bytt ut lenkene -->
-    <a href="index.html" class="back-fixed">Selected works</a>
-    <a href="NESTE-SIDE.html" class="next-fixed">›</a>
-
-    <!-- TOPP-NAV -->
-    <header class="project-top">
-        <div class="project-top-nav" id="topNav">
-            <a href="#intro" id="topTitle">Women's House</a>
-        </div>
-    </header>
-
-    <!-- STOR TITTEL -->
-    <div class="project-title-block">
-        <h1>Women's house</h1>
-    </div>
-
-    <!-- HERO-BILDE -->
-    <div class="img-wide" id="intro">
-        <img src="../../images/womens-house/01-womens-house.jpg" alt="PROSJEKTNAVN">
-    </div>
-
-    <!-- BESKRIVELSE + FAKTA -->
-    <div class="project-intro-block">
-        <p class="project-intro">
-            Baghere Village is a small community in rural Senegal where women play a central role in daily life. The project proposes a communal gathering space — a women's house — designed to support social       
-  exchange, work, and collective life within the village fabric. 
-        </p>
-        <dl class="project-facts">
-            <dt>Location</dt>
-            <dd>Baghere Village, Senegal</dd>
-            <dt>Status</dt>
-            <dd>Competition</dd>
-            <dt>Program</dt>
-            <dd>Cultural</dd>
-            <dt>Year</dt>
-            <dd>2021</dd>
-        </dl>
-    </div>
-
-    <!-- ========================
-         BILDER
-         Bruk img-wide (80%) eller img-narrow (55%)
-         ======================== -->
-
-     <div class="img-small">
-        <img src="../../images/womens-house/07-womens-house.jpg" alt="">
-    </div>
-
-    <div class="img-small">
-        <img src="../../images/womens-house/06-womens-house.jpg" alt="">
-    </div>
-
-    <div class="img-small">
-        <img src="../../images/womens-house/08-womens-house.jpg" alt="">
-    </div>
-
-         <div class="img-wide" style="padding-top: 140px;">
-        <img src="../../images/womens-house/03-womens-house.jpg" alt="">
-    </div>
-
-    <div class="img-narrow">
-        <img src="../../images/womens-house/02-womens-house.jpg" alt="">
-    </div>
-
-    <div class="img-wide">
-        <img src="../../images/womens-house/04-womens-house.jpg" alt="">
-    </div>
-
-    <div class="img-wide">
-        <img src="../../images/womens-house/05-womens-house.jpg" alt="">
-    </div>
-
-  
-
-    <!-- legg til flere ved å kopiere en av blokkene over -->
-
-    <footer></footer>
-
-    <script src="../../app.js"></script>
     <script>
-        history.scrollRestoration = 'manual';
-
-        window.addEventListener('load', () => {
-            const bigTitle   = document.querySelector('.project-title-block h1');
-            const smallTitle = document.getElementById('topTitle');
-            const topNav     = document.getElementById('topNav');
-            const fadeOver   = 80;
-            let loadDone     = false;
-
-            if (window.scrollY >= fadeOver) {
-                bigTitle.style.opacity    = '0';
-                bigTitle.style.filter     = 'blur(12px)';
-                bigTitle.style.transform  = 'scale(1.04)';
-                bigTitle.style.transition = 'none';
-                topNav.style.opacity      = '0';
-                topNav.style.filter       = 'blur(12px)';
-                loadDone = true;
-
-                requestAnimationFrame(() => requestAnimationFrame(() => {
-                    const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1)';
-                    topNav.style.transition = t;
-                    topNav.style.opacity    = '1';
-                    topNav.style.filter     = 'blur(0px)';
-                }));
-            } else {
-                bigTitle.style.opacity   = '0';
-                bigTitle.style.filter    = 'blur(12px)';
-                bigTitle.style.transform = 'scale(1.04)';
-                topNav.style.opacity     = '0';
-                topNav.style.filter      = 'blur(12px)';
-
-                requestAnimationFrame(() => requestAnimationFrame(() => {
-                    const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
-                    bigTitle.style.transition = t;
-                    topNav.style.transition   = t;
-
-                    bigTitle.style.opacity   = '1';
-                    bigTitle.style.filter    = 'blur(0px)';
-                    bigTitle.style.transform = 'scale(1)';
-                    topNav.style.opacity     = '1';
-                    topNav.style.filter      = 'blur(0px)';
-                }));
-
-                setTimeout(() => {
-                    bigTitle.style.transition = 'none';
-                    loadDone = true;
-                }, 900);
-            }
-
-            window.addEventListener('scroll', () => {
-                if (!loadDone) {
-                    bigTitle.style.transition = 'none';
-                    loadDone = true;
-                }
-                const progress = Math.min(window.scrollY / fadeOver, 1);
-                const shift = progress * 8;
-                bigTitle.style.opacity    = 1 - progress;
-                bigTitle.style.filter     = `blur(${progress * 12}px)`;
-                bigTitle.style.transform  = `scale(${1 + progress * 0.04})`;
-                bigTitle.style.textShadow = `
-                    ${shift}px 0 rgba(255,40,40,${progress * 0.8}),
-                    -${shift}px 0 rgba(40,40,255,${progress * 0.8}),
-                    0 ${shift * 0.4}px rgba(255,210,0,${progress * 0.5})
-                `;
-            });
-        });
+        render({
+            title:       "Women's House",
+            next:        "sagvag-senior-garden.html",
+            folder:      "womens-house",
+            description: "Baghere Village is a small community in rural Senegal where women play a central role in daily life. The project proposes a communal gathering space — a women's house — designed to support social exchange, work, and collective life within the village fabric.",
+            facts: {
+                Location: "Baghere Village, Senegal",
+                Status:   "Competition",
+                Program:  "Cultural",
+                Year:     "2021"
+            },
+            images: [
+                { src: "01-womens-house.jpg", size: "wide" },
+                { src: "07-womens-house.jpg", size: "small" },
+                { src: "06-womens-house.jpg", size: "small" },
+                { src: "08-womens-house.jpg", size: "small", padding: "140px" },
+                { src: "03-womens-house.jpg", size: "wide" },
+                { src: "02-womens-house.jpg", size: "narrow" },
+                { src: "04-womens-house.jpg", size: "wide" },
+                { src: "05-womens-house.jpg", size: "wide" }
+            ]
+        })
     </script>
-
 </body>
 </html>
