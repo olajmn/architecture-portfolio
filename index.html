@@ -175,13 +175,87 @@
             .index-card--1, .index-card--2, .index-card--3,
             .index-card--4, .index-card--5 { margin-top: 0; }
         }
+
+        /* ---- MENY-PANEL ---- */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 340px;
+            height: auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 24px 32px 32px;
+            transform: translateY(-110%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .menu-overlay.open {
+            transform: translateY(0);
+        }
+
+        .menu-overlay .menu-label {
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .menu-overlay a {
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 12px 0;
+            border-bottom: 1px solid #efefef;
+            transition: color 0.2s;
+        }
+
+        .menu-overlay a:first-of-type {
+            border-top: 1px solid #efefef;
+        }
+
+        .menu-overlay a:hover {
+            color: var(--black);
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--gray);
+            padding: 4px;
+            line-height: 1;
+        }
     </style>
 </head>
 <body>
 
+    <!-- MENY-PANEL -->
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close" id="menuClose">×</button>
+        <span class="menu-label">Selected works 2021–2024</span>
+        <a href="projects/architecture/in-the-quarry.html">In the Quarry</a>
+        <a href="projects/architecture/lean-to.html">Lean-to</a>
+        <a href="projects/architecture/sagvag-senior-garden.html">Sagvåg Senior Garden</a>
+        <a href="projects/architecture/shifted.html">Shifted</a>
+        <a href="projects/architecture/womens-house.html">Women's House</a>
+    </div>
+
     <!-- STICKY OVERSKRIFT -->
     <header class="index-hero">
-        <span class="index-subtitle">Selected works 2021–2024</span>
+        <span class="index-subtitle"></span>
         <img src="architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="index-logo">
         <button class="index-burger">
             <span></span>
@@ -252,6 +326,18 @@
     </footer>
 
     <script>
+        const burger = document.querySelector('.index-burger');
+        const overlay = document.getElementById('menuOverlay');
+        const closeBtn = document.getElementById('menuClose');
+
+        burger.addEventListener('click', function() {
+            overlay.classList.add('open');
+        });
+
+        closeBtn.addEventListener('click', function() {
+            overlay.classList.remove('open');
+        });
+
         const logo = document.querySelector('.index-logo');
 
         window.addEventListener('scroll', function() {
