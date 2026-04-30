@@ -40,7 +40,7 @@ function render(data) {
 
     // Sett inn hele siden i <body>
     document.body.innerHTML = `
-        <a href="index.html" class="back-fixed">Selected works</a>
+        <a href="../../index.html" class="back-fixed">Selected works</a>
         <a href="${data.next}" class="next-fixed">›</a>
 
         <header class="project-top">
