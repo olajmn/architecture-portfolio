@@ -59,37 +59,61 @@
             background: var(--black);
         }
 
-        /* 3-kolonne galleri-grid */
+        /* ---- KARUSELL — stort bilde øverst ---- */
+        .carousel {
+            width: 100%;
+            height: 80vh;
+            position: relative;
+            overflow: hidden;
+            background: var(--light-gray);
+            cursor: pointer;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ---- KVADRAT-GRID — 4 like under ---- */
         .index-projects {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px 0;
-            align-items: start;
-            padding: 40px 0 120px;
+            grid-template-columns: repeat(4, 1fr);
         }
 
         .index-card {
             display: block;
             text-decoration: none;
             color: inherit;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: var(--light-gray);
+            position: relative;
             opacity: 0;
             animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .index-card:nth-child(1) { animation-delay: 0.0s; }
-        .index-card:nth-child(2) { animation-delay: 0.15s; }
-        .index-card:nth-child(3) { animation-delay: 0.30s; }
+        .index-card:nth-child(1) { animation-delay: 0.15s; }
+        .index-card:nth-child(2) { animation-delay: 0.25s; }
+        .index-card:nth-child(3) { animation-delay: 0.35s; }
         .index-card:nth-child(4) { animation-delay: 0.45s; }
-        .index-card:nth-child(5) { animation-delay: 0.60s; }
 
-        .index-card-image {
-            width: 100%;
-            overflow: hidden;
-            background: var(--light-gray);
-            position: relative;
-        }
-
-        .index-card-image img {
+        .index-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -97,12 +121,13 @@
             transition: transform 0.7s ease;
         }
 
-        .index-card:hover .index-card-image img {
+        .index-card:hover img {
             transform: scale(1.03);
         }
 
         /* Tekst-overlay — usynlig til hover */
-        .index-card-text {
+        .index-card-text,
+        .featured-text {
             position: absolute;
             inset: 0;
             display: flex;
@@ -115,7 +140,8 @@
             transition: opacity 0.3s ease;
         }
 
-        .index-card:hover .index-card-text {
+        .index-card:hover .index-card-text,
+        .featured-card:hover .featured-text {
             opacity: 1;
         }
 
@@ -141,22 +167,6 @@
             margin-top: 6px;
             letter-spacing: 0.04em;
         }
-
-        /* Individuell størrelse og offset per kort */
-        .index-card--1 { margin-top: 120px; padding: 0 40px; }
-        .index-card--1 .index-card-image { aspect-ratio: 3 / 4; }
-
-        .index-card--2 { margin-top: 120px; padding: 0 40px; }
-        .index-card--2 .index-card-image { aspect-ratio: 1 / 1; }
-
-        .index-card--3 { margin-top: 120px; padding: 0 40px; }
-        .index-card--3 .index-card-image { aspect-ratio: 2 / 3; }
-
-        .index-card--4 { margin-top: 60px; padding: 0 40px; }
-        .index-card--4 .index-card-image { aspect-ratio: 4 / 3; }
-
-        .index-card--5 { margin-top: 100px; padding: 0 40px; }
-        .index-card--5 .index-card-image { aspect-ratio: 3 / 4; }
 
         @keyframes fadeIn {
             0%   {
@@ -274,57 +284,91 @@
         </button>
     </header>
 
-    <!-- PROSJEKTLISTE — 3-kolonne galleri -->
+    <!-- KARUSELL — featured prosjekt -->
+    <div class="carousel" id="carousel">
+
+        <a href="projects/architecture/sagvag-senior-garden.html" class="carousel-slide active">
+            <img src="images/sagvaag-senior-garden/01-cover-sagvaag.jpg" alt="Sagvåg Senior Garden">
+            <div class="featured-text">
+                <span class="index-card-year">2024</span>
+                <h2 class="index-card-title">Sagvåg Senior Garden</h2>
+                <p class="index-card-desc">Master Thesis — Sagvåg, Norway</p>
+            </div>
+        </a>
+
+        <a href="projects/architecture/in-the-quarry.html" class="carousel-slide">
+            <img src="images/in-the-quarry/01-AD9-cover.jpg" alt="In the Quarry">
+            <div class="featured-text">
+                <span class="index-card-year">2023</span>
+                <h2 class="index-card-title">In the Quarry</h2>
+                <p class="index-card-desc">Cultural Architecture — Ústí nad Labem</p>
+            </div>
+        </a>
+
+        <a href="projects/architecture/shifted.html" class="carousel-slide">
+            <img src="images/shifted/Render_Exterior_Above.jpg" alt="Shifted">
+            <div class="featured-text">
+                <span class="index-card-year">2022</span>
+                <h2 class="index-card-title">Shifted</h2>
+                <p class="index-card-desc">Bachelor Thesis — Prague</p>
+            </div>
+        </a>
+
+        <a href="projects/architecture/lean-to.html" class="carousel-slide">
+            <img src="images/lean-to/11-AD3-axo-cover.jpg" alt="Lean-to">
+            <div class="featured-text">
+                <span class="index-card-year">2021</span>
+                <h2 class="index-card-title">Lean-to</h2>
+                <p class="index-card-desc">Student Project — Prague</p>
+            </div>
+        </a>
+
+        <a href="projects/architecture/womens-house.html" class="carousel-slide">
+            <img src="images/womens-house/01-womens-house.jpg" alt="Women's House">
+            <div class="featured-text">
+                <span class="index-card-year">2021</span>
+                <h2 class="index-card-title">Women's House</h2>
+                <p class="index-card-desc">Student Project — Senegal</p>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- KVADRAT-GRID — 4 prosjekter under -->
     <div class="index-projects">
 
-        <a href="projects/architecture/sagvag-senior-garden.html" class="index-card index-card--1">
-            <div class="index-card-image">
-                <div class="index-card-text">
-                    <span class="index-card-year">2024</span>
-                    <h3 class="index-card-title">Sagvåg Senior Garden</h3>
-                    <p class="index-card-desc">Master Thesis — Sagvåg, Norway</p>
-                </div>
+        <a href="projects/architecture/in-the-quarry.html" class="index-card">
+            <img src="images/in-the-quarry/01-AD9-cover.jpg" alt="In the Quarry">
+            <div class="index-card-text">
+                <span class="index-card-year">2023</span>
+                <h3 class="index-card-title">In the Quarry</h3>
+                <p class="index-card-desc">Cultural Architecture</p>
             </div>
         </a>
 
-        <a href="projects/architecture/in-the-quarry.html" class="index-card index-card--2">
-            <div class="index-card-image">
-                <img src="images/in-the-quarry/01-AD9-cover.jpg" alt="In the Quarry">
-                <div class="index-card-text">
-                    <span class="index-card-year">2023</span>
-                    <h3 class="index-card-title">In the Quarry</h3>
-                    <p class="index-card-desc">Cultural Architecture — Ústí nad Labem, Czech Republic</p>
-                </div>
+        <a href="projects/architecture/shifted.html" class="index-card">
+            <div class="index-card-text">
+                <span class="index-card-year">2022</span>
+                <h3 class="index-card-title">Shifted</h3>
+                <p class="index-card-desc">Bachelor Thesis</p>
             </div>
         </a>
 
-        <a href="projects/architecture/shifted.html" class="index-card index-card--3">
-            <div class="index-card-image">
-                <div class="index-card-text">
-                    <span class="index-card-year">2022</span>
-                    <h3 class="index-card-title">Shifted</h3>
-                    <p class="index-card-desc">Bachelor Thesis — Prague, Czech Republic</p>
-                </div>
+        <a href="projects/architecture/lean-to.html" class="index-card">
+            <img src="images/lean-to/01-AD3-exterior.png" alt="Lean-to">
+            <div class="index-card-text">
+                <span class="index-card-year">2021</span>
+                <h3 class="index-card-title">Lean-to</h3>
+                <p class="index-card-desc">Student Project</p>
             </div>
         </a>
 
-        <a href="projects/architecture/lean-to.html" class="index-card index-card--4">
-            <div class="index-card-image">
-                <div class="index-card-text">
-                    <span class="index-card-year">2021</span>
-                    <h3 class="index-card-title">Lean-to</h3>
-                    <p class="index-card-desc">Student Project — Prague, Czech Republic</p>
-                </div>
-            </div>
-        </a>
-
-        <a href="projects/architecture/womens-house.html" class="index-card index-card--5">
-            <div class="index-card-image">
-                <div class="index-card-text">
-                    <span class="index-card-year">2021</span>
-                    <h3 class="index-card-title">Women's House</h3>
-                    <p class="index-card-desc">Student Project — Baghere Village, Senegal</p>
-                </div>
+        <a href="projects/architecture/womens-house.html" class="index-card">
+            <img src="images/womens-house/01-womens-house.jpg" alt="Women's House">
+            <div class="index-card-text">
+                <span class="index-card-year">2021</span>
+                <h3 class="index-card-title">Women's House</h3>
+                <p class="index-card-desc">Student Project</p>
             </div>
         </a>
 
@@ -347,6 +391,16 @@
         closeBtn.addEventListener('click', function() {
             overlay.classList.remove('open');
         });
+
+        // Karusell — bytter slide hvert 4. sekund
+        const slides = document.querySelectorAll('.carousel-slide');
+        let current = 0;
+
+        setInterval(function() {
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
+        }, 4000);
 
         const logo = document.querySelector('.index-logo');
 
