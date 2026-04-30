@@ -20,10 +20,18 @@
             align-items: start;
         }
 
+        .index-logo-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
         .index-logo {
             height: 160px;
             width: auto;
             transition: height 0.1s ease;
+            display: block;
         }
 
         .index-subtitle {
@@ -256,7 +264,9 @@
     <!-- STICKY OVERSKRIFT -->
     <header class="index-hero">
         <span class="index-subtitle"></span>
-        <img src="architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="index-logo">
+        <button class="index-logo-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+            <img src="architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="index-logo">
+        </button>
         <button class="index-burger">
             <span></span>
             <span></span>
@@ -339,6 +349,7 @@
         });
 
         const logo = document.querySelector('.index-logo');
+
 
         window.addEventListener('scroll', function() {
             // Starter på 160px, krymper ned til 32px
