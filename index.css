@@ -5,8 +5,10 @@
 nav { display: none; }
 
 .index-hero {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 90;
     background: var(--white);
     padding: 20px 40px;

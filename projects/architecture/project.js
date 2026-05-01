@@ -40,8 +40,27 @@ function render(data) {
 
     // Sett inn hele siden i <body>
     document.body.innerHTML = `
-        <a href="../../index.html" class="back-fixed">Selected works</a>
-        <a href="${data.next}" class="next-fixed">›</a>
+        <div class="menu-overlay" id="menuOverlay">
+            <button class="menu-close" id="menuClose">×</button>
+            <span class="menu-label">Selected works 2021–2024</span>
+            <a href="in-the-quarry.html">In the Quarry</a>
+            <a href="lean-to.html">Lean-to</a>
+            <a href="sagvag-senior-garden.html">Sagvåg Senior Garden</a>
+            <a href="shifted.html">Shifted</a>
+            <a href="womens-house.html">Women's House</a>
+        </div>
+
+        <header class="site-header">
+            <span></span>
+            <a href="../../index.html">
+                <img src="../../architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="site-logo">
+            </a>
+            <button class="site-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </header>
 
         <header class="project-top">
             <div class="project-top-nav" id="topNav">
@@ -66,6 +85,14 @@ function render(data) {
 
         <footer></footer>
     `;
+
+    // Burgermeny
+    document.querySelector('.site-burger').addEventListener('click', function() {
+        document.getElementById('menuOverlay').classList.add('open');
+    });
+    document.getElementById('menuClose').addEventListener('click', function() {
+        document.getElementById('menuOverlay').classList.remove('open');
+    });
 
     // Scroll-animasjoner:
     // - Den store tittelen ghostes ut når du begynner å scrolle

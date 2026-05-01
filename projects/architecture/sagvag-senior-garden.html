@@ -3,85 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagvåg Senior Garden — Ola Jin Myhre Nymoen</title>
+    <title>PROSJEKTNAVN — Ola Jin Myhre Nymoen</title>
     <link rel="stylesheet" href="../../shared.css">
+    <link rel="stylesheet" href="project.css">
+    <script src="project.js"></script>
 </head>
 <body>
-
-    <!-- NAVIGATION -->
-    <nav>
-        <a href="index.html" class="nav-name">Ola Jin Myhre Nymoen</a>
-        <div class="nav-links">
-            <a href="../../index.html#projects">Work</a>
-            <a href="../../about.html">About</a>
-            <a href="../../index.html#contact">Contact</a>
-        </div>
-    </nav>
-
-    <!-- PROJECT HEADER -->
-    <section class="project-header">
-        <div class="project-meta">
-            <span>2024</span>
-            <span>Master Thesis</span>
-            <span>Sagvåg, Norway</span>
-        </div>
-        <h1>Sagvåg Senior Garden</h1>
-        <p class="project-intro">
-            The thesis investigates how architecture can challenge today's housing standards,
-            promote community, and prevent isolation among the elderly. Based on a site in
-            central Sagvåg, the project consists of five private residential units and one
-            communal building for social activities — prioritising economic sustainability
-            and age-friendly design.
-        </p>
-    </section>
-
-    <!-- PROJECT IMAGES -->
-    <div class="project-images">
-
-        <div class="image-full">
-            <img src="../../images/project-images/side-07.png" alt="Sagvåg Senior Garden — site plan">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/project-images/side-08.png" alt="Sagvåg Senior Garden — concept">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/project-images/side-09.png" alt="Sagvåg Senior Garden — elevations">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/project-images/side-10.png" alt="Sagvåg Senior Garden — facade detail">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/project-images/side-11.png" alt="Sagvåg Senior Garden — plans">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/project-images/side-12.png" alt="Sagvåg Senior Garden — section">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/project-images/side-13.png" alt="Sagvåg Senior Garden — interior">
-        </div>
-
-        <div class="image-full">
-            <img src="../../images/project-images/side-14.png" alt="Sagvåg Senior Garden — community building">
-        </div>
-
-    </div>
-
-    <!-- PROJECT NAVIGATION -->
-    <div class="project-nav">
-        <a href="in-the-quarry.html">← In the Quarry</a>
-        <a href="shifted.html">Shifted →</a>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2025 Ola Jin Myhre Nymoen</p>
-    </footer>
-
+    <script>
+        render({
+            title:       "Sagvåg Senior Garden",
+            next:        "NESTE-SIDE.html",
+            folder:      "sagvaag-senior-garden",
+            description: `The master's thesis is based on a site in Sagvåg town centre, where the developer sought housing for the elderly. I  
+  investigated how architecture can challenge current housing standards, promote community and prevent isolation. With 
+  a focus on senior housing and shared living, the project consists of five private residential units and one communal 
+  building for social activities.  `,
+            facts: {
+                Location: "Sagvåg, Norge",
+                Status:   "Master's Thesis",
+                Program:  "Senior Housing",
+                Year:     "2024"
+            },
+            images: [
+                { src: "01-cover-sagvaag.jpg",    size: "wide" },
+                { src: "02-plan-sagvaag.jpg",     size: "small" },
+                { src: "03-apt-sagvaag.jpg",      size: "small" },
+                { src: "04-apt-sagvaag.jpg",      size: "small" },
+                { src: "05-apt-sagvaag.jpg",      size: "small" },
+                { src: "06-apt-sagvaag.jpg",      size: "small" },
+                { src: "07-apt-sagvaag.jpg",      size: "small" },
+                { src: "08-apt-sagvaag.jpg",      size: "small" },
+                { src: "09-cmnhouse-sagvaag.jpg", size: "small" },
+                { src: "10-cmnhouse-sagvaag.jpg", size: "small" },
+                { src: "11-cmnhouse-sagvaag.jpg", size: "small" },
+                { src: "12-cmnhouse-sagvaag.jpg", size: "small" },
+                { src: "13-cmnhouse-sagvaag.jpg", size: "small" },
+                { src: "14-cmnhouse-sagvaag.jpg", size: "small" },
+                { src: "15-cmnhouse-sagvaag.jpg", size: "small" },
+                { src: "16-shed-sagvaag.jpg",     size: "small" },                                                            
+                { src: "17-shed-sagvaag.jpg",     size: "small" },
+                { src: "18-shed-sagvaag.jpg",     size: "small" },                                                            
+                { src: "19-shed-sagvaag.jpg",     size: "small" }                                                             
+            ]
+        })
+    </script>
 </body>
 </html>

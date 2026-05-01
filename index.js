@@ -34,13 +34,35 @@ setInterval(function() {
 ============================================================ */
 
 const logo = document.querySelector('.index-logo');
+const carousel = document.getElementById('carousel');
 let currentLogoSize = 160;
+let animationId = null;
+
+function applyLogoSize(size) {
+    logo.style.height = size + 'px';
+    carousel.style.marginTop = (size + 40) + 'px';
+}
 
 function animateLogo() {
     const targetSize = Math.max(32, 160 - window.scrollY * 0.5);
-    currentLogoSize += (targetSize - currentLogoSize) * 0.2;
-    logo.style.height = currentLogoSize + 'px';
-    requestAnimationFrame(animateLogo);
+    const diff = targetSize - currentLogoSize;
+
+    if (Math.abs(diff) < 0.5) {
+        currentLogoSize = targetSize;
+        applyLogoSize(currentLogoSize);
+        animationId = null;
+        return;
+    }
+
+    currentLogoSize += diff * 0.2;
+    applyLogoSize(currentLogoSize);
+    animationId = requestAnimationFrame(animateLogo);
 }
+
+window.addEventListener('scroll', function() {
+    if (!animationId) {
+        animationId = requestAnimationFrame(animateLogo);
+    }
+});
 
 animateLogo();

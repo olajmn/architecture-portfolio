@@ -1,4 +1,23 @@
 /* ============================================================
+   BURGERMENY
+============================================================ */
+
+const burger = document.querySelector('.site-burger');
+const overlay = document.getElementById('menuOverlay');
+const closeBtn = document.getElementById('menuClose');
+
+if (burger && overlay && closeBtn) {
+    burger.addEventListener('click', function() {
+        overlay.classList.add('open');
+    });
+
+    closeBtn.addEventListener('click', function() {
+        overlay.classList.remove('open');
+    });
+}
+
+
+/* ============================================================
    SPRÅKBYTTE — NO / EN
 ============================================================ */
 
