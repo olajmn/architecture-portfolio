@@ -34,8 +34,13 @@ setInterval(function() {
 ============================================================ */
 
 const logo = document.querySelector('.index-logo');
+let currentLogoSize = 160;
 
-window.addEventListener('scroll', function() {
-    const newSize = Math.max(32, 160 - window.scrollY * 0.5);
-    logo.style.height = newSize + 'px';
-});
+function animateLogo() {
+    const targetSize = Math.max(32, 160 - window.scrollY * 0.5);
+    currentLogoSize += (targetSize - currentLogoSize) * 0.2;
+    logo.style.height = currentLogoSize + 'px';
+    requestAnimationFrame(animateLogo);
+}
+
+animateLogo();

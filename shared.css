@@ -1,20 +1,6 @@
 /* ============================================================
-   FIL:      style.css
-   TILHØRER: alle sider (delt stilark)
-   BRUKES:   prosjektsider, prosjektoversikt — ikke forsiden
-
-   Hva den gjør:
-   - Felles stiler: typografi, farger, layout, navigasjon
-   - Prosjektkort, timeline, kontakt, footer
-   - Responsivt design (mobil)
+   1. RESET & BASE
 ============================================================ */
-
-
-/* ===========================
-   RESET & BASE STYLES
-   Remove browser defaults so everything
-   looks the same in all browsers
-=========================== */
 
 *, *::before, *::after {
     margin: 0;
@@ -22,7 +8,6 @@
     box-sizing: border-box;
 }
 
-/* CSS variables — like named constants for colors/fonts */
 :root {
     --black: #0a0a0a;
     --white: #ffffff;
@@ -33,7 +18,7 @@
 }
 
 html {
-    scroll-behavior: smooth; /* smooth scrolling when clicking nav links */
+    scroll-behavior: smooth;
 }
 
 body {
@@ -45,66 +30,9 @@ body {
 }
 
 
-/* ===========================
-   NAVIGATION
-   Fixed at top — always visible while scrolling
-=========================== */
-
-nav {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
-    padding: 12px 24px;
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 100px;
-    z-index: 100;
-    white-space: nowrap;
-    overflow: hidden;
-    --mouse-x: 50%;
-    --mouse-y: 50%;
-}
-
-nav::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 100px;
-    backdrop-filter: blur(40px) brightness(1.05);
-    -webkit-backdrop-filter: blur(40px) brightness(1.05);
-    mask-image: radial-gradient(circle 55px at var(--mouse-x) var(--mouse-y), black 0%, transparent 75%);
-    -webkit-mask-image: radial-gradient(circle 55px at var(--mouse-x) var(--mouse-y), black 0%, transparent 75%);
-    opacity: 0;
-    transition: opacity 0.25s;
-    pointer-events: none;
-}
-
-nav:hover::before {
-    opacity: 1;
-}
-
-.nav-home {
-    color: #aaa;
-    display: flex;
-    align-items: center;
-    transition: color 0.2s;
-}
-
-.nav-home:hover {
-    color: #000;
-}
-
-.nav-divider {
-    width: 1px;
-    height: 16px;
-    background: #e0e0e0;
-}
+/* ============================================================
+   2. SPRÅKKNAPPER
+============================================================ */
 
 .lang-toggle {
     display: flex;
@@ -132,406 +60,14 @@ nav:hover::before {
 }
 
 
-/* ===========================
-   SECTIONS — shared styles
-   Each section gets the same max-width and padding
-=========================== */
+/* ============================================================
+   3. PROSJEKTSIDE
+============================================================ */
 
-section {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 100px 60px;
-    scroll-margin-top: 70px;
-}
-
-#about {
-    padding-top: 40px;
-    scroll-margin-top: 70px;
-}
-
-
-/* Section headings (small caps labels like "ABOUT", "PROJECTS") */
-h2 {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    color: var(--gray);
-    margin-bottom: 60px;
-}
-
-
-/* ===========================
-   HERO
-   The first big section — name and title
-=========================== */
-
-#hero {
-    padding-top: 260px;
-    padding-bottom: 40vh;
-    min-height: calc(500px + 40vh);
-}
-
-#hero h1 {
-    /* clamp(min, preferred, max) — responsive font size */
-    font-size: clamp(48px, 8vw, 96px);
-    font-weight: 300;         /* light weight = elegant */
-    line-height: 1.0;
-    letter-spacing: -0.02em;  /* slight tightening looks refined */
-    margin-bottom: 32px;
-    transform-origin: left top;
-}
-
-#hero .title {
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 8px;
-}
-
-#hero .location {
-    font-size: 13px;
-    color: var(--gray);
-}
-
-
-/* ===========================
-   HERO — bilde + tekst side ved side
-=========================== */
-
-.hero-inner {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 80px;
-}
-
-.hero-text {
-    flex: 1;
-    padding-top: 16px;
-}
-
-.hero-image {
-    width: 42%;
-    flex-shrink: 0;
-}
-
-.hero-image img {
-    width: 100%;
-    height: 520px;
-    object-fit: cover;          /* fyller boksen uten å strekke bildet */
-    display: block;
-    filter: grayscale(100%);
-}
-
-@media (max-width: 768px) {
-    .hero-inner {
-        flex-direction: column-reverse;
-        gap: 32px;
-    }
-
-    .hero-image {
-        width: 100%;
-    }
-
-    .hero-image img {
-        height: 320px;
-    }
-}
-
-
-/* ===========================
-   TYPEWRITER CURSOR
-=========================== */
-
-.typing-cursor {
-    animation: blink 1s step-end infinite;
-}
-
-/* @keyframes definerer en animasjon — her blinker vi opacity av og på */
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-}
-
-
-/* ===========================
-   ABOUT
-=========================== */
-
-.about-inner {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 48px 40px;
-    align-items: start;
-}
-
-#about p {
-    max-width: 420px;
-}
-
-.about-image {
-    width: 85%;
-    margin: 0 auto;
-}
-
-.about-image img {
-    width: 100%;
-    height: 560px;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-    filter: grayscale(100%);
-}
-
-#about p {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.7;
-    max-width: 680px;
-    color: #333;
-}
-
-.bio-line {
-    transition: opacity 0.15s ease;
-}
-
-
-/* ===========================
-   PROJECTS
-   2-column grid of cards
-=========================== */
-
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);   /* 2 equal columns */
-    gap: 48px 40px;                          /* row gap, column gap */
-}
-
-.project-card {
-    cursor: pointer;
-}
-
-/* The image placeholder box */
-.project-image {
-    width: 100%;
-    aspect-ratio: 4 / 3;     /* keeps a consistent shape */
-    background: var(--light-gray);
-    margin-bottom: 16px;
-    transition: opacity 0.3s;
-}
-
-.project-card:hover .project-image {
-    opacity: 0.75;
-}
-
-.project-year {
-    font-size: 11px;
-    color: var(--gray);
-    letter-spacing: 0.05em;
-    display: block;
-    margin-bottom: 6px;
-}
-
-.project-card h3 {
-    font-size: 15px;
-    font-weight: 400;
-    margin-bottom: 4px;
-}
-
-.project-card p {
-    font-size: 13px;
-    color: var(--gray);
-}
-
-
-/* ===========================
-   TIMELINE
-   Used for both Experience and Education
-=========================== */
-
-.timeline {
-    display: flex;
-    flex-direction: column;   /* stack items vertically */
-    gap: 48px;
-}
-
-.timeline-item {
-    display: grid;
-    grid-template-columns: 110px 1fr;   /* date column + content column */
-    gap: 40px;
-}
-
-.timeline-date {
-    font-size: 12px;
-    color: var(--gray);
-    letter-spacing: 0.04em;
-    padding-top: 3px;
-}
-
-.timeline-content h3 {
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 4px;
-}
-
-.timeline-company {
-    font-size: 13px;
-    color: var(--gray);
-    margin-bottom: 12px;
-}
-
-.timeline-content p:not(.timeline-company) {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.65;
-}
-
-
-/* ===========================
-   SKILLS
-   4-column grid of skill groups
-=========================== */
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-}
-
-.skill-group h3 {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 20px;
-}
-
-.skill-group ul {
-    list-style: none;
-}
-
-.skill-group ul li {
-    font-size: 14px;
-    padding: 8px 0;
-    border-bottom: 1px solid #efefef;
-}
-
-.skill-group ul li:last-child {
-    border-bottom: none;
-}
-
-
-/* ===========================
-   CONTACT
-=========================== */
-
-#contact {
-    padding-top: 160px;
-}
-
-#contact p {
-    font-size: 15px;
-    color: var(--gray);
-    margin-bottom: 28px;
-}
-
-#contact a {
-    font-size: clamp(24px, 4vw, 40px);
-    font-weight: 300;
-    color: var(--black);
-    text-decoration: none;
-    border-bottom: 1px solid var(--black);
-    padding-bottom: 2px;
-    transition: opacity 0.2s;
-}
-
-#contact a:hover {
-    opacity: 0.35;
-}
-
-
-/* ===========================
-   NAV LINKS
-   Work / About / Contact i navigasjonen
-=========================== */
-
-.nav-name {
-    text-decoration: none;
-    color: var(--black);
-}
-
-.nav-links {
-    display: flex;
-    gap: 32px;
-}
-
-.nav-links a {
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    color: #555;
-    transition: color 0.2s;
-}
-
-.nav-links a:hover {
-    color: #000;
-}
-
-
-/* ===========================
-   PROJECT CARDS — lenker nå
-   Fjerner understrek fra <a>-tagger brukt som kort
-=========================== */
-
-.project-card {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.img-multiply {
-    mix-blend-mode: multiply;
-    background: white;
-}
-
-
-/* ===========================
-   PROJECT DETAIL PAGE
-   Stilene for individuelle prosjektsider
-=========================== */
-
-/* Sticky wrapper — full bredde med bakgrunn og border */
-.project-header-sticky {
-    position: sticky;
-    top: 60px;
-    z-index: 90;
-    background: var(--white);
-    border-bottom: 1px solid #e8e8e8;
-    padding-top: 160px;
-    padding-bottom: 32px;
-}
-
-/* Sentrert innhold inne i sticky wrapper */
-.project-header-inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding-left: 60px;
-    padding-right: 60px;
-}
-
-/* Intro-teksten — ikke sticky, scroller normalt */
 .project-header {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 80px 60px 80px;
+    padding: 80px 60px;
 }
 
 .project-meta {
@@ -547,16 +83,6 @@ h2 {
     color: var(--gray);
 }
 
-
-.project-header-inner h1 {
-    font-size: 72px;              /* starter stor — JS krymper denne */
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1.0;
-    margin-bottom: 16px;
-    transition: font-size 0.1s ease;
-}
-
 .project-intro {
     font-size: 18px;
     font-weight: 300;
@@ -565,7 +91,6 @@ h2 {
     color: #333;
 }
 
-/* Bilder på prosjektsiden */
 .project-images {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -593,7 +118,6 @@ h2 {
     line-height: 1.65;
 }
 
-/* Navigasjon mellom prosjekter */
 .project-nav {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -616,9 +140,9 @@ h2 {
 }
 
 
-/* ===========================
-   FOOTER
-=========================== */
+/* ============================================================
+   4. FOOTER
+============================================================ */
 
 footer {
     border-top: 1px solid #e8e8e8;
@@ -633,44 +157,11 @@ footer p {
 }
 
 
-/* ===========================
-   RESPONSIVE — Mobile screens
-   @media means "apply these styles only when..."
-=========================== */
+/* ============================================================
+   5. RESPONSIV — mobil
+============================================================ */
 
 @media (max-width: 768px) {
-
-    nav {
-        padding: 16px 24px;
-    }
-
-    .nav-name {
-        font-size: 10px;
-    }
-
-    section {
-        padding: 72px 24px;
-    }
-
-    #hero {
-        padding-top: 120px;
-        padding-bottom: 80px;
-    }
-
-    /* Stack projects to 1 column on mobile */
-    .project-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* Stack skills to 2 columns on mobile */
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .timeline-item {
-        grid-template-columns: 72px 1fr;
-        gap: 16px;
-    }
 
     footer {
         padding: 28px 24px;
