@@ -1,6 +1,9 @@
+/* ============================================================
+   1. HEADER
+============================================================ */
+
 nav { display: none; }
 
-/* Sticky header */
 .index-hero {
     position: sticky;
     top: 0;
@@ -51,7 +54,11 @@ nav { display: none; }
     background: var(--black);
 }
 
-/* ---- KARUSELL — stort bilde øverst ---- */
+
+/* ============================================================
+   2. KARUSELL
+============================================================ */
+
 .carousel {
     width: 100%;
     height: calc(100vh - 200px);
@@ -83,7 +90,11 @@ nav { display: none; }
     display: block;
 }
 
-/* ---- KVADRAT-GRID — 4 like under ---- */
+
+/* ============================================================
+   3. PROSJEKTGRID
+============================================================ */
+
 .index-projects {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -118,7 +129,6 @@ nav { display: none; }
     transform: scale(1.03);
 }
 
-/* Tekst-overlay — usynlig til hover */
 .index-card-text,
 .featured-text {
     position: absolute;
@@ -177,7 +187,11 @@ nav { display: none; }
     }
 }
 
-/* ---- MENY-PANEL ---- */
+
+/* ============================================================
+   4. MENY-PANEL
+============================================================ */
+
 .menu-overlay {
     position: fixed;
     top: 0;
@@ -239,6 +253,11 @@ nav { display: none; }
     padding: 4px;
     line-height: 1;
 }
+
+
+/* ============================================================
+   5. RESPONSIV — mobil
+============================================================ */
 
 @media (max-width: 768px) {
     .index-projects {
