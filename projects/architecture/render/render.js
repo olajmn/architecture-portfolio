@@ -134,35 +134,19 @@ function render(data) {
     const slides = document.querySelectorAll('.proj-slide');
     const thumbBtns = document.querySelectorAll('.proj-thumb');
     let current = 0;
-    let transitioning = false;
-
     function goTo(n, dir) {
-        if (transitioning) return;
-        transitioning = true;
-
-        const outSlide = slides[current];
-        outSlide.style.zIndex = '2';
-
-        const overlay = document.createElement('div');
-        overlay.style.cssText = [
-            'position:absolute;inset:0;pointer-events:none',
-            `background:linear-gradient(to ${dir === 'left' ? 'right' : 'left'},white 0%,transparent 50%)`,
-            'opacity:0;transition:opacity 0.45s ease'
-        ].join(';');
-        outSlide.appendChild(overlay);
-        requestAnimationFrame(() => requestAnimationFrame(() => { overlay.style.opacity = '1'; }));
-
+        slides[current].classList.remove('active');
         thumbBtns[current].classList.remove('active');
         current = (n + slides.length) % slides.length;
         thumbBtns[current].classList.add('active');
-        slides[current].classList.add('active');
 
-        setTimeout(() => {
-            outSlide.classList.remove('active');
-            outSlide.style.zIndex = '';
-            overlay.remove();
-            transitioning = false;
-        }, 500);
+        const incoming = slides[current];
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `position:absolute;inset:0;pointer-events:none;background:linear-gradient(to ${dir},white 0%,transparent 50%);transition:opacity 0.5s ease`;
+        incoming.appendChild(overlay);
+        incoming.classList.add('active');
+        requestAnimationFrame(() => requestAnimationFrame(() => { overlay.style.opacity = '0'; }));
+        setTimeout(() => overlay.remove(), 600);
     }
 
     document.querySelector('.proj-carousel').addEventListener('click', function(e) {
