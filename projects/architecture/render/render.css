@@ -20,6 +20,7 @@ body {
     top: 72px;
     z-index: 85;
     background: var(--white);
+    text-align: center;
 }
 
 .project-ticker-btn {
@@ -28,6 +29,10 @@ body {
 
 .project-ticker.scrolled .project-ticker-btn {
     color: var(--light-gray);
+}
+
+.project-ticker.scrolled .project-ticker-btn:hover {
+    color: var(--black);
 }
 
 .project-ticker-btn {
@@ -81,7 +86,7 @@ body {
     justify-content: center;
     gap: 6px;
     width: calc(100% - 12px);
-    margin: 0 6px 6px;
+    margin: 0 6px 120px;
 }
 
 .proj-thumb {
@@ -249,4 +254,41 @@ footer {
 
 .top-btn:hover {
     color: var(--black);
+}
+
+
+/* ---- MOBIL ---- */
+@media (max-width: 768px) {
+    .proj-carousel {
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
+
+    .proj-thumbs {
+        grid-template-columns: repeat(auto-fit, 56px);
+    }
+
+    .project-intro-block {
+        padding: 0 24px 120px;
+    }
+
+    .img-wide, .img-narrow, .img-small {
+        padding: 0 24px 60px;
+    }
+
+    .img-wide img, .img-narrow img, .img-small img {
+        width: 100%;
+    }
+
+    .img-caption {
+        padding: 0 24px;
+    }
+
+    .back-fixed {
+        left: 24px;
+    }
+
+    .next-fixed {
+        right: 24px;
+    }
 }

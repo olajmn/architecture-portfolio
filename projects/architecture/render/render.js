@@ -103,6 +103,15 @@ function render(data) {
         </footer>
     `;
 
+    // Karusell-innstillinger per prosjekt
+    const carousel = document.querySelector('.proj-carousel');
+    carousel.style.height = data.carouselHeight || '70vh';
+    if (data.carouselFit) {
+        document.querySelectorAll('.proj-slide img').forEach(img => {
+            img.style.objectFit = data.carouselFit;
+        });
+    }
+
     // Burgermeny
     const burger = document.querySelector('.site-burger');
     const overlay = document.getElementById('menuOverlay');

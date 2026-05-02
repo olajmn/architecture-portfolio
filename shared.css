@@ -124,7 +124,8 @@ body {
     text-transform: uppercase;
     color: var(--black);
     text-decoration: none;
-    padding: 12px 0;
+    padding: 6px 0;
+    align-self: flex-start;
     opacity: 0;
     transition: color 0.3s ease;
 }
