@@ -111,8 +111,8 @@ nav { display: none; }
     overflow: hidden;
     white-space: nowrap;
     padding: 6px 0 2px 0;
-    width: 100%;
-    margin: 0 auto;
+    width: calc(100% - 12px);
+    margin: 0 6px;
 }
 
 .ticker-track {
@@ -125,8 +125,14 @@ nav { display: none; }
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gray);
+    color: #d8d8d8;
     white-space: pre;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+.ticker-track span:hover {
+    color: var(--black);
 }
 
 /* @keyframes ticker is created dynamically in index.js */
