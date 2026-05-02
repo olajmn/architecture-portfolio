@@ -233,18 +233,13 @@ body.menu-open .ticker-track span {
 }
 
 @keyframes fadeIn {
-    0%   {
+    from {
         opacity: 0;
         transform: scale(1.04);
-        filter: blur(12px);
     }
-    60%  {
-        filter: blur(2px);
-    }
-    100% {
+    to {
         opacity: 1;
         transform: scale(1);
-        filter: blur(0px);
     }
 }
 
