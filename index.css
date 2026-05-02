@@ -110,7 +110,7 @@ nav { display: none; }
 .ticker {
     overflow: hidden;
     white-space: nowrap;
-    padding: 2.5px 0;
+    padding: 6px 0 2px 0;
     width: 100%;
     margin: 0 auto;
 }
@@ -118,7 +118,7 @@ nav { display: none; }
 .ticker-track {
     display: inline-block;
     font-size: 0;
-    animation: ticker 12.5s linear infinite;
+    animation: ticker 50s linear infinite;
 }
 
 .ticker-track span {
