@@ -129,14 +129,14 @@ nav { display: none; }
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #d8d8d8;
+    color: var(--black);
     white-space: pre;
     cursor: default;
     transition: color 0.3s ease;
 }
 
 .ticker-track span:hover {
-    color: var(--black);
+    color: #d8d8d8;
 }
 
 /* @keyframes ticker is created dynamically in index.js */
@@ -250,22 +250,20 @@ nav { display: none; }
     position: fixed;
     top: 0;
     right: 0;
-    width: 340px;
-    height: auto;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    width: calc((100vw + 24px) / 5);
+    height: 100vh;
+    background: var(--white);
     z-index: 200;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 24px 32px 32px;
-    transform: translateY(-110%);
+    padding: 24px 24px 32px;
+    transform: translateX(110%);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .menu-overlay.open {
-    transform: translateY(0);
+    transform: translateX(0);
 }
 
 .menu-overlay .menu-label {
@@ -318,4 +316,7 @@ nav { display: none; }
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .menu-overlay {
+        width: calc((100vw + 6px) / 2);
+    }
 }
