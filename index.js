@@ -87,3 +87,25 @@ window.addEventListener('scroll', function() {
 animateLogo();
 
 
+/* ============================================================
+   4. TICKER — seamless loop: span2 enters right as span1 exits left
+============================================================ */
+
+const tickerTrack = document.querySelector('.ticker-track');
+if (tickerTrack) {
+    const spans = tickerTrack.querySelectorAll('span');
+    const textW = spans[0].offsetWidth;
+    // Gap between span1 and span2 = full screen width
+    // So when span1 is fully off-screen left (-textW), span2 is exactly at right edge
+    spans[0].style.marginRight = window.innerWidth + 'px';
+
+    // Create the keyframe dynamically so we know the exact pixel end point
+    const style = document.createElement('style');
+    style.textContent = `@keyframes ticker {
+        from { transform: translateX(100vw); }
+        to   { transform: translateX(-${textW}px); }
+    }`;
+    document.head.appendChild(style);
+}
+
+
