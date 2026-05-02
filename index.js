@@ -16,6 +16,13 @@ closeBtn.addEventListener('click', function() {
     document.body.classList.remove('menu-open');
 });
 
+document.addEventListener('click', function(e) {
+    if (overlay.classList.contains('open') && !overlay.contains(e.target) && !burger.contains(e.target)) {
+        overlay.classList.remove('open');
+        document.body.classList.remove('menu-open');
+    }
+});
+
 
 /* ============================================================
    2. KARUSELL — bytter slide hvert 4. sekund

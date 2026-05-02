@@ -54,6 +54,11 @@ nav { display: none; }
     width: 22px;
     height: 1.5px;
     background: var(--black);
+    transition: background 0.3s ease;
+}
+
+.index-burger:hover span {
+    background: #d8d8d8;
 }
 
 
@@ -85,7 +90,6 @@ nav { display: none; }
 
 .carousel-slide.active {
     opacity: 1;
-    pointer-events: auto;
 }
 
 .carousel-slide img {
@@ -310,6 +314,11 @@ body.menu-open .ticker-track span {
     color: var(--black);
     padding: 4px;
     line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.menu-close:hover {
+    color: #d8d8d8;
 }
 
 
