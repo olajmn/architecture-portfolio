@@ -11,7 +11,7 @@ nav { display: none; }
     right: 0;
     z-index: 90;
     background: var(--white);
-    padding: 20px 40px;
+    padding: 20px 10px 20px 40px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: start;
@@ -304,9 +304,9 @@ body.menu-open .ticker-track span {
 
 
 .menu-close {
-    position: absolute;
+    position: fixed;
     top: 20px;
-    right: 40px;
+    right: 10px;
     background: none;
     border: none;
     font-size: 20px;
