@@ -7,45 +7,102 @@
 /* Skjul hovednavigeringen — prosjektsider har sin egen nav */
 nav { display: none; }
 
-/* ---- TOPP-NAV (sticky, vises når du scroller ned) ---- */
-.project-top {
+/* ---- STATISK TICKER MED PROSJEKTNAVN ---- */
+body {
+    padding-top: 72px;
+}
+
+.project-ticker {
+    padding: 6px 0 2px 0;
+    width: calc(100% - 12px);
+    margin: 0 6px;
     position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 20px 60px;
+    top: 72px;
+    z-index: 85;
+    background: var(--white);
 }
 
-.project-top-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3px;
-    opacity: 0;
-    filter: blur(6px);
+.project-ticker-btn {
+    transition: color 0.3s ease;
 }
 
-.project-top-nav a {
+.project-ticker.scrolled .project-ticker-btn {
+    color: var(--light-gray);
+}
+
+.project-ticker-btn {
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--black);
-    font-weight: 600;
-    text-decoration: none;
+    background: none;
+    border: none;
+    font-family: var(--font);
+    cursor: pointer;
+    padding: 0;
 }
 
-/* ---- STOR TITTEL (ghostes ut når du begynner å scrolle) ---- */
-.project-title-block {
-    padding: 60px;
-    text-align: center;
+/* ---- BILDEKARUSELL ---- */
+.proj-carousel {
+    position: relative;
+    width: calc(100% - 12px);
+    margin: 0 6px 6px;
+    height: 70vh;
+    background: var(--white);
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.project-title-block h1 {
-    font-size: clamp(48px, 7vw, 96px);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    color: var(--black);
-    line-height: 1;
+.proj-slide {
+    position: absolute;
+    inset: 0;
     opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.proj-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.proj-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+
+/* ---- MINIATYRBILDER ---- */
+.proj-thumbs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 70px);
+    justify-content: center;
+    gap: 6px;
+    width: calc(100% - 12px);
+    margin: 0 6px 6px;
+}
+
+.proj-thumb {
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--light-gray);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.35;
+    transition: opacity 0.3s ease;
+}
+
+.proj-thumb.active,
+.proj-thumb:hover { opacity: 1; }
+
+.proj-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 /* ---- INTRO-BLOKK (beskrivelse + fakta) ---- */
@@ -172,4 +229,24 @@ nav { display: none; }
 footer {
     border-top: none;
     padding: 0 60px 150px;
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+}
+
+.top-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray);
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.top-btn:hover {
+    color: var(--black);
 }

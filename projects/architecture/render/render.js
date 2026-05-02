@@ -28,6 +28,20 @@ function render(data) {
     const heroImage = data.images[0];
     const galleryImages = data.images.slice(1);
 
+    // Bygg karusell-slides (alle bilder)
+    const slidesHTML = data.images.map((img, i) =>
+        `<div class="proj-slide${i === 0 ? ' active' : ''}">
+            <img src="../../images/${data.folder}/${img.src}" alt="">
+        </div>`
+    ).join('');
+
+    // Bygg miniatyrbilder (alle bilder)
+    const thumbsHTML = data.images.map((img, i) =>
+        `<button class="proj-thumb${i === 0 ? ' active' : ''}" data-index="${i}">
+            <img src="../../images/${data.folder}/${img.src}" alt="">
+        </button>`
+    ).join('');
+
     // Bygg en HTML-div per galleri-bilde
     // img.size bestemmer klassen (wide/narrow/small)
     // img.padding gir ekstra luft under ett spesifikt bilde
@@ -42,7 +56,6 @@ function render(data) {
     document.body.innerHTML = `
         <div class="menu-overlay" id="menuOverlay">
             <button class="menu-close" id="menuClose">×</button>
-            <span class="menu-label">Selected works 2021–2024</span>
             <a href="in-the-quarry.html">In the Quarry</a>
             <a href="lean-to.html">Lean-to</a>
             <a href="sagvag-senior-garden.html">Sagvåg Senior Garden</a>
@@ -62,14 +75,8 @@ function render(data) {
             </button>
         </header>
 
-        <header class="project-top">
-            <div class="project-top-nav" id="topNav">
-                <a href="#intro" id="topTitle">${data.title}</a>
-            </div>
-        </header>
-
-        <div class="project-title-block">
-            <h1>${data.title}</h1>
+        <div class="project-ticker" id="projectTicker">
+            <button class="project-ticker-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">${data.title}</button>
         </div>
 
         <div class="img-wide" id="intro">
@@ -81,17 +88,41 @@ function render(data) {
             <dl class="project-facts">${factsHTML}</dl>
         </div>
 
+        <div class="proj-carousel">
+            ${slidesHTML}
+        </div>
+
+        <div class="proj-thumbs">
+            ${thumbsHTML}
+        </div>
+
         ${galleryHTML}
 
-        <footer></footer>
+        <footer>
+            <button class="top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Top</button>
+        </footer>
     `;
 
     // Burgermeny
-    document.querySelector('.site-burger').addEventListener('click', function() {
-        document.getElementById('menuOverlay').classList.add('open');
+    const burger = document.querySelector('.site-burger');
+    const overlay = document.getElementById('menuOverlay');
+    const closeBtn = document.getElementById('menuClose');
+
+    burger.addEventListener('click', function() {
+        overlay.classList.add('open');
+        document.body.classList.add('menu-open');
     });
-    document.getElementById('menuClose').addEventListener('click', function() {
-        document.getElementById('menuOverlay').classList.remove('open');
+
+    closeBtn.addEventListener('click', function() {
+        overlay.classList.remove('open');
+        document.body.classList.remove('menu-open');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (overlay.classList.contains('open') && !overlay.contains(e.target) && !burger.contains(e.target)) {
+            overlay.classList.remove('open');
+            document.body.classList.remove('menu-open');
+        }
     });
 
     // Scroll-animasjoner:
@@ -99,67 +130,54 @@ function render(data) {
     // - Topp-nav ghostes inn samtidig
     history.scrollRestoration = 'manual';
 
-    window.addEventListener('load', () => {
-        const bigTitle   = document.querySelector('.project-title-block h1');
-        const smallTitle = document.getElementById('topTitle');
-        const topNav     = document.getElementById('topNav');
-        const fadeOver   = 80;
-        let loadDone     = false;
+    // Karusell
+    const slides = document.querySelectorAll('.proj-slide');
+    const thumbBtns = document.querySelectorAll('.proj-thumb');
+    let current = 0;
+    let transitioning = false;
 
-        if (window.scrollY >= fadeOver) {
-            bigTitle.style.opacity    = '0';
-            bigTitle.style.filter     = 'blur(12px)';
-            bigTitle.style.transform  = 'scale(1.04)';
-            bigTitle.style.transition = 'none';
-            topNav.style.opacity      = '0';
-            topNav.style.filter       = 'blur(12px)';
-            loadDone = true;
+    function goTo(n, dir) {
+        if (transitioning) return;
+        transitioning = true;
 
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1)';
-                topNav.style.transition = t;
-                topNav.style.opacity    = '1';
-                topNav.style.filter     = 'blur(0px)';
-            }));
-        } else {
-            bigTitle.style.opacity   = '0';
-            bigTitle.style.filter    = 'blur(12px)';
-            bigTitle.style.transform = 'scale(1.04)';
-            topNav.style.opacity     = '0';
-            topNav.style.filter      = 'blur(12px)';
+        const outSlide = slides[current];
+        outSlide.style.zIndex = '2';
 
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                const t = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
-                bigTitle.style.transition = t;
-                topNav.style.transition   = t;
-                bigTitle.style.opacity    = '1';
-                bigTitle.style.filter     = 'blur(0px)';
-                bigTitle.style.transform  = 'scale(1)';
-                topNav.style.opacity      = '1';
-                topNav.style.filter       = 'blur(0px)';
-            }));
+        const overlay = document.createElement('div');
+        overlay.style.cssText = [
+            'position:absolute;inset:0;pointer-events:none',
+            `background:linear-gradient(to ${dir === 'left' ? 'right' : 'left'},white 0%,transparent 50%)`,
+            'opacity:0;transition:opacity 0.45s ease'
+        ].join(';');
+        outSlide.appendChild(overlay);
+        requestAnimationFrame(() => requestAnimationFrame(() => { overlay.style.opacity = '1'; }));
 
-            setTimeout(() => {
-                bigTitle.style.transition = 'none';
-                loadDone = true;
-            }, 900);
-        }
+        thumbBtns[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        thumbBtns[current].classList.add('active');
+        slides[current].classList.add('active');
 
-        window.addEventListener('scroll', () => {
-            if (!loadDone) {
-                bigTitle.style.transition = 'none';
-                loadDone = true;
-            }
-            const progress = Math.min(window.scrollY / fadeOver, 1);
-            const shift = progress * 8;
-            bigTitle.style.opacity    = 1 - progress;
-            bigTitle.style.filter     = `blur(${progress * 12}px)`;
-            bigTitle.style.transform  = `scale(${1 + progress * 0.04})`;
-            bigTitle.style.textShadow = `
-                ${shift}px 0 rgba(255,40,40,${progress * 0.8}),
-                -${shift}px 0 rgba(40,40,255,${progress * 0.8}),
-                0 ${shift * 0.4}px rgba(255,210,0,${progress * 0.5})
-            `;
-        });
+        setTimeout(() => {
+            outSlide.classList.remove('active');
+            outSlide.style.zIndex = '';
+            overlay.remove();
+            transitioning = false;
+        }, 500);
+    }
+
+    document.querySelector('.proj-carousel').addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const goLeft = e.clientX < rect.left + rect.width / 2;
+        goTo(goLeft ? current - 1 : current + 1, goLeft ? 'left' : 'right');
+    });
+
+    thumbBtns.forEach((btn, i) => btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        goTo(i, i < current ? 'left' : 'right');
+    }));
+
+    const ticker = document.getElementById('projectTicker');
+    window.addEventListener('scroll', function() {
+        ticker.classList.toggle('scrolled', window.scrollY > 0);
     });
 }
