@@ -56,12 +56,6 @@ body {
     display: block;
 }
 
-.site-logo-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-}
 
 .site-burger {
     display: flex;
@@ -168,114 +162,6 @@ body {
 }
 
 
-/* ============================================================
-   3. SPRÅKKNAPPER
-============================================================ */
-
-.lang-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--gray);
-}
-
-.lang-btn {
-    background: none;
-    border: none;
-    font-family: var(--font);
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    color: var(--gray);
-    padding: 0;
-    transition: color 0.2s;
-}
-
-.lang-btn.active {
-    color: var(--black);
-    font-weight: 600;
-}
-
-
-/* ============================================================
-   3. PROSJEKTSIDE
-============================================================ */
-
-.project-header {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 100px 60px 80px;
-}
-
-.project-meta {
-    display: flex;
-    gap: 32px;
-    margin-bottom: 24px;
-}
-
-.project-meta span {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray);
-}
-
-.project-intro {
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 1.75;
-    max-width: 640px;
-    color: #333;
-}
-
-.project-images {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 60px 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-
-.image-full img {
-    width: 100%;
-    display: block;
-}
-
-.image-caption-block img {
-    width: 100%;
-    display: block;
-    margin-bottom: 16px;
-}
-
-.image-caption-block p {
-    font-size: 13px;
-    color: var(--gray);
-    max-width: 560px;
-    line-height: 1.65;
-}
-
-.project-nav {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 60px 60px 100px;
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid #e8e8e8;
-}
-
-.project-nav a {
-    font-size: 13px;
-    color: var(--black);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    transition: opacity 0.2s;
-}
-
-.project-nav a:hover {
-    opacity: 0.4;
-}
 
 
 /* ============================================================

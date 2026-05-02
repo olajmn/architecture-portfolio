@@ -30,12 +30,6 @@ nav { display: none; }
     display: block;
 }
 
-.index-subtitle {
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    color: var(--gray);
-    text-transform: uppercase;
-}
 
 .index-burger {
     display: flex;
@@ -210,7 +204,7 @@ body.menu-open .ticker-track span {
 }
 
 .index-card:hover .index-card-text,
-.featured-card:hover .featured-text {
+.carousel-slide:hover .featured-text {
     opacity: 1;
 }
 
