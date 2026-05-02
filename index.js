@@ -54,6 +54,7 @@ setInterval(function() {
 
 const logo = document.querySelector('.index-logo');
 const carousel = document.getElementById('carousel');
+const tickerEl = document.querySelector('.ticker');
 let currentLogoSize = 160;
 let animationId = null;
 
@@ -79,6 +80,8 @@ function animateLogo() {
 }
 
 window.addEventListener('scroll', function() {
+    const exactHeaderH = Math.max(32, 160 - window.scrollY * 0.5) + 40;
+    tickerEl.style.top = exactHeaderH + 'px';
     if (!animationId) {
         animationId = requestAnimationFrame(animateLogo);
     }

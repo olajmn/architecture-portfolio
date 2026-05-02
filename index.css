@@ -113,6 +113,10 @@ nav { display: none; }
     padding: 6px 0 2px 0;
     width: calc(100% - 12px);
     margin: 0 6px;
+    position: sticky;
+    top: 200px;
+    z-index: 85;
+    background: var(--white);
 }
 
 .ticker-track {
@@ -146,9 +150,8 @@ nav { display: none; }
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 6px;
-    margin-top: 6px;
-    padding: 0 6px;
-    margin-bottom: calc(100vh - 20vw - 155px);
+    width: calc(100% - 12px);
+    margin: 6px 6px calc(100vh - 20vw - 155px);
 }
 
 .index-card {
@@ -313,7 +316,6 @@ nav { display: none; }
 @media (max-width: 768px) {
     .index-projects {
         grid-template-columns: repeat(2, 1fr);
-        padding: 24px 24px 80px;
-        gap: 16px 24px;
     }
+
 }
