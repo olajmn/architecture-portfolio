@@ -8,10 +8,12 @@ const closeBtn = document.getElementById('menuClose');
 
 burger.addEventListener('click', function() {
     overlay.classList.add('open');
+    document.body.classList.add('menu-open');
 });
 
 closeBtn.addEventListener('click', function() {
     overlay.classList.remove('open');
+    document.body.classList.remove('menu-open');
 });
 
 

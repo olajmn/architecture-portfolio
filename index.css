@@ -135,7 +135,7 @@ nav { display: none; }
     transition: color 0.3s ease;
 }
 
-.ticker-track span:hover {
+body.menu-open .ticker-track span {
     color: #d8d8d8;
 }
 
@@ -257,13 +257,17 @@ nav { display: none; }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 24px 24px 32px;
-    transform: translateX(110%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 40px 24px 32px;
+    opacity: 0;
+    filter: blur(4px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, filter 0.25s ease;
 }
 
 .menu-overlay.open {
-    transform: translateX(0);
+    opacity: 1;
+    filter: blur(0);
+    pointer-events: auto;
 }
 
 .menu-overlay .menu-label {
@@ -276,22 +280,24 @@ nav { display: none; }
 
 .menu-overlay a {
     font-size: 11px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gray);
+    color: var(--black);
     text-decoration: none;
     padding: 12px 0;
-    border-bottom: 1px solid #efefef;
-    transition: color 0.2s;
+    opacity: 0;
+    transition: color 0.3s ease;
 }
 
-.menu-overlay a:first-of-type {
-    border-top: 1px solid #efefef;
-}
 
 .menu-overlay a:hover {
-    color: var(--black);
+    color: #d8d8d8;
 }
+
+.menu-overlay.open a {
+    animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 
 .menu-close {
     position: absolute;
@@ -301,7 +307,7 @@ nav { display: none; }
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: var(--gray);
+    color: var(--black);
     padding: 4px;
     line-height: 1;
 }

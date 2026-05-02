@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
 /* ============================================================
    1. RESET & BASE
 ============================================================ */
@@ -13,7 +15,7 @@
     --white: #ffffff;
     --gray: #888888;
     --light-gray: #f0f0f0;
-    --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     --max-width: 1100px;
 }
 
@@ -116,12 +118,10 @@ body {
     color: var(--gray);
     text-decoration: none;
     padding: 12px 0;
-    border-bottom: 1px solid #efefef;
     transition: color 0.2s;
 }
 
 .menu-overlay a:first-of-type {
-    border-top: 1px solid #efefef;
 }
 
 .menu-overlay a:hover {
