@@ -112,13 +112,14 @@ function render(data) {
         });
     }
 
-    // Logo-klikk — fade ut innhold (ikke header) før navigering
+    // Logo-klikk — liten skyv oppover + fade ut, så naviger
     document.querySelector('.site-header a').addEventListener('click', function(e) {
         e.preventDefault();
         const href = this.href;
         document.querySelectorAll('body > *:not(.site-header):not(.menu-overlay)').forEach(el => {
-            el.style.transition = 'opacity 0.35s ease';
+            el.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
             el.style.opacity = '0';
+            el.style.transform = 'translateY(-40px)';
         });
         setTimeout(() => { window.location.href = href; }, 370);
     });
@@ -181,7 +182,15 @@ function render(data) {
     }));
 
     const ticker = document.getElementById('projectTicker');
+    let lastScrollY = window.scrollY;
     window.addEventListener('scroll', function() {
-        ticker.classList.toggle('scrolled', window.scrollY > 0);
+        if (window.scrollY === 0) {
+            ticker.classList.remove('scrolled');
+        } else if (window.scrollY > lastScrollY) {
+            ticker.classList.add('scrolled');
+        } else if (window.scrollY < lastScrollY) {
+            ticker.classList.remove('scrolled');
+        }
+        lastScrollY = window.scrollY;
     });
 }

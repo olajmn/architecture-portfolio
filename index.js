@@ -64,13 +64,17 @@ setInterval(function() {
 const logo = document.querySelector('.index-logo');
 const carousel = document.getElementById('carousel');
 const tickerEl = document.querySelector('.ticker');
-let currentLogoSize = 32;
+const isBackForward = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
+let currentLogoSize = isBackForward ? Math.max(32, 160 - window.scrollY * 0.5) : 32;
 let animationId = null;
 
-// Fade inn innhold under headeren
 const contentEls = [carousel, tickerEl, document.querySelector('.index-projects'), document.querySelector('footer')];
-contentEls.forEach(el => { if (el) { el.style.opacity = '0'; el.style.transition = 'opacity 0.7s ease'; } });
-setTimeout(() => { contentEls.forEach(el => { if (el) el.style.opacity = '1'; }); }, 200);
+if (isBackForward) {
+    contentEls.forEach(el => { if (el) el.style.opacity = '1'; });
+} else {
+    contentEls.forEach(el => { if (el) { el.style.opacity = '0'; el.style.transition = 'opacity 0.7s ease'; } });
+    setTimeout(() => { contentEls.forEach(el => { if (el) el.style.opacity = '1'; }); }, 200);
+}
 
 function applyLogoSize(size) {
     logo.style.height = size + 'px';

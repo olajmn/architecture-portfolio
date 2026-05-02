@@ -65,6 +65,13 @@ nav { display: none; }
    2. KARUSELL
 ============================================================ */
 
+.fresh-load .carousel,
+.fresh-load .ticker,
+.fresh-load .index-projects,
+.fresh-load footer {
+    opacity: 0;
+}
+
 .carousel {
     width: calc(100% - 12px);
     margin: 0 6px;
