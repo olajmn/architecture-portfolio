@@ -27,7 +27,6 @@ nav { display: none; }
 .index-logo {
     height: 160px;
     width: auto;
-    transition: none;
     display: block;
 }
 
@@ -180,11 +179,13 @@ body.menu-open .ticker-track span {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.7s ease;
+    filter: grayscale(100%);
+    transition: transform 0.7s ease, filter 0.7s ease;
 }
 
 .index-card:hover img {
     transform: scale(1.03);
+    filter: grayscale(0%);
 }
 
 .index-card-text,
@@ -208,7 +209,7 @@ body.menu-open .ticker-track span {
 
 .index-card-year {
     font-size: 11px;
-    color: var(--black);
+    color: var(--white);
     letter-spacing: 0.1em;
     display: block;
     margin-bottom: 8px;
@@ -220,11 +221,12 @@ body.menu-open .ticker-track span {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     line-height: 1.3;
+    color: var(--white);
 }
 
 .index-card-desc {
     font-size: 11px;
-    color: #555;
+    color: var(--white);
     margin-top: 6px;
     letter-spacing: 0.04em;
 }

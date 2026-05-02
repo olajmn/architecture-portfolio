@@ -112,6 +112,17 @@ function render(data) {
         });
     }
 
+    // Logo-klikk — fade ut innhold (ikke header) før navigering
+    document.querySelector('.site-header a').addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.href;
+        document.querySelectorAll('body > *:not(.site-header):not(.menu-overlay)').forEach(el => {
+            el.style.transition = 'opacity 0.35s ease';
+            el.style.opacity = '0';
+        });
+        setTimeout(() => { window.location.href = href; }, 370);
+    });
+
     // Burgermeny
     const burger = document.querySelector('.site-burger');
     const overlay = document.getElementById('menuOverlay');

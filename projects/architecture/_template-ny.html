@@ -15,6 +15,11 @@
             next:        "NESTE-SIDE.html",
             folder:      "MAPPENAVN",
             description: "SKRIV BESKRIVELSE HER.",
+
+            /* Valgfritt — karusell-innstillinger:
+               carouselHeight: "60vh"       standard: "70vh"
+               carouselFit:    "cover"      standard: "contain"  */
+
             facts: {
                 Location: "BY, LAND",
                 Status:   "STATUS",
@@ -22,6 +27,9 @@
                 Year:     "ÅRSTALL"
             },
             images: [
+                /* Første bilde = hero øverst på siden */
+                /* size: "wide" (80%) | "narrow" (55%) | "small" (40%) */
+                /* Valgfritt per bilde: padding: "160px", caption: "TEKST", width: "70%" */
                 { src: "01-FILNAVN.jpg", size: "wide" },
                 { src: "02-FILNAVN.jpg", size: "wide" },
                 { src: "03-FILNAVN.jpg", size: "narrow" }
