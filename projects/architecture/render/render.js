@@ -1,3 +1,5 @@
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
 /* ============================================================
    render.js — bygger alle prosjektsider automatisk
 
@@ -194,7 +196,6 @@ function render(data) {
     });
 
     /* ---- Scroll-gjenoppretting ved refresh ---- */
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     const scrollKey = 'scroll:' + window.location.pathname;
     window.addEventListener('pagehide', () => {
         sessionStorage.setItem(scrollKey, window.scrollY);
@@ -202,16 +203,10 @@ function render(data) {
     const isReload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
     const saved = parseInt(sessionStorage.getItem(scrollKey) || '0');
 
-    if (isReload && saved > 0) {
-        setTimeout(() => {
-            window.scrollTo(0, saved);
-            document.body.style.transition = 'opacity 0.7s ease';
-            document.body.style.opacity = '1';
-        }, 100);
-    } else {
-        setTimeout(() => {
-            document.body.style.transition = 'opacity 0.7s ease';
-            document.body.style.opacity = '1';
-        }, 50);
-    }
+    if (isReload && saved > 0) window.scrollTo(0, saved);
+
+    setTimeout(() => {
+        document.body.style.transition = 'opacity 0.7s ease';
+        document.body.style.opacity = '1';
+    }, 50);
 }
