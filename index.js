@@ -105,7 +105,18 @@ window.addEventListener('scroll', function() {
     }
 });
 
-animateLogo();
+if (!isBackForward) {
+    carousel.style.marginTop = (160 + 40) + 'px';
+    currentLogoSize = 160;
+    logo.style.height = '32px';
+    logo.style.transition = 'height 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        logo.style.height = '160px';
+    }));
+    setTimeout(() => { logo.style.transition = ''; }, 1300);
+} else {
+    animateLogo();
+}
 
 
 /* ============================================================
