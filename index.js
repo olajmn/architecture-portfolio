@@ -71,8 +71,6 @@ const isFreshNavigate = performance.getEntriesByType('navigation')[0]?.type === 
 const isBackForward = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
 const fromProject = isFreshNavigate && sessionStorage.getItem('fromProject') === '1';
 if (fromProject) sessionStorage.removeItem('fromProject');
-let currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
-let animationId = null;
 let tickerScrollY = 0;
 
 if (!isBackForward) {
@@ -91,7 +89,7 @@ function applyLogoSize(size) {
 }
 
 function updateTickerState() {
-    const headerH = currentLogoSize + 40;
+    const headerH = logo.offsetHeight + 40;
     if (!tickerFixed && tickerEl.getBoundingClientRect().top <= headerH) {
         tickerSpacer = document.createElement('div');
         tickerSpacer.style.height = tickerEl.offsetHeight + 'px';
@@ -108,52 +106,33 @@ function updateTickerState() {
     }
 }
 
-function animateLogo() {
-    const target = tickerScrollY > 0
+window.addEventListener('scroll', function() {
+    const size = tickerScrollY > 0
         ? Math.max(32, 160 - (window.scrollY / tickerScrollY) * 128)
         : Math.max(32, 160 - window.scrollY * 0.5);
-    const diff = target - currentLogoSize;
-    if (Math.abs(diff) < 0.5) {
-        currentLogoSize = target;
-        applyLogoSize(currentLogoSize);
-        animationId = null;
-        return;
-    }
-    currentLogoSize += diff * 0.12;
-    applyLogoSize(currentLogoSize);
-    animationId = requestAnimationFrame(animateLogo);
-}
-
-window.addEventListener('scroll', function() {
-    if (!animationId) animationId = requestAnimationFrame(animateLogo);
+    applyLogoSize(size);
     requestAnimationFrame(updateTickerState);
 });
 
 if (isFreshNavigate) {
     if (fromProject) {
-        currentLogoSize = 32;
         applyLogoSize(32);
         setTimeout(() => {
             tickerEl.scrollIntoView({ behavior: 'instant' });
-            currentLogoSize = 32;
             applyLogoSize(32);
         }, 0);
     } else {
-        currentLogoSize = 160;
         applyLogoSize(160);
     }
 } else {
-    applyLogoSize(currentLogoSize);
+    applyLogoSize(32);
     setTimeout(() => {
         tickerEl.scrollIntoView({ behavior: 'instant' });
-        currentLogoSize = 32;
-        applyLogoSize(32);
     }, 0);
 }
 
-// Beregn tickerScrollY etter at layout og scroll er satt
 setTimeout(() => {
-    tickerScrollY = tickerEl.offsetTop - Math.max(0, currentLogoSize - 32);
+    tickerScrollY = tickerEl.offsetTop - (logo.offsetHeight - 32);
 }, 0);
 
 

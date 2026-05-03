@@ -9,8 +9,6 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
      description — introtekst
      facts       — { Location, Status, Program, Year }
      images      — [{ src, size: "wide/narrow/small", width?, caption?, padding? }]
-     carouselHeight — valgfri høyde på karusellen (standard: "70vh")
-     carouselFit    — valgfri object-fit på karusellbilder
 ============================================================ */
 
 function render(data) {
@@ -21,18 +19,6 @@ function render(data) {
 
     const heroImage = data.images[0];
     const galleryImages = data.images.slice(1);
-
-    const slidesHTML = data.images.map((img, i) =>
-        `<div class="proj-slide${i === 0 ? ' active' : ''}">
-            <img src="../../images/${data.folder}/${img.src}" alt="">
-        </div>`
-    ).join('');
-
-    const thumbsHTML = data.images.map((img, i) =>
-        `<button class="proj-thumb${i === 0 ? ' active' : ''}" data-index="${i}">
-            <img src="../../images/${data.folder}/${img.src}" alt="">
-        </button>`
-    ).join('');
 
     const galleryHTML = galleryImages.map(img =>
         `<div class="img-${img.size || 'wide'}" ${img.paddingTop || img.paddingBottom ? `style=" ${img.paddingTop ? `padding-top:${img.paddingTop};` : ''} ${img.paddingBottom ? `padding-bottom:${img.paddingBottom};` : ''} "` : ''}>
@@ -52,12 +38,12 @@ function render(data) {
             <a href="womens-house.html">Women's House</a>
         </div>
 
-        <header class="site-header">
+        <header class="index-hero">
             <span></span>
-            <a href="../../index.html">
-                <img src="../../architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="site-logo">
-            </a>
-            <button class="site-burger">
+            <button class="index-logo-btn">
+                <img src="../../architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="index-logo" style="height: 32px;">
+            </button>
+            <button class="index-burger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -77,14 +63,6 @@ function render(data) {
             <dl class="project-facts">${factsHTML}</dl>
         </div>
 
-        <div class="proj-carousel">
-            ${slidesHTML}
-        </div>
-
-        <div class="proj-thumbs">
-            ${thumbsHTML}
-        </div>
-
         ${galleryHTML}
 
         <footer>
@@ -94,30 +72,19 @@ function render(data) {
 
     document.body.style.opacity = '0';
 
-    /* ---- Karusell-innstillinger ---- */
-    const projCarousel = document.querySelector('.proj-carousel');
-    projCarousel.style.height = data.carouselHeight || '70vh';
-    if (data.carouselFit) {
-        document.querySelectorAll('.proj-slide img').forEach(img => {
-            img.style.objectFit = data.carouselFit;
-        });
-    }
-
     /* ---- Logo-klikk: fade ut og naviger ---- */
-    document.querySelector('.site-header a').addEventListener('click', function(e) {
-        e.preventDefault();
-        const href = this.href;
+    document.querySelector('.index-logo-btn').addEventListener('click', function() {
         sessionStorage.setItem('fromProject', '1');
         document.querySelectorAll('body > *:not(.site-header):not(.menu-overlay)').forEach(el => {
             el.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
             el.style.opacity = '0';
             el.style.transform = 'translateY(-40px)';
         });
-        setTimeout(() => { window.location.href = href; }, 370);
+        setTimeout(() => { window.location.href = '../../index.html'; }, 370);
     });
 
     /* ---- Burgermeny ---- */
-    const burger = document.querySelector('.site-burger');
+    const burger = document.querySelector('.index-burger');
     const menuOverlay = document.getElementById('menuOverlay');
     const closeBtn = document.getElementById('menuClose');
 
@@ -129,37 +96,6 @@ function render(data) {
             document.body.classList.remove('menu-open');
         }
     });
-
-    /* ---- Bildekarusell ---- */
-    const slides = document.querySelectorAll('.proj-slide');
-    const thumbBtns = document.querySelectorAll('.proj-thumb');
-    let current = 0;
-
-    function goTo(n, dir) {
-        slides[current].classList.remove('active');
-        thumbBtns[current].classList.remove('active');
-        current = (n + slides.length) % slides.length;
-        thumbBtns[current].classList.add('active');
-
-        const incoming = slides[current];
-        const wipeEl = document.createElement('div');
-        wipeEl.style.cssText = `position:absolute;inset:0;pointer-events:none;background:linear-gradient(to ${dir},white 0%,transparent 50%);transition:opacity 0.5s ease`;
-        incoming.appendChild(wipeEl);
-        incoming.classList.add('active');
-        requestAnimationFrame(() => requestAnimationFrame(() => { wipeEl.style.opacity = '0'; }));
-        setTimeout(() => wipeEl.remove(), 600);
-    }
-
-    projCarousel.addEventListener('click', function(e) {
-        const rect = this.getBoundingClientRect();
-        const goLeft = e.clientX < rect.left + rect.width / 2;
-        goTo(goLeft ? current - 1 : current + 1, goLeft ? 'left' : 'right');
-    });
-
-    thumbBtns.forEach((btn, i) => btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        goTo(i, i < current ? 'left' : 'right');
-    }));
 
     /* ---- Ticker-tittel: ghoster ut ved scroll ned, inn ved scroll opp ---- */
     const ticker = document.getElementById('projectTicker');
