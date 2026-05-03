@@ -203,10 +203,18 @@ function render(data) {
     const isReload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
     const saved = parseInt(sessionStorage.getItem(scrollKey) || '0');
 
-    if (isReload && saved > 0) window.scrollTo(0, saved);
-
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.7s ease';
-        document.body.style.opacity = '1';
-    }, 50);
+    if (isReload && saved > 0) {
+        window.addEventListener('load', () => {
+            window.scrollTo(0, saved);
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.7s ease';
+                document.body.style.opacity = '1';
+            }, 50);
+        });
+    } else {
+        setTimeout(() => {
+            document.body.style.transition = 'opacity 0.7s ease';
+            document.body.style.opacity = '1';
+        }, 50);
+    }
 }
