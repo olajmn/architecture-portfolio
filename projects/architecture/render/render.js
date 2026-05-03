@@ -1,50 +1,37 @@
 /* ============================================================
-   project.js — mal-systemet for alle prosjektsider
+   render.js — bygger alle prosjektsider automatisk
 
-   Denne filen inneholder én funksjon: render(data)
-   Den kalles fra den minimale HTML-filen med prosjektdata.
-   render() bygger hele siden automatisk i nettleseren.
-
-   Hva du kan sende inn (i HTML-filen):
-     title       — prosjektnavn (tekst)
-     next        — filnavn på neste prosjektside
+   Kall render(data) fra HTML-filen med disse feltene:
+     title       — prosjektnavn
      folder      — mappenavn under images/
-     description — introtekst (tekst)
-     facts       — objekt med Location, Status, Program, Year
-     images      — liste med bilder:
-                   { src: "filnavn.jpg", size: "wide/narrow/small" }
-                   Legg til padding: "160px" for ekstra luft under ett bilde
-   ============================================================ */
+     description — introtekst
+     facts       — { Location, Status, Program, Year }
+     images      — [{ src, size: "wide/narrow/small", width?, caption?, padding? }]
+     carouselHeight — valgfri høyde på karusellen (standard: "70vh")
+     carouselFit    — valgfri object-fit på karusellbilder
+============================================================ */
 
 function render(data) {
 
-    // Gjør om facts-objektet til HTML-rader (dt + dd per par)
     const factsHTML = Object.entries(data.facts).map(([key, val]) =>
         `<dt>${key}</dt><dd>${val}</dd>`
     ).join('');
 
-    // Første bilde i listen brukes som hero-bilde øverst
-    // Resten vises som galleri nedover siden
     const heroImage = data.images[0];
     const galleryImages = data.images.slice(1);
 
-    // Bygg karusell-slides (alle bilder)
     const slidesHTML = data.images.map((img, i) =>
         `<div class="proj-slide${i === 0 ? ' active' : ''}">
             <img src="../../images/${data.folder}/${img.src}" alt="">
         </div>`
     ).join('');
 
-    // Bygg miniatyrbilder (alle bilder)
     const thumbsHTML = data.images.map((img, i) =>
         `<button class="proj-thumb${i === 0 ? ' active' : ''}" data-index="${i}">
             <img src="../../images/${data.folder}/${img.src}" alt="">
         </button>`
     ).join('');
 
-    // Bygg en HTML-div per galleri-bilde
-    // img.size bestemmer klassen (wide/narrow/small)
-    // img.padding gir ekstra luft under ett spesifikt bilde
     const galleryHTML = galleryImages.map(img =>
         `<div class="img-${img.size || 'wide'}" ${img.padding ? `style="padding-bottom:${img.padding}"` : ''}>
             <img src="../../images/${data.folder}/${img.src}" alt="" ${img.width ? `style="width:${img.width}"` : ''}>
@@ -52,7 +39,6 @@ function render(data) {
         </div>`
     ).join('');
 
-    // Sett inn hele siden i <body>
     document.body.innerHTML = `
         <div class="menu-overlay" id="menuOverlay">
             <button class="menu-close" id="menuClose">×</button>
@@ -103,16 +89,18 @@ function render(data) {
         </footer>
     `;
 
-    // Karusell-innstillinger per prosjekt
-    const carousel = document.querySelector('.proj-carousel');
-    carousel.style.height = data.carouselHeight || '70vh';
+    document.body.style.opacity = '0';
+
+    /* ---- Karusell-innstillinger ---- */
+    const projCarousel = document.querySelector('.proj-carousel');
+    projCarousel.style.height = data.carouselHeight || '70vh';
     if (data.carouselFit) {
         document.querySelectorAll('.proj-slide img').forEach(img => {
             img.style.objectFit = data.carouselFit;
         });
     }
 
-    // Logo-klikk — liten skyv oppover + fade ut, så naviger
+    /* ---- Logo-klikk: fade ut og naviger ---- */
     document.querySelector('.site-header a').addEventListener('click', function(e) {
         e.preventDefault();
         const href = this.href;
@@ -124,32 +112,25 @@ function render(data) {
         setTimeout(() => { window.location.href = href; }, 370);
     });
 
-    // Burgermeny
+    /* ---- Burgermeny ---- */
     const burger = document.querySelector('.site-burger');
-    const overlay = document.getElementById('menuOverlay');
+    const menuOverlay = document.getElementById('menuOverlay');
     const closeBtn = document.getElementById('menuClose');
 
-    burger.addEventListener('click', function() {
-        overlay.classList.add('open');
-        document.body.classList.add('menu-open');
-    });
-
-    closeBtn.addEventListener('click', function() {
-        overlay.classList.remove('open');
-        document.body.classList.remove('menu-open');
-    });
-
+    burger.addEventListener('click', () => { menuOverlay.classList.add('open'); document.body.classList.add('menu-open'); });
+    closeBtn.addEventListener('click', () => { menuOverlay.classList.remove('open'); document.body.classList.remove('menu-open'); });
     document.addEventListener('click', function(e) {
-        if (overlay.classList.contains('open') && !overlay.contains(e.target) && !burger.contains(e.target)) {
-            overlay.classList.remove('open');
+        if (menuOverlay.classList.contains('open') && !menuOverlay.contains(e.target) && !burger.contains(e.target)) {
+            menuOverlay.classList.remove('open');
             document.body.classList.remove('menu-open');
         }
     });
 
-    // Karusell
+    /* ---- Bildekarusell ---- */
     const slides = document.querySelectorAll('.proj-slide');
     const thumbBtns = document.querySelectorAll('.proj-thumb');
     let current = 0;
+
     function goTo(n, dir) {
         slides[current].classList.remove('active');
         thumbBtns[current].classList.remove('active');
@@ -157,15 +138,15 @@ function render(data) {
         thumbBtns[current].classList.add('active');
 
         const incoming = slides[current];
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `position:absolute;inset:0;pointer-events:none;background:linear-gradient(to ${dir},white 0%,transparent 50%);transition:opacity 0.5s ease`;
-        incoming.appendChild(overlay);
+        const wipeEl = document.createElement('div');
+        wipeEl.style.cssText = `position:absolute;inset:0;pointer-events:none;background:linear-gradient(to ${dir},white 0%,transparent 50%);transition:opacity 0.5s ease`;
+        incoming.appendChild(wipeEl);
         incoming.classList.add('active');
-        requestAnimationFrame(() => requestAnimationFrame(() => { overlay.style.opacity = '0'; }));
-        setTimeout(() => overlay.remove(), 600);
+        requestAnimationFrame(() => requestAnimationFrame(() => { wipeEl.style.opacity = '0'; }));
+        setTimeout(() => wipeEl.remove(), 600);
     }
 
-    document.querySelector('.proj-carousel').addEventListener('click', function(e) {
+    projCarousel.addEventListener('click', function(e) {
         const rect = this.getBoundingClientRect();
         const goLeft = e.clientX < rect.left + rect.width / 2;
         goTo(goLeft ? current - 1 : current + 1, goLeft ? 'left' : 'right');
@@ -176,6 +157,7 @@ function render(data) {
         goTo(i, i < current ? 'left' : 'right');
     }));
 
+    /* ---- Ticker-tittel: ghoster ut ved scroll ned, inn ved scroll opp ---- */
     const ticker = document.getElementById('projectTicker');
     let lastScrollY = window.scrollY;
     window.addEventListener('scroll', function() {
@@ -183,18 +165,30 @@ function render(data) {
             ticker.classList.remove('scrolled');
         } else if (window.scrollY > lastScrollY) {
             ticker.classList.add('scrolled');
-        } else if (window.scrollY < lastScrollY) {
+        } else {
             ticker.classList.remove('scrolled');
         }
         lastScrollY = window.scrollY;
     });
 
-    const navType = performance.getEntriesByType('navigation')[0]?.type;
-    if (navType === 'reload') {
-        const saved = sessionStorage.getItem('projectScrollY');
-        if (saved) window.scrollTo(0, parseInt(saved));
-    }
-    window.addEventListener('pagehide', function() {
-        sessionStorage.setItem('projectScrollY', window.scrollY);
+    /* ---- Scroll-gjenoppretting ved refresh ---- */
+    const scrollKey = 'scroll:' + window.location.pathname;
+    window.addEventListener('pagehide', () => {
+        sessionStorage.setItem(scrollKey, window.scrollY);
     });
+    const isReload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
+    const saved = parseInt(sessionStorage.getItem(scrollKey) || '0');
+
+    if (isReload && saved > 0) {
+        setTimeout(() => {
+            window.scrollTo(0, saved);
+            document.body.style.transition = 'opacity 0.7s ease';
+            document.body.style.opacity = '1';
+        }, 100);
+    } else {
+        setTimeout(() => {
+            document.body.style.transition = 'opacity 0.7s ease';
+            document.body.style.opacity = '1';
+        }, 50);
+    }
 }

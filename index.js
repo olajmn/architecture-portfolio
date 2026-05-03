@@ -6,12 +6,12 @@ const burger = document.querySelector('.index-burger');
 const overlay = document.getElementById('menuOverlay');
 const closeBtn = document.getElementById('menuClose');
 
-burger.addEventListener('click', function() {
+burger.addEventListener('click', () => {
     overlay.classList.add('open');
     document.body.classList.add('menu-open');
 });
 
-closeBtn.addEventListener('click', function() {
+closeBtn.addEventListener('click', () => {
     overlay.classList.remove('open');
     document.body.classList.remove('menu-open');
 });
@@ -59,20 +59,22 @@ setInterval(function() {
 
 /* ============================================================
    3. LOGO — krymper fra 160px til 32px når man scroller
+
+   Regler:
+   - Fersk navigasjon (navigate): CSS-animasjon fra 32px → 160px
+   - Alt annet (reload, tilbake): snap direkte til riktig størrelse
 ============================================================ */
 
 const logo = document.querySelector('.index-logo');
 const carousel = document.getElementById('carousel');
 const tickerEl = document.querySelector('.ticker');
-const navType = performance.getEntriesByType('navigation')[0]?.type;
-const isFreshNavigate = navType === 'navigate';
-const isBackForward = navType === 'back_forward';
+const isFreshNavigate = performance.getEntriesByType('navigation')[0]?.type === 'navigate';
+const isBackForward = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
 let currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
-let snapMode = !isFreshNavigate;
 let animationId = null;
 
 if (!isBackForward) {
-    const contentEls = [carousel, tickerEl, document.querySelector('.index-projects'), document.querySelector('footer')];
+    const contentEls = [logo, carousel, tickerEl, document.querySelector('.index-projects'), document.querySelector('footer')];
     contentEls.forEach(el => { if (el) { el.style.opacity = '0'; el.style.transition = 'opacity 0.7s ease'; } });
     setTimeout(() => { contentEls.forEach(el => { if (el) el.style.opacity = '1'; }); }, 200);
 }
@@ -83,10 +85,10 @@ function applyLogoSize(size) {
 }
 
 function animateLogo() {
-    const targetSize = Math.max(32, 160 - window.scrollY * 0.5);
-    const diff = targetSize - currentLogoSize;
+    const target = Math.max(32, 160 - window.scrollY * 0.5);
+    const diff = target - currentLogoSize;
     if (Math.abs(diff) < 0.5) {
-        currentLogoSize = targetSize;
+        currentLogoSize = target;
         applyLogoSize(currentLogoSize);
         animationId = null;
         return;
@@ -97,13 +99,6 @@ function animateLogo() {
 }
 
 window.addEventListener('scroll', function() {
-    tickerEl.style.top = (Math.max(32, 160 - window.scrollY * 0.5) + 40) + 'px';
-    if (snapMode) {
-        currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
-        applyLogoSize(currentLogoSize);
-        snapMode = false;
-        return;
-    }
     if (!animationId) animationId = requestAnimationFrame(animateLogo);
 });
 
@@ -116,28 +111,23 @@ if (isFreshNavigate) {
     setTimeout(() => { logo.style.transition = ''; }, 1300);
 } else {
     applyLogoSize(currentLogoSize);
+    setTimeout(() => {
+        currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
+        applyLogoSize(currentLogoSize);
+    }, 0);
 }
 
 
 /* ============================================================
-   4. TICKER — seamless loop: span2 enters right as span1 exits left
+   4. TICKER — seamless loop
 ============================================================ */
 
 const tickerTrack = document.querySelector('.ticker-track');
 if (tickerTrack) {
     const spans = tickerTrack.querySelectorAll('span');
     const textW = spans[0].offsetWidth;
-    // Gap between span1 and span2 = full screen width
-    // So when span1 is fully off-screen left (-textW), span2 is exactly at right edge
     spans[0].style.marginRight = window.innerWidth + 'px';
-
-    // Create the keyframe dynamically so we know the exact pixel end point
     const style = document.createElement('style');
-    style.textContent = `@keyframes ticker {
-        from { transform: translateX(100vw); }
-        to   { transform: translateX(-${textW}px); }
-    }`;
+    style.textContent = `@keyframes ticker { from { transform: translateX(100vw); } to { transform: translateX(-${textW}px); } }`;
     document.head.appendChild(style);
 }
-
-
