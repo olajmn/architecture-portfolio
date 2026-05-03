@@ -194,6 +194,7 @@ function render(data) {
     });
 
     /* ---- Scroll-gjenoppretting ved refresh ---- */
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     const scrollKey = 'scroll:' + window.location.pathname;
     window.addEventListener('pagehide', () => {
         sessionStorage.setItem(scrollKey, window.scrollY);
