@@ -146,11 +146,6 @@ function render(data) {
         }
     });
 
-    // Scroll-animasjoner:
-    // - Den store tittelen ghostes ut når du begynner å scrolle
-    // - Topp-nav ghostes inn samtidig
-    history.scrollRestoration = 'manual';
-
     // Karusell
     const slides = document.querySelectorAll('.proj-slide');
     const thumbBtns = document.querySelectorAll('.proj-thumb');
@@ -192,5 +187,14 @@ function render(data) {
             ticker.classList.remove('scrolled');
         }
         lastScrollY = window.scrollY;
+    });
+
+    const navType = performance.getEntriesByType('navigation')[0]?.type;
+    if (navType === 'reload') {
+        const saved = sessionStorage.getItem('projectScrollY');
+        if (saved) window.scrollTo(0, parseInt(saved));
+    }
+    window.addEventListener('pagehide', function() {
+        sessionStorage.setItem('projectScrollY', window.scrollY);
     });
 }

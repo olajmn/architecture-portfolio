@@ -64,14 +64,15 @@ setInterval(function() {
 const logo = document.querySelector('.index-logo');
 const carousel = document.getElementById('carousel');
 const tickerEl = document.querySelector('.ticker');
-const isBackForward = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
-let currentLogoSize = isBackForward ? Math.max(32, 160 - window.scrollY * 0.5) : 32;
+const navType = performance.getEntriesByType('navigation')[0]?.type;
+const isFreshNavigate = navType === 'navigate';
+const isBackForward = navType === 'back_forward';
+let currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
+let snapMode = !isFreshNavigate;
 let animationId = null;
 
-const contentEls = [carousel, tickerEl, document.querySelector('.index-projects'), document.querySelector('footer')];
-if (isBackForward) {
-    contentEls.forEach(el => { if (el) el.style.opacity = '1'; });
-} else {
+if (!isBackForward) {
+    const contentEls = [carousel, tickerEl, document.querySelector('.index-projects'), document.querySelector('footer')];
     contentEls.forEach(el => { if (el) { el.style.opacity = '0'; el.style.transition = 'opacity 0.7s ease'; } });
     setTimeout(() => { contentEls.forEach(el => { if (el) el.style.opacity = '1'; }); }, 200);
 }
@@ -84,38 +85,37 @@ function applyLogoSize(size) {
 function animateLogo() {
     const targetSize = Math.max(32, 160 - window.scrollY * 0.5);
     const diff = targetSize - currentLogoSize;
-
     if (Math.abs(diff) < 0.5) {
         currentLogoSize = targetSize;
         applyLogoSize(currentLogoSize);
         animationId = null;
         return;
     }
-
     currentLogoSize += diff * 0.12;
     applyLogoSize(currentLogoSize);
     animationId = requestAnimationFrame(animateLogo);
 }
 
 window.addEventListener('scroll', function() {
-    const exactHeaderH = Math.max(32, 160 - window.scrollY * 0.5) + 40;
-    tickerEl.style.top = exactHeaderH + 'px';
-    if (!animationId) {
-        animationId = requestAnimationFrame(animateLogo);
+    tickerEl.style.top = (Math.max(32, 160 - window.scrollY * 0.5) + 40) + 'px';
+    if (snapMode) {
+        currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
+        applyLogoSize(currentLogoSize);
+        snapMode = false;
+        return;
     }
+    if (!animationId) animationId = requestAnimationFrame(animateLogo);
 });
 
-if (!isBackForward) {
+if (isFreshNavigate) {
     carousel.style.marginTop = (160 + 40) + 'px';
     currentLogoSize = 160;
     logo.style.height = '32px';
     logo.style.transition = 'height 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        logo.style.height = '160px';
-    }));
+    requestAnimationFrame(() => requestAnimationFrame(() => { logo.style.height = '160px'; }));
     setTimeout(() => { logo.style.transition = ''; }, 1300);
 } else {
-    animateLogo();
+    applyLogoSize(currentLogoSize);
 }
 
 
