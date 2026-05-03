@@ -58,11 +58,10 @@ setInterval(function() {
 
 
 /* ============================================================
-   3. LOGO — krymper fra 160px til 32px når man scroller
+   3. LOGO — skalerer fra 160px (topp) til 32px (ved tickeren)
 
-   Regler:
-   - Fersk navigasjon (navigate): CSS-animasjon fra 32px → 160px
-   - Alt annet (reload, tilbake): snap direkte til riktig størrelse
+   tickerScrollY beregnes etter layout og brukes som referansepunkt
+   slik at logoen beveger seg jevnt gjennom hele karusellområdet.
 ============================================================ */
 
 const logo = document.querySelector('.index-logo');
@@ -70,8 +69,11 @@ const carousel = document.getElementById('carousel');
 const tickerEl = document.querySelector('.ticker');
 const isFreshNavigate = performance.getEntriesByType('navigation')[0]?.type === 'navigate';
 const isBackForward = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
+const fromProject = isFreshNavigate && sessionStorage.getItem('fromProject') === '1';
+if (fromProject) sessionStorage.removeItem('fromProject');
 let currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
 let animationId = null;
+let tickerScrollY = 0;
 
 if (!isBackForward) {
     const contentEls = [logo, carousel, tickerEl, document.querySelector('.index-projects'), document.querySelector('footer')];
@@ -79,13 +81,37 @@ if (!isBackForward) {
     setTimeout(() => { contentEls.forEach(el => { if (el) el.style.opacity = '1'; }); }, 200);
 }
 
+let tickerFixed = false;
+let tickerSpacer = null;
+
 function applyLogoSize(size) {
     logo.style.height = size + 'px';
     carousel.style.marginTop = (size + 40) + 'px';
+    if (tickerFixed) tickerEl.style.top = (size + 40) + 'px';
+}
+
+function updateTickerState() {
+    const headerH = currentLogoSize + 40;
+    if (!tickerFixed && tickerEl.getBoundingClientRect().top <= headerH) {
+        tickerSpacer = document.createElement('div');
+        tickerSpacer.style.height = tickerEl.offsetHeight + 'px';
+        tickerEl.insertAdjacentElement('afterend', tickerSpacer);
+        tickerEl.style.position = 'fixed';
+        tickerEl.style.top = headerH + 'px';
+        tickerFixed = true;
+    } else if (tickerFixed && tickerSpacer && tickerSpacer.getBoundingClientRect().top > headerH + 1) {
+        tickerEl.style.position = '';
+        tickerEl.style.top = '';
+        tickerSpacer.remove();
+        tickerSpacer = null;
+        tickerFixed = false;
+    }
 }
 
 function animateLogo() {
-    const target = Math.max(32, 160 - window.scrollY * 0.5);
+    const target = tickerScrollY > 0
+        ? Math.max(32, 160 - (window.scrollY / tickerScrollY) * 128)
+        : Math.max(32, 160 - window.scrollY * 0.5);
     const diff = target - currentLogoSize;
     if (Math.abs(diff) < 0.5) {
         currentLogoSize = target;
@@ -100,49 +126,39 @@ function animateLogo() {
 
 window.addEventListener('scroll', function() {
     if (!animationId) animationId = requestAnimationFrame(animateLogo);
+    requestAnimationFrame(updateTickerState);
 });
 
 if (isFreshNavigate) {
-    currentLogoSize = 160;
-    applyLogoSize(160);
-    // tickerEl moves up 128px as logo shrinks from 160→32, so compensate
-    const tickerTarget = tickerEl.offsetTop - 128;
-    setTimeout(() => smoothScrollTo(tickerTarget, 1300), 300);
+    if (fromProject) {
+        currentLogoSize = 32;
+        applyLogoSize(32);
+        setTimeout(() => {
+            tickerEl.scrollIntoView({ behavior: 'instant' });
+            currentLogoSize = 32;
+            applyLogoSize(32);
+        }, 0);
+    } else {
+        currentLogoSize = 160;
+        applyLogoSize(160);
+    }
 } else {
     applyLogoSize(currentLogoSize);
     setTimeout(() => {
-        currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
-        applyLogoSize(currentLogoSize);
-        if (!isBackForward) {
-            tickerEl.scrollIntoView({ behavior: 'instant' });
-            currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
-            applyLogoSize(currentLogoSize);
-        }
+        tickerEl.scrollIntoView({ behavior: 'instant' });
+        currentLogoSize = 32;
+        applyLogoSize(32);
     }, 0);
 }
 
-
-/* ============================================================
-   4. SMOOTH SCROLL — ease-out landing
-============================================================ */
-
-function smoothScrollTo(targetY, duration) {
-    const startY = window.scrollY;
-    const diff = targetY - startY;
-    const startTime = performance.now();
-    function step(now) {
-        const t = Math.min((now - startTime) / duration, 1);
-        // ease-in-out cubic: slow start (tension) → pull → soft landing
-        const ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
-        window.scrollTo(0, startY + diff * ease);
-        if (t < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-}
+// Beregn tickerScrollY etter at layout og scroll er satt
+setTimeout(() => {
+    tickerScrollY = tickerEl.offsetTop - Math.max(0, currentLogoSize - 32);
+}, 0);
 
 
 /* ============================================================
-   5. LOGO-KNAPP — scroll til toppen
+   4. LOGO-KNAPP — scroll til toppen
 ============================================================ */
 
 document.querySelector('.index-logo-btn').addEventListener('click', function() {

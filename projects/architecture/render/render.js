@@ -105,6 +105,7 @@ function render(data) {
     document.querySelector('.site-header a').addEventListener('click', function(e) {
         e.preventDefault();
         const href = this.href;
+        sessionStorage.setItem('fromProject', '1');
         document.querySelectorAll('body > *:not(.site-header):not(.menu-overlay)').forEach(el => {
             el.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
             el.style.opacity = '0';
@@ -161,6 +162,9 @@ function render(data) {
     /* ---- Ticker-tittel: ghoster ut ved scroll ned, inn ved scroll opp ---- */
     const ticker = document.getElementById('projectTicker');
     let lastScrollY = window.scrollY;
+    let projTickerFixed = false;
+    let projTickerSpacer = null;
+
     window.addEventListener('scroll', function() {
         if (window.scrollY === 0) {
             ticker.classList.remove('scrolled');
@@ -170,6 +174,23 @@ function render(data) {
             ticker.classList.remove('scrolled');
         }
         lastScrollY = window.scrollY;
+
+        requestAnimationFrame(() => {
+            if (!projTickerFixed && ticker.getBoundingClientRect().top <= 72) {
+                projTickerSpacer = document.createElement('div');
+                projTickerSpacer.style.height = ticker.offsetHeight + 'px';
+                ticker.insertAdjacentElement('afterend', projTickerSpacer);
+                ticker.style.position = 'fixed';
+                ticker.style.top = '72px';
+                projTickerFixed = true;
+            } else if (projTickerFixed && projTickerSpacer && projTickerSpacer.getBoundingClientRect().top > 73) {
+                ticker.style.position = '';
+                ticker.style.top = '';
+                projTickerSpacer.remove();
+                projTickerSpacer = null;
+                projTickerFixed = false;
+            }
+        });
     });
 
     /* ---- Scroll-gjenoppretting ved refresh ---- */
