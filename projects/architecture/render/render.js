@@ -33,7 +33,8 @@ function render(data) {
     ).join('');
 
     const galleryHTML = galleryImages.map(img =>
-        `<div class="img-${img.size || 'wide'}" ${img.padding ? `style="padding-bottom:${img.padding}"` : ''}>
+        `<div class="img-${img.size || 'wide'}" ${img.paddingTop || img.paddingBottom ? `style=" ${img.paddingTop ? `padding-top:${img.paddingTop};` : ''} ${img.paddingBottom ? `padding-bottom:${img.paddingBottom};` : ''} "` : ''}>
+
             <img src="../../images/${data.folder}/${img.src}" alt="" ${img.width ? `style="width:${img.width}"` : ''}>
             ${img.caption ? `<p class="img-caption">${img.caption}</p>` : ''}
         </div>`

@@ -103,23 +103,55 @@ window.addEventListener('scroll', function() {
 });
 
 if (isFreshNavigate) {
-    carousel.style.marginTop = (160 + 40) + 'px';
     currentLogoSize = 160;
-    logo.style.height = '32px';
-    logo.style.transition = 'height 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
-    requestAnimationFrame(() => requestAnimationFrame(() => { logo.style.height = '160px'; }));
-    setTimeout(() => { logo.style.transition = ''; }, 1300);
+    applyLogoSize(160);
+    // tickerEl moves up 128px as logo shrinks from 160→32, so compensate
+    const tickerTarget = tickerEl.offsetTop - 128;
+    setTimeout(() => smoothScrollTo(tickerTarget, 1300), 300);
 } else {
     applyLogoSize(currentLogoSize);
     setTimeout(() => {
         currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
         applyLogoSize(currentLogoSize);
+        if (!isBackForward) {
+            tickerEl.scrollIntoView({ behavior: 'instant' });
+            currentLogoSize = Math.max(32, 160 - window.scrollY * 0.5);
+            applyLogoSize(currentLogoSize);
+        }
     }, 0);
 }
 
 
 /* ============================================================
-   4. TICKER — seamless loop
+   4. SMOOTH SCROLL — ease-out landing
+============================================================ */
+
+function smoothScrollTo(targetY, duration) {
+    const startY = window.scrollY;
+    const diff = targetY - startY;
+    const startTime = performance.now();
+    function step(now) {
+        const t = Math.min((now - startTime) / duration, 1);
+        // ease-in-out cubic: slow start (tension) → pull → soft landing
+        const ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+        window.scrollTo(0, startY + diff * ease);
+        if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
+
+/* ============================================================
+   5. LOGO-KNAPP — scroll til toppen
+============================================================ */
+
+document.querySelector('.index-logo-btn').addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
+/* ============================================================
+   5. TICKER — seamless loop
 ============================================================ */
 
 const tickerTrack = document.querySelector('.ticker-track');
