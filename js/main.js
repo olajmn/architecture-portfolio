@@ -10,3 +10,13 @@ initLogo();
 initTicker();
 initIndexScroll();
 initProjectsGrid();
+
+
+// PROJECT PAGE // 
+import { initProjectPage } from "./modules/projectPages/projectPage.js";
+
+const page = document.body.dataset.page;
+
+if (page === "project") {
+  initProjectPage();
+}
