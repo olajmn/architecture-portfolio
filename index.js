@@ -67,8 +67,10 @@ setInterval(function() {
 const logo = document.querySelector('.index-logo');
 const carousel = document.getElementById('carousel');
 const tickerEl = document.querySelector('.ticker');
-const isFreshNavigate = performance.getEntriesByType('navigation')[0]?.type === 'navigate';
-const isBackForward = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
+const navType = performance.getEntriesByType('navigation')[0]?.type;
+const isFreshNavigate = navType === 'navigate';
+const isBackForward = navType === 'back_forward';
+const isReload = navType === 'reload';
 const fromProject = isFreshNavigate && sessionStorage.getItem('fromProject') === '1';
 if (fromProject) sessionStorage.removeItem('fromProject');
 let tickerScrollY = 0;
@@ -124,6 +126,8 @@ if (isFreshNavigate) {
     } else {
         applyLogoSize(160);
     }
+} else if (isReload) {
+    applyLogoSize(160);
 } else {
     applyLogoSize(32);
     setTimeout(() => {

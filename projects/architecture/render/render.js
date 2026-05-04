@@ -13,6 +13,8 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
 function render(data) {
 
+    document.body.style.opacity = '0';
+
     const factsHTML = Object.entries(data.facts).map(([key, val]) =>
         `<dt>${key}</dt><dd>${val}</dd>`
     ).join('');
@@ -70,8 +72,6 @@ function render(data) {
         </footer>
     `;
 
-    document.body.style.opacity = '0';
-
     /* ---- Logo-klikk: fade ut og naviger ---- */
     document.querySelector('.index-logo-btn').addEventListener('click', function() {
         sessionStorage.setItem('fromProject', '1');
@@ -114,14 +114,14 @@ function render(data) {
         lastScrollY = window.scrollY;
 
         requestAnimationFrame(() => {
-            if (!projTickerFixed && ticker.getBoundingClientRect().top <= 72) {
+            if (!projTickerFixed && ticker.getBoundingClientRect().top <= 80) {
                 projTickerSpacer = document.createElement('div');
                 projTickerSpacer.style.height = ticker.offsetHeight + 'px';
                 ticker.insertAdjacentElement('afterend', projTickerSpacer);
                 ticker.style.position = 'fixed';
-                ticker.style.top = '72px';
+                ticker.style.top = '80px';
                 projTickerFixed = true;
-            } else if (projTickerFixed && projTickerSpacer && projTickerSpacer.getBoundingClientRect().top > 73) {
+            } else if (projTickerFixed && projTickerSpacer && projTickerSpacer.getBoundingClientRect().top > 81) {
                 ticker.style.position = '';
                 ticker.style.top = '';
                 projTickerSpacer.remove();
