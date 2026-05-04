@@ -41,7 +41,7 @@ function render(data) {
         <header class="index-hero">
             <span></span>
             <button class="index-logo-btn">
-                <img src="../../architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="index-logo" style="height: 40px;">
+                <img src="../../images/architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="index-logo" style="height: 40px;">
             </button>
             <button class="index-burger">
                 <span></span>

@@ -1,168 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ola Jin Myhre Nymoen</title>
-    <link rel="stylesheet" href="index.css">
-    <script>
-        if (performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') {
-            document.documentElement.classList.add('fresh-load');
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ola Jin Myhre Nymoen</title>
+
+  <link rel="stylesheet" href="index.css" />
 </head>
-<body>
 
-    <!-- ============================================================
-         1. MENY-PANEL
-    ============================================================ -->
-    <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close" id="menuClose">×</button>
-        <span class="menu-label"></span>
-        <a href="projects/architecture/in-the-quarry.html">In the Quarry</a>
-        <a href="projects/architecture/lean-to.html">Lean-to</a>
-        <a href="projects/architecture/sagvag-senior-garden.html">Sagvåg Senior Garden</a>
-        <a href="projects/architecture/shifted.html">Shifted</a>
-        <a href="projects/architecture/womens-house.html">Women's House</a>
+<body data-page="index">
+
+  <!-- ================= HEADER ================= -->
+  <header class="index-hero">
+    <span></span>
+
+    <button class="index-logo-btn" aria-label="Logo button">
+      <img src="images/architecture-portfolio.svg" class="index-logo" alt="Logo" />
+    </button>
+
+    <button class="index-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  
+
+  <!-- ================= MENU ================= -->
+  <nav class="menu-overlay" id="menuOverlay">
+    <button class="menu-close" id="menuClose">×</button>
+
+    <span class="menu-label">Projects</span>
+
+    <div id="menuLinks"></div>
+  </nav>
+
+  <!-- ================= CAROUSEL ================= -->
+  <section class="carousel" id="carousel"></section>
+
+  <!-- ================= TICKER ================= -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>Selected Works</span>
+      <span>Selected Works</span>
     </div>
+  </div>
 
-    <!-- ============================================================
-         2. HEADER
-    ============================================================ -->
-    <header class="index-hero">
-        <span></span>
-        <button class="index-logo-btn">
-            <img src="architecture-portfolio.svg" alt="Ola Jin Myhre Nymoen" class="index-logo" style="height: 32px;">
-        </button>
-        <button class="index-burger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </header>
+  <!-- ================= GRID ================= -->
+  <main class="index-projects" id="projectsGrid">
+    <!-- JS lager cards her -->
+  </main>
 
-    <!-- ============================================================
-         3. KARUSELL
-    ============================================================ -->
-    <div class="carousel" id="carousel">
-
-        <a href="projects/architecture/in-the-quarry.html" class="carousel-slide active">
-            <img src="images/display/display-010-quarry.jpg" alt="In the Quarry" style="object-position: center bottom;">
-            <div class="featured-text">
-                <span class="index-card-year">2023</span>
-                <h2 class="index-card-title">In the Quarry</h2>
-                <p class="index-card-desc">Cultural Architecture — Ústí nad Labem</p>
-            </div>
-        </a>
-
-        <a href="projects/architecture/shifted.html" class="carousel-slide">
-            <img src="images/display/display-020-shifted.jpg" alt="Shifted" style="object-position: center center;">
-            <div class="featured-text">
-                <span class="index-card-year">2022</span>
-                <h2 class="index-card-title">Shifted</h2>
-                <p class="index-card-desc">Bachelor Thesis — Prague</p>
-            </div>
-        </a>
-
-        <a href="projects/architecture/womens-house.html" class="carousel-slide">
-            <img src="images/display/display-030-womenshouse.jpg" alt="Women's House" style="object-position: center bottom;">
-            <div class="featured-text">
-                <span class="index-card-year">2021</span>
-                <h2 class="index-card-title">Women's House</h2>
-                <p class="index-card-desc">Student Project — Senegal</p>
-            </div>
-        </a>
-
-        <a href="projects/architecture/lean-to.html" class="carousel-slide">
-            <img src="images/display/display-040-leanto.jpg" alt="Lean-to" style="object-position: center center;">
-            <div class="featured-text">
-                <span class="index-card-year">2021</span>
-                <h2 class="index-card-title">Lean-to</h2>
-                <p class="index-card-desc">Student Project — Prague</p>
-            </div>
-        </a>
-
-        <a href="projects/architecture/sagvag-senior-garden.html" class="carousel-slide">
-            <img src="images/display/display-050-sagvag.jpg" alt="Sagvåg Senior Garden" style="object-position: center bottom;">
-            <div class="featured-text">
-                <span class="index-card-year">2024</span>
-                <h2 class="index-card-title">Sagvåg Senior Garden</h2>
-                <p class="index-card-desc">Master Thesis — Sagvåg, Norway</p>
-            </div>
-        </a>
-
-    </div>
-
-    <!-- ============================================================
-         4. TICKER
-    ============================================================ -->
-    <div class="ticker">
-        <div class="ticker-track">
-            <span>Selected Works</span>
-            <span>Selected Works</span>
-        </div>
-    </div>
-
-    <!-- ============================================================
-         5. PROSJEKTGRID
-    ============================================================ -->
-    <div class="index-projects">
-
-        <a href="projects/architecture/in-the-quarry.html" class="index-card">
-            <img src="images/display/display-010-quarry.jpg" alt="In the Quarry" style="object-position: center bottom;">
-            <div class="index-card-text">
-                <span class="index-card-year">2023</span>
-                <h3 class="index-card-title">In the Quarry</h3>
-                <p class="index-card-desc">Acadamic</p>
-            </div>
-        </a>
-
-        <a href="projects/architecture/shifted.html" class="index-card">
-            <img src="images/display/display-020-shifted.jpg" alt="Shifted" style="object-position: center bottom;">
-            <div class="index-card-text">
-                <span class="index-card-year">2022</span>
-                <h3 class="index-card-title">Shifted</h3>
-                <p class="index-card-desc">Bachelor's thesis</p>
-            </div>
-        </a>
-
-        <a href="projects/architecture/womens-house.html" class="index-card">
-            <img src="images/display/display-030-womenshouse.jpg" alt="Women's House" style="object-position: center center;">
-            <div class="index-card-text">
-                <span class="index-card-year">2021</span>
-                <h3 class="index-card-title">Women's House</h3>
-                <p class="index-card-desc">Competition</p>
-            </div>
-        </a>
-
-        <a href="projects/architecture/lean-to.html" class="index-card">
-            <img src="images/display/display-040-leanto.jpg" alt="Lean-to" style="object-position: center center;">
-            <div class="index-card-text">
-                <span class="index-card-year">2021</span>
-                <h3 class="index-card-title">Lean-to</h3>
-                <p class="index-card-desc">Acadamic</p>
-            </div>
-        </a>
-
-        <a href="projects/architecture/sagvag-senior-garden.html" class="index-card">
-            <img src="images/display/display-050-sagvag.jpg" alt="Sagvåg Senior Garden" style="object-position: center center;">
-            <div class="index-card-text">
-                <span class="index-card-year">2024</span>
-                <h3 class="index-card-title">Sagvåg Senior Garden</h3>
-                <p class="index-card-desc">Master's Thesis</p>
-            </div>
-        </a>
-
-    </div>
-
-    <!-- ============================================================
-         5. FOOTER
-    ============================================================ -->
-    <footer>
-        <!-- <p>© 2025 Ola Jin Myhre Nymoen</p> -->
-    </footer>
-
-    <script src="index.js"></script>
+  <!-- ================= JS ================= -->
+  <script type="module" src="js/main.js"></script>
 
 </body>
 </html>
