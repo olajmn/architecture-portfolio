@@ -5,7 +5,7 @@ export function initProjectsGrid() {
   if (!grid) return;
 
   grid.innerHTML = displayImages.map(item => `
-    <a class="index-card" href="js/modules/projectPages/projectPage.html?slug=${item.slug}">
+    <a class="index-card" href="projectPages/projectPage.html?slug=${item.slug}">
       <img src="${item.image}" />
       <div class="index-card-text">
         <span>${item.title}</span>

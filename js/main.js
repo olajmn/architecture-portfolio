@@ -13,7 +13,7 @@ initProjectsGrid();
 
 
 // PROJECT PAGE // 
-import { initProjectPage } from "./modules/projectPages/projectPage.js";
+import { initProjectPage } from "../projectPages/projectPage.js";
 
 const page = document.body.dataset.page;
 

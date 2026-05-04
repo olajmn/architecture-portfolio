@@ -11,7 +11,7 @@ export function renderProject(data) {
 
   const galleryHTML = galleryImages.map(img =>
     `<div class="img-${img.size || 'wide'}">
-        <img src="../../../images/${data.folder}/${img.src}">
+        <img src="../images/${data.folder}/${img.src}">
         ${img.caption ? `<p class="img-caption">${img.caption}</p>` : ''}
     </div>`
   ).join('');
@@ -24,7 +24,7 @@ export function renderProject(data) {
     </div>
 
     <div class="img-wide">
-      <img src="../../../images/${data.folder}/${heroImage.src}">
+      <img src="../images/${data.folder}/${heroImage.src}">
     </div>
 
     <div class="project-intro-block">

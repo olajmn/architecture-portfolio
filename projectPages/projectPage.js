@@ -1,4 +1,4 @@
-import { projects } from "../../data.js";
+import { projects } from "../js/data.js";
 import { renderProject } from "./projectRender.js";
 
 export function initProjectPage() {
