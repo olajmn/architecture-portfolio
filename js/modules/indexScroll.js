@@ -20,14 +20,17 @@ export function initIndexScroll() {
     carousel.style.marginTop = (size + 40) + 'px';
   }
 
+  let tickerScrollY = 0;
+
   applyLogoSize(160);
 
   window.addEventListener('scroll', () => {
-    const size = Math.max(32, 160 - window.scrollY * 0.5);
+    const ref = tickerScrollY > 0 ? tickerScrollY : 1;
+    const size = Math.max(32, 160 - (window.scrollY / ref) * 128);
     applyLogoSize(size);
   });
 
   setTimeout(() => {
-    tickerScrollY = tickerEl.offsetTop;
+    tickerScrollY = tickerEl.offsetTop - 200;
   }, 0);
 }
