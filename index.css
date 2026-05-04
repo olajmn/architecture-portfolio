@@ -58,7 +58,7 @@ body {
 }
 
 .index-logo {
-    height: 32px;
+    height: 160px;
     width: auto;
     display: block;
 }
@@ -100,6 +100,7 @@ nav { display: none; }
 /* ============================================================
    KARUSELL
 ============================================================ */
+
 
 .fresh-load .index-logo,
 .fresh-load .carousel,

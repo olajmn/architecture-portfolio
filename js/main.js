@@ -1,0 +1,12 @@
+import { initCarousel } from "./modules/carousel.js";
+import { initLogo } from "./modules/logo.js";
+import { initBurgerMenu } from "./modules/menu.js";
+import { initIndexScroll } from "./modules/indexScroll.js";
+import { initTicker } from "./modules/ticker.js";
+import { initProjectsGrid } from "./modules/projectsGrid.js";
+initBurgerMenu();
+initCarousel();
+initLogo();
+initTicker();
+initIndexScroll();
+initProjectsGrid();
