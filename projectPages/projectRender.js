@@ -7,6 +7,7 @@ export function renderProject(data) {
   ).join('');
 
   const heroImage = data.images[0];
+  
   const galleryImages = data.images.slice(1);
 
   const galleryHTML = galleryImages.map(img =>
