@@ -1,4 +1,4 @@
-import { displayImages } from "../data.js";
+import { displayImages } from "../../data.js";
 
 export function initProjectsGrid() {
   const grid = document.getElementById("projectsGrid");

@@ -1,9 +1,9 @@
-import { initCarousel } from "./modules/carousel.js";
-import { initLogo } from "./modules/logo.js";
-import { initBurgerMenu } from "./modules/menu.js";
-import { initIndexScroll } from "./modules/indexScroll.js";
-import { initTicker } from "./modules/ticker.js";
-import { initProjectsGrid } from "./modules/projectsGrid.js";
+import { initCarousel }     from "./modules/components/carousel.js";
+import { initLogo }         from "./modules/components/logo.js";
+import { initBurgerMenu }   from "./modules/components/menu.js";
+import { initIndexScroll }  from "./modules/components/indexScroll.js";
+import { initTicker }       from "./modules/components/ticker.js";
+import { initProjectsGrid } from "./modules/components/projectsGrid.js";
 initBurgerMenu();
 initCarousel();
 initLogo();

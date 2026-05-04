@@ -1,4 +1,4 @@
-import { displayImages } from "../data.js";
+import { displayImages } from "../../data.js";
 
 export function initCarousel() {
   const container = document.getElementById("carousel");
