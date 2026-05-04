@@ -232,19 +232,6 @@ footer {
 ============================================================ */
 
 @media (max-width: 768px) {
-    body {
-        padding-top: 68px;
-    }
-
-    .index-logo {
-        height: 28px;
-        max-width: 160px;
-    }
-
-    .project-ticker {
-        top: 68px;
-    }
-
     .project-intro-block {
         padding: 0 24px 120px;
     }

@@ -284,11 +284,6 @@ body.menu-open .ticker-track span {
 ============================================================ */
 
 @media (max-width: 768px) {
-    .index-logo {
-        max-height: 60px;
-        max-width: 160px;
-    }
-
     .index-projects {
         grid-template-columns: repeat(2, 1fr);
     }
