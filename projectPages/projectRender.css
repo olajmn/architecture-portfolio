@@ -1,90 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-@import url('../../../shared.css');
+@import url('../shared.css');
 
 /* ============================================================
-   RESET & BASE
+   BASE — prosjektsidespesifikt
 ============================================================ */
-
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --black: #0a0a0a;
-    --white: #ffffff;
-    --gray: #888888;
-    --light-gray: #f0f0f0;
-    --font: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-}
-
-html {
-    scroll-behavior: smooth;
-}
 
 body {
-    font-family: var(--font);
-    color: var(--black);
-    background: var(--white);
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
     padding-top: 80px;
-}
-
-
-/* ============================================================
-   HEADER
-============================================================ */
-
-.index-hero {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 90;
-    background: var(--white);
-    padding: 20px 10px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: start;
-}
-
-.index-logo-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
 }
 
 .index-logo {
     height: 40px;
-    width: auto;
-    display: block;
 }
 
-.index-burger {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    justify-self: end;
-    background: none;
-    border: none;
-    padding: 4px;
-}
-
-.index-burger span {
-    display: block;
-    width: 22px;
-    height: 1.5px;
-    background: var(--black);
-    transition: background 0.3s ease;
-}
-
-.index-burger:hover span {
-    background: #d8d8d8;
+#projectContent {
+    padding-top: 36px;
 }
 
 
@@ -96,8 +25,8 @@ body {
     padding: 6px 0 2px 0;
     width: calc(100% - 12px);
     margin: 0 6px;
-    position: sticky;
-    top: 72px;
+    position: fixed;
+    top: 80px;
     z-index: 85;
     background: var(--white);
     text-align: center;
@@ -163,10 +92,6 @@ body {
 
 /* ============================================================
    BILDEKLASSER
-   Velg størrelse per bilde i HTML-filen:
-     img-wide   = 80% bred
-     img-narrow = 55% bred
-     img-small  = 40% bred
 ============================================================ */
 
 .img-wide,
@@ -175,7 +100,7 @@ body {
     padding: 0 60px 80px;
 }
 
-.img-wide img  { width: 80%; }
+.img-wide img   { width: 80%; }
 .img-narrow img { width: 55%; }
 .img-small img  { width: 40%; }
 
@@ -200,35 +125,7 @@ body {
 
 
 /* ============================================================
-   FOOTER
-============================================================ */
-
-footer {
-    padding: 60px 60px 150px;
-    display: flex;
-    justify-content: center;
-}
-
-.top-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: var(--font);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gray);
-    padding: 0;
-    transition: color 0.3s ease;
-}
-
-.top-btn:hover {
-    color: var(--black);
-}
-
-
-/* ============================================================
-   MOBIL
+   RESPONSIV — mobil
 ============================================================ */
 
 @media (max-width: 768px) {

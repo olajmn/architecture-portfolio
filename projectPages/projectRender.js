@@ -19,7 +19,7 @@ export function renderProject(data) {
 
   container.innerHTML = `
     <div class="project-ticker">
-      <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+      <button class="project-ticker-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
         ${data.title}
       </button>
     </div>
@@ -29,8 +29,8 @@ export function renderProject(data) {
     </div>
 
     <div class="project-intro-block">
-      <p>${data.desc}</p>
-      <dl>${factsHTML}</dl>
+      <p class="project-intro">${data.desc}</p>
+      <dl class="project-facts">${factsHTML}</dl>
     </div>
 
     ${galleryHTML}

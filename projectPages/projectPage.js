@@ -12,5 +12,14 @@ export function initProjectPage() {
   }
 
   renderProject(project);
+
+  const ticker = document.querySelector('.project-ticker');
+  if (ticker) {
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      ticker.classList.toggle('scrolled', window.scrollY > lastScrollY);
+      lastScrollY = window.scrollY;
+    });
+  }
 }
 
