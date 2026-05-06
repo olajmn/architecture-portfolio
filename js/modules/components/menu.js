@@ -1,4 +1,4 @@
-import { displayImages } from "../../data.js";
+import { projects } from "../../data.js";
 
 export function initBurgerMenu() {
   const burger = document.querySelector('.index-burger');
@@ -9,7 +9,7 @@ export function initBurgerMenu() {
   if (menuLinks) {
     const page = document.body.dataset.page;
     const base = page === 'project' ? 'projectPage.html' : 'projectPages/projectPage.html';
-    menuLinks.innerHTML = displayImages.map(item =>
+    menuLinks.innerHTML = projects.map(item =>
       `<a href="${base}?slug=${item.slug}">${item.title}</a>`
     ).join('');
   }

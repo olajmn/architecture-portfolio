@@ -34,5 +34,11 @@ export function renderProject(data) {
     </div>
 
     ${galleryHTML}
+
+    <div class="project-top-btn-wrap">
+      <button class="project-top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        Top
+      </button>
+    </div>
   `;
 }

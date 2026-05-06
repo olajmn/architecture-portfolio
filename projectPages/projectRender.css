@@ -45,7 +45,7 @@ body {
 }
 
 .project-ticker.scrolled .project-ticker-btn {
-    color: var(--light-gray);
+    color: #d8d8d8;
 }
 
 .project-ticker.scrolled .project-ticker-btn:hover {
@@ -157,4 +157,30 @@ body {
     .img-caption {
         padding: 0 24px;
     }
+}
+
+
+/* ============================================================
+   TOP-KNAPP
+============================================================ */
+
+.project-top-btn-wrap {
+    text-align: center;
+    padding: 120px 0 120px;
+}
+
+.project-top-btn {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-family: var(--font);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #d8d8d8;
+    transition: color 0.3s ease;
+}
+
+.project-top-btn:hover {
+    color: var(--black);
 }

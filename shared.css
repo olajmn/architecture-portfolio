@@ -156,6 +156,15 @@ body {
     color: #d8d8d8;
 }
 
+.menu-overlay .menu-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #d8d8d8;
+    margin-bottom: 40px;
+    margin-top: -12px;
+}
+
 @media (max-width: 768px) {
     .menu-overlay {
         width: calc((100vw + 6px) / 2);

@@ -1,12 +1,12 @@
-import { displayImages } from "../../data.js";
+import { projects } from "../../data.js";
 
 export function initCarousel() {
   const container = document.getElementById("carousel");
   if (!container) return;
 
-  container.innerHTML = displayImages.map((item, i) => `
+  container.innerHTML = projects.map((item, i) => `
     <a class="carousel-slide ${i === 0 ? "active" : ""}">
-      <img src="${item.image}" />
+      <img src="images/${item.folder}/${item.displayImage}" ${item.objectPosition ? `style="object-position: ${item.objectPosition}"` : ""} />
     </a>
   `).join("");
 

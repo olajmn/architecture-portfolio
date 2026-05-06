@@ -14,14 +14,6 @@ html.from-project .index-logo {
 
 nav { display: none; }
 
-.menu-overlay .menu-label {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 32px;
-}
-
 
 /* ============================================================
    KARUSELL
@@ -121,11 +113,6 @@ body.menu-open .ticker-track span {
     animation: cardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.index-card:nth-child(1) { animation-delay: 0.15s; }
-.index-card:nth-child(2) { animation-delay: 0.15s; }
-.index-card:nth-child(3) { animation-delay: 0.15s; }
-.index-card:nth-child(4) { animation-delay: 0.15s; }
-
 .index-card img {
     width: 100%;
     height: 100%;
@@ -149,8 +136,24 @@ body.menu-open .ticker-track span {
     justify-content: center;
     text-align: center;
     padding: 24px;
+    color: var(--white);
     opacity: 0;
     transition: opacity 0.3s ease;
+}
+
+.index-card-text span:first-child {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.index-card-text span:last-child {
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    opacity: 0.7;
 }
 
 .index-card:hover .index-card-text {

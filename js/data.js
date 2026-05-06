@@ -1,38 +1,11 @@
-export const displayImages = [
-  {
-    title: "In the Quarry",
-    slug: "in-the-quarry",
-    image: "images/display/display-010-quarry.jpg"
-  },
-  {
-    title: "Shifted",
-    slug: "shifted",
-    image: "images/display/display-020-shifted.jpg"
-  },
-  {
-    title: "Women's House",
-    slug: "womens-house", 
-    image: "images/display/display-030-womenshouse.jpg"
-  },
-  {
-    title: "Lean-to",
-    slug: "lean-to",
-    image: "images/display/display-040-leanto.jpg"
-  },
-  {
-    title: "Sagvåg",
-    slug: "sagvaag-senior-garden",
-    image: "images/display/display-050-sagvag.jpg"
-  }
-];
-
-
-
 export const projects = [
-  
+
   { // 1
     slug: "in-the-quarry",
     folder: "in-the-quarry",
+    displayImage: "01-AD9-cover.jpg",
+    objectPosition: "bottom",
+    gridType: "Academic",
 
     title: "In the Quarry",
     year: 2023,
@@ -65,6 +38,8 @@ export const projects = [
   { // 2
     slug: "shifted",
     folder: "shifted",
+    displayImage: "01-ad6.jpg",
+    gridType: "Bachelor's thesis",
 
     title: "Shifted",
     year: 2022,
@@ -98,6 +73,8 @@ export const projects = [
   { // 3
     slug: "womens-house",
     folder: "womens-house",
+    displayImage: "01-womens-house.jpg",
+    gridType: "Competition",
 
     title: "Women's House",
     year: 2021,
@@ -128,6 +105,8 @@ export const projects = [
   { // 4
     slug: "lean-to",
     folder: "lean-to",
+    displayImage: "12-AD3-night-display.jpg",
+    gridType: "Academic",
 
     title: "Lean-to",
     year: 2022,
@@ -162,6 +141,8 @@ export const projects = [
   { // 5
     slug: "sagvaag-senior-garden",
     folder: "sagvaag-senior-garden",
+    displayImage: "06-apt-sagvaag.jpg",
+    gridType: "Master's Thesis",
 
     title: "Sagvåg Senior garden",
     year: 2024,
