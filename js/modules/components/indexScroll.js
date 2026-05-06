@@ -71,13 +71,4 @@ export function initIndexScroll() {
   setTimeout(() => {
     tickerScrollY = tickerEl.offsetTop - 200;
   }, 0);
-
-  window.addEventListener('pageshow', (e) => {
-    if (e.persisted) {
-      applyLogoSize(40);
-      setTimeout(() => {
-        tickerEl.scrollIntoView({ behavior: 'instant' });
-      }, 0);
-    }
-  });
 }

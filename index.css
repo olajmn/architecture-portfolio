@@ -173,6 +173,10 @@ body.menu-open .ticker-track span {
         max-width: 160px;
     }
 
+    .ticker-track span {
+        font-size: 8px;
+    }
+
     .index-projects {
         grid-template-columns: repeat(2, 1fr);
     }

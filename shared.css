@@ -114,13 +114,13 @@ body {
 }
 
 .menu-overlay a {
+    display: block;
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--black);
     text-decoration: none;
     padding: 6px 0;
-    align-self: flex-start;
     opacity: 0;
     transition: color 0.3s ease;
 }
