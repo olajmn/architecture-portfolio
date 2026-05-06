@@ -10,7 +10,9 @@ export function initIndexScroll() {
   if (!logo || !carousel || !tickerEl) return;
 
   history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
+
+  const fromProject = sessionStorage.getItem('fromProject') === '1';
+  if (fromProject) sessionStorage.removeItem('fromProject');
 
   let tickerFixed = false;
   let tickerSpacer = null;
@@ -49,11 +51,19 @@ export function initIndexScroll() {
 
   let tickerScrollY = 0;
 
-  applyLogoSize(160);
+  if (fromProject) {
+    applyLogoSize(40);
+    setTimeout(() => {
+      tickerEl.scrollIntoView({ behavior: 'instant' });
+    }, 0);
+  } else {
+    window.scrollTo(0, 0);
+    applyLogoSize(160);
+  }
 
   window.addEventListener('scroll', () => {
     const ref = tickerScrollY > 0 ? tickerScrollY : 1;
-    const size = Math.max(40, 160 - (window.scrollY / ref) * 128);
+    const size = Math.max(40, 160 - (window.scrollY / ref) * 120);
     applyLogoSize(size);
     updateTicker();
   });
@@ -61,4 +71,13 @@ export function initIndexScroll() {
   setTimeout(() => {
     tickerScrollY = tickerEl.offsetTop - 200;
   }, 0);
+
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      applyLogoSize(40);
+      setTimeout(() => {
+        tickerEl.scrollIntoView({ behavior: 'instant' });
+      }, 0);
+    }
+  });
 }

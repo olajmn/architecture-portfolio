@@ -2,6 +2,10 @@ import { projects } from "../js/data.js";
 import { renderProject } from "./projectRender.js";
 
 export function initProjectPage() {
+  window.addEventListener('pagehide', () => {
+    sessionStorage.setItem('fromProject', '1');
+  });
+
   const slug = new URLSearchParams(window.location.search).get("slug");
 
   const project = projects.find(p => p.slug === slug);

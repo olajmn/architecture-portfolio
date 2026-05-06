@@ -8,6 +8,10 @@
     height: 160px;
 }
 
+html.from-project .index-logo {
+    height: 40px;
+}
+
 nav { display: none; }
 
 .menu-overlay .menu-label {

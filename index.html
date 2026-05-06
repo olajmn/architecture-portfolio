@@ -6,6 +6,11 @@
   <title>Ola Jin Myhre Nymoen</title>
 
   <link rel="stylesheet" href="index.css" />
+  <script>
+    if (sessionStorage.getItem('fromProject') === '1') {
+      document.documentElement.classList.add('from-project');
+    }
+  </script>
 </head>
 
 <body data-page="index">
