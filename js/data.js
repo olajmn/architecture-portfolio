@@ -3,7 +3,7 @@ export const projects = [
   { // 1
     slug: "in-the-quarry",
     folder: "in-the-quarry",
-    displayImage: "01-AD9-cover.jpg",
+    displayImage: { src: "01-AD9-cover.jpg", objectPosition: "bottom" },
     gridType: "Academic",
     carouselImages: [
     { src: "01-AD9-cover.jpg", objectPosition: "bottom" },
