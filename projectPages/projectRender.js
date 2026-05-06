@@ -35,7 +35,7 @@ export function renderProject(data) {
 
     <div class="project-intro-block">
       <h1 class="project-title">${data.title}</h1>
-      <p class="project-intro">${data.desc}</p>
+      <div class="project-desc">${data.desc}</div>
       <dl class="project-facts">${factsHTML}</dl>
     </div>
 

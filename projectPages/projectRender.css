@@ -72,11 +72,15 @@ body {
     padding-top: 40px;
 }
 
-.project-intro {
+.project-desc p {
     font-size: 14px;
     line-height: 1.8;
-    margin-bottom: 60px;
     font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.project-desc p:last-child {
+    margin-bottom: 60px;
 }
 
 .project-facts {
