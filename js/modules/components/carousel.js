@@ -4,9 +4,17 @@ export function initCarousel() {
   const container = document.getElementById("carousel");
   if (!container) return;
 
-  container.innerHTML = projects.map((item, i) => `
+  const slideData = projects.flatMap(item =>
+    item.carouselImages.map(img => ({
+      folder: item.folder,
+      src: typeof img === 'string' ? img : img.src,
+      objectPosition: typeof img === 'string' ? item.objectPosition : img.objectPosition
+    }))
+  );
+
+  container.innerHTML = slideData.map((slide, i) => `
     <a class="carousel-slide ${i === 0 ? "active" : ""}">
-      <img src="images/${item.folder}/${item.displayImage}" ${item.objectPosition ? `style="object-position: ${item.objectPosition}"` : ""} />
+      <img src="images/${slide.folder}/${slide.src}" ${slide.objectPosition ? `style="object-position: ${slide.objectPosition}"` : ""} />
     </a>
   `).join("");
 

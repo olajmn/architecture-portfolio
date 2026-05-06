@@ -4,8 +4,10 @@ export const projects = [
     slug: "in-the-quarry",
     folder: "in-the-quarry",
     displayImage: "01-AD9-cover.jpg",
-    objectPosition: "bottom",
     gridType: "Academic",
+    carouselImages: [
+    { src: "01-AD9-cover.jpg", objectPosition: "bottom" },
+    ],
 
     title: "In the Quarry",
     year: 2023,
@@ -22,7 +24,7 @@ export const projects = [
     },
     
     images: [
-      { src: "01-AD9-cover.jpg",             size: "wide" },                                                                                                                                                                                    
+      { src: "01-AD9-cover.jpg",             size: "wide"},                                                                                                                                                                                    
       { src: "02-AD9-axonometry.jpg",        size: "wide", paddingBottom: "180px" },                                                                                                                                                                                   
       { src: "03-AD9-snitt-landskap.jpg",    size: "narrow", paddingBottom: "180px"},                                                                                                                                                                                   
       { src: "04-AD9-section-long.jpg",      size: "narrow", paddingBottom: "180px" },                                                                                                                                                                                   
@@ -40,6 +42,10 @@ export const projects = [
     folder: "shifted",
     displayImage: "01-ad6.jpg",
     gridType: "Bachelor's thesis",
+    carouselImages: [
+      "01-ad6.jpg", 
+      "11-ad6.jpg",
+    ],
 
     title: "Shifted",
     year: 2022,
@@ -75,6 +81,10 @@ export const projects = [
     folder: "womens-house",
     displayImage: "01-womens-house.jpg",
     gridType: "Competition",
+    carouselImages: [
+      { src: "01-womens-house.jpg", objectPosition: "bottom" },
+      "02-womens-house.jpg",
+    ],
 
     title: "Women's House",
     year: 2021,
@@ -107,6 +117,9 @@ export const projects = [
     folder: "lean-to",
     displayImage: "12-AD3-night-display.jpg",
     gridType: "Academic",
+    carouselImages: [
+      "12-AD3-night-display.jpg",
+    ],
 
     title: "Lean-to",
     year: 2022,
@@ -143,6 +156,9 @@ export const projects = [
     folder: "sagvaag-senior-garden",
     displayImage: "06-apt-sagvaag.jpg",
     gridType: "Master's Thesis",
+    carouselImages: [
+      "06-apt-sagvaag.jpg",
+    ],
 
     title: "Sagvåg Senior garden",
     year: 2024,
