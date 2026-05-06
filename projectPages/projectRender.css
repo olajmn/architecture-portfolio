@@ -63,16 +63,27 @@ body {
     margin: 0 auto;
 }
 
+.project-title {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    padding-top: 40px;
+}
+
 .project-intro {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1.8;
     margin-bottom: 60px;
+    font-weight: 400;
 }
 
 .project-facts {
     display: grid;
     grid-template-columns: 140px 1fr;
     gap: 12px 0;
+    line-height: 1.4;
 }
 
 .project-facts dt {
@@ -81,11 +92,11 @@ body {
     letter-spacing: 0.04em;
     text-transform: uppercase;
 }
-
 .project-facts dt::after { content: ':'; }
 
 .project-facts dd {
     font-size: 14px;
+    font-weight: 400;
     margin: 0;
 }
 

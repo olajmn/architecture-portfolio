@@ -10,12 +10,17 @@ export function renderProject(data) {
   
   const galleryImages = data.images.slice(1);
 
-  const galleryHTML = galleryImages.map(img =>
-    `<div class="img-${img.size || 'wide'}">
+  const galleryHTML = galleryImages.map(img => {
+    const style = [
+      img.paddingTop    ? `padding-top: ${img.paddingTop}`       : '',
+      img.paddingBottom ? `padding-bottom: ${img.paddingBottom}` : '',
+    ].filter(Boolean).join('; ');
+
+    return `<div class="img-${img.size || 'wide'}"${style ? ` style="${style}"` : ''}>
         <img src="../images/${data.folder}/${img.src}">
         ${img.caption ? `<p class="img-caption">${img.caption}</p>` : ''}
-    </div>`
-  ).join('');
+    </div>`;
+  }).join('');
 
   container.innerHTML = `
     <div class="project-ticker">
@@ -29,6 +34,7 @@ export function renderProject(data) {
     </div>
 
     <div class="project-intro-block">
+      <h1 class="project-title">${data.title}</h1>
       <p class="project-intro">${data.desc}</p>
       <dl class="project-facts">${factsHTML}</dl>
     </div>
