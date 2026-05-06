@@ -15,6 +15,7 @@ export function initProjectPage() {
     return;
   }
 
+  document.title = project.title;
   renderProject(project);
 
   const ticker = document.querySelector('.project-ticker');
