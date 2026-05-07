@@ -1,0 +1,77 @@
+.index-projects {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    width: calc(100% - 12px);
+    margin: 6px 6px calc(100vh - 20vw - 100px);
+}
+
+.index-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--light-gray);
+    position: relative;
+    opacity: 0;
+    animation: cardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.index-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(100%);
+    transition: transform 0.7s ease, filter 0.7s ease;
+}
+
+.index-card:hover img {
+    transform: scale(1.03);
+    filter: grayscale(0%);
+}
+
+.index-card-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    color: var(--white);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.index-card-text span:first-child {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.index-card-text span:last-child {
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.index-card:hover .index-card-text {
+    opacity: 1;
+}
+
+@keyframes cardFadeIn {
+    from { opacity: 0; transform: scale(1.04); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+    .index-projects {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

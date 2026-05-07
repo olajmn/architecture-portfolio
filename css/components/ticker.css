@@ -1,0 +1,36 @@
+.ticker {
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 6px 0 2px 0;
+    width: calc(100% - 12px);
+    margin: 0 6px;
+    position: relative;
+    z-index: 85;
+    background: var(--white);
+}
+
+.ticker-track {
+    display: inline-block;
+    font-size: 0;
+    animation: ticker 50s linear infinite;
+}
+
+.ticker-track span {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--black);
+    white-space: pre;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+body.menu-open .ticker-track span {
+    color: #d8d8d8;
+}
+
+@media (max-width: 768px) {
+    .ticker-track span {
+        font-size: 8px;
+    }
+}

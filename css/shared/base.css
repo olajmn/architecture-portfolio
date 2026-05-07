@@ -1,0 +1,12 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font);
+    color: var(--black);
+    background: var(--white);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: clip;
+}
