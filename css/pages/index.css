@@ -6,18 +6,17 @@
     position: fixed;
     inset: 0;
     background: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
     z-index: 999;
-    transition: opacity 0.4s ease;
+    /* transition set in JS for sync with logo */
 }
 
 .intro-logo {
-    width: 260px;
-    transform: scale(6);
-    transform-origin: center center;
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(90vw, calc(90vh * 1.778));
 }
 
 
@@ -31,6 +30,11 @@
 
 html.from-project .index-logo {
     height: 40px;
+}
+
+html.from-project .intro-overlay,
+html.from-project .intro-logo {
+    display: none;
 }
 
 nav {

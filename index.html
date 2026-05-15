@@ -6,6 +6,14 @@
   <title>Ola Jin Myhre Nymoen</title>
 
   <link rel="stylesheet" href="css/main.css" />
+
+  <!-- Preload carousel images so they start loading before JS runs -->
+  <link rel="preload" as="image" href="images/shifted/01-ad6.jpg">
+  <link rel="preload" as="image" href="images/shifted/11-ad6.jpg">
+  <link rel="preload" as="image" href="images/womens-house/01-womens-house.jpg">
+  <link rel="preload" as="image" href="images/womens-house/02-womens-house.jpg">
+  <link rel="preload" as="image" href="images/lean-to/12-AD3-night-display.jpg">
+  <link rel="preload" as="image" href="images/sagvaag-senior-garden/06-apt-sagvaag.jpg">
   <script>
     if (sessionStorage.getItem('fromProject') === '1') {
       document.documentElement.classList.add('from-project');
@@ -56,9 +64,8 @@
   </main>
 
   <!-- ================= INTRO ================= -->
-  <div class="intro-overlay" id="introOverlay">
-    <img src="images/architecture-portfolio.svg" class="intro-logo" id="introLogo" alt="" />
-  </div>
+  <div class="intro-overlay" id="introOverlay"></div>
+  <img src="images/architecture-portfolio.svg" class="intro-logo" id="introLogo" alt="" />
 
   <!-- ================= JS ================= -->
   <script type="module" src="js/main.js"></script>

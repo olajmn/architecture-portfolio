@@ -2,55 +2,61 @@ export function initIntro() {
   const overlay     = document.getElementById('introOverlay');
   const overlayLogo = document.getElementById('introLogo');
   const realLogo    = document.querySelector('.index-logo');
+  const header      = document.querySelector('.index-hero');
 
   if (!overlay || !overlayLogo || !realLogo) return;
 
   if (sessionStorage.getItem('fromProject') === '1') {
     overlay.remove();
+    overlayLogo.remove();
     return;
   }
 
   realLogo.style.opacity = '0';
-  document.body.style.overflow = 'hidden';
+
+  const logoDuration    = 700;
+  const curtainDuration = 1700;
+  const logoEasing      = 'cubic-bezier(0.16, 1, 0.3, 1)';
+  const curtainEasing   = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
   setTimeout(() => {
-    // FLIP: record where the big logo is, and where it needs to end up
+    // FLIP: big logo → header position
     const startRect = overlayLogo.getBoundingClientRect();
     const finalRect = realLogo.getBoundingClientRect();
 
-    // Move overlay logo to final position at natural size
-    overlayLogo.style.position      = 'fixed';
-    overlayLogo.style.zIndex        = '1000';
-    overlayLogo.style.margin        = '0';
-    overlayLogo.style.top           = finalRect.top + 'px';
-    overlayLogo.style.left          = finalRect.left + 'px';
-    overlayLogo.style.width         = finalRect.width + 'px';
-    overlayLogo.style.height        = finalRect.height + 'px';
+    overlayLogo.style.top             = finalRect.top + 'px';
+    overlayLogo.style.left            = finalRect.left + 'px';
+    overlayLogo.style.width           = finalRect.width + 'px';
+    overlayLogo.style.height          = finalRect.height + 'px';
     overlayLogo.style.transformOrigin = 'top left';
+    overlayLogo.style.zIndex          = '1002'; // above header (1001) and overlay (999)
 
-    // Invert: push it back visually to where it started
     const dx    = startRect.left - finalRect.left;
     const dy    = startRect.top  - finalRect.top;
     const scale = startRect.width / finalRect.width;
     overlayLogo.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
-    overlayLogo.offsetHeight; // force reflow
+    overlayLogo.offsetHeight;
 
-    // Play: animate logo to header
-    overlayLogo.style.transition = 'transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)';
+    // Lift header above overlay — it becomes part of the animation, not a "reveal"
+    if (header) header.style.zIndex = '1001';
+
+    overlayLogo.style.transition = `transform ${logoDuration}ms ${logoEasing}`;
     overlayLogo.style.transform  = 'none';
 
-    // After logo lands: show real logo, fade out overlay
-    setTimeout(() => {
-      realLogo.style.transition = 'opacity 0.15s ease';
-      realLogo.style.opacity    = '1';
-      overlay.style.opacity     = '0';
+    overlay.style.transition = `transform ${curtainDuration}ms ${curtainEasing}`;
+    overlay.style.transform  = 'translateY(-100%)';
 
-      setTimeout(() => {
-        overlay.remove();
-        realLogo.style.opacity    = '';
-        realLogo.style.transition = '';
-        document.body.style.overflow = '';
-      }, 400);
-    }, 880);
+    // Logo lands: show real logo instantly, then remove overlay logo next frame
+    setTimeout(() => {
+      realLogo.style.opacity = '1';
+      requestAnimationFrame(() => overlayLogo.remove());
+    }, logoDuration);
+
+    // Curtain done: clean up
+    setTimeout(() => {
+      overlay.remove();
+      if (header) header.style.zIndex = '';
+      realLogo.style.opacity = '';
+    }, curtainDuration + 50);
   }, 700);
 }
