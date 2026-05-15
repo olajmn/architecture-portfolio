@@ -33,7 +33,9 @@ html.from-project .index-logo {
 }
 
 html.from-project .intro-overlay,
-html.from-project .intro-logo {
+html.from-project .intro-logo,
+html.intro-seen .intro-overlay,
+html.intro-seen .intro-logo {
     display: none;
 }
 

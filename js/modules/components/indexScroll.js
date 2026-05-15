@@ -9,10 +9,15 @@ export function initIndexScroll() {
 
   if (!logo || !carousel || !tickerEl) return;
 
-  history.scrollRestoration = 'manual';
+  const fromProject  = sessionStorage.getItem('fromProject')  === '1';
+  const introPlaying = sessionStorage.getItem('introPlaying') === '1';
 
-  const fromProject = sessionStorage.getItem('fromProject') === '1';
-  if (fromProject) sessionStorage.removeItem('fromProject');
+  if (fromProject)  sessionStorage.removeItem('fromProject');
+  if (introPlaying) sessionStorage.removeItem('introPlaying');
+
+  // Only override scroll restoration when we're deliberately jumping somewhere.
+  // On a plain refresh we want the browser to put the user back where they were.
+  history.scrollRestoration = (fromProject || introPlaying) ? 'manual' : 'auto';
 
   let tickerFixed = false;
   let tickerSpacer = null;
@@ -56,8 +61,10 @@ export function initIndexScroll() {
     setTimeout(() => {
       tickerEl.scrollIntoView({ behavior: 'instant' });
     }, 0);
-  } else {
+  } else if (introPlaying) {
     window.scrollTo(0, 0);
+    applyLogoSize(160);
+  } else {
     applyLogoSize(160);
   }
 
@@ -70,5 +77,11 @@ export function initIndexScroll() {
 
   setTimeout(() => {
     tickerScrollY = tickerEl.offsetTop - 200;
+    if (!fromProject && !introPlaying) {
+      const ref  = tickerScrollY > 0 ? tickerScrollY : 1;
+      const size = Math.max(40, 160 - (window.scrollY / ref) * 120);
+      applyLogoSize(size);
+      updateTicker();
+    }
   }, 0);
 }

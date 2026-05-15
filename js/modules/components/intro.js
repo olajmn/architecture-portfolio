@@ -6,11 +6,14 @@ export function initIntro() {
 
   if (!overlay || !overlayLogo || !realLogo) return;
 
-  if (sessionStorage.getItem('fromProject') === '1') {
+  if (sessionStorage.getItem('fromProject') === '1' || sessionStorage.getItem('introSeen') === '1') {
     overlay.remove();
     overlayLogo.remove();
     return;
   }
+
+  sessionStorage.setItem('introSeen',    '1');
+  sessionStorage.setItem('introPlaying', '1');
 
   realLogo.style.opacity = '0';
 
