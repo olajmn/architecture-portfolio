@@ -86,13 +86,20 @@ export function initIndexScroll() {
   });
 
   setTimeout(() => {
+    // Measure with logo at 160px so tickerScrollY is always consistent,
+    // regardless of which size was restored. Body is still hidden here.
+    logo.style.height = '160px';
+    carousel.style.marginTop = '200px';
     tickerScrollY = tickerEl.offsetTop - 200;
-    if (!fromProject && !introPlaying) {
+
+    if (fromProject) {
+      applyLogoSize(40);
+    } else {
       const ref  = tickerScrollY > 0 ? tickerScrollY : 1;
       const size = Math.max(40, 160 - (window.scrollY / ref) * 120);
       applyLogoSize(size);
-      updateTicker();
     }
+    updateTicker();
     document.getElementById('pre-render-fix')?.remove();
   }, 0);
 }
