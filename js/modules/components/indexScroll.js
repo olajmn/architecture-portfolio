@@ -11,12 +11,18 @@ export function initIndexScroll() {
 
   const fromProject  = sessionStorage.getItem('fromProject')  === '1';
   const introPlaying = sessionStorage.getItem('introPlaying') === '1';
+  const savedLogoH   = parseFloat(sessionStorage.getItem('savedLogoH'));
 
   if (fromProject)  sessionStorage.removeItem('fromProject');
   if (introPlaying) sessionStorage.removeItem('introPlaying');
+  sessionStorage.removeItem('savedLogoH');
 
-  // Only override scroll restoration when we're deliberately jumping somewhere.
-  // On a plain refresh we want the browser to put the user back where they were.
+  // Save exact logo height just before teardown so refresh can restore it
+  // instantly — avoids the 160px flash while the correct size is computed.
+  window.addEventListener('pagehide', () => {
+    sessionStorage.setItem('savedLogoH', logo.offsetHeight);
+  });
+
   history.scrollRestoration = (fromProject || introPlaying) ? 'manual' : 'auto';
 
   let tickerFixed = false;
@@ -64,6 +70,10 @@ export function initIndexScroll() {
   } else if (introPlaying) {
     window.scrollTo(0, 0);
     applyLogoSize(160);
+  } else if (savedLogoH) {
+    // Refresh: restore exact logo size from last visit so layout is correct
+    // before the browser's own scroll restoration kicks in — no flash.
+    applyLogoSize(savedLogoH);
   } else {
     applyLogoSize(160);
   }
@@ -83,5 +93,6 @@ export function initIndexScroll() {
       applyLogoSize(size);
       updateTicker();
     }
+    document.getElementById('pre-render-fix')?.remove();
   }, 0);
 }

@@ -15,12 +15,28 @@
   <link rel="preload" as="image" href="images/lean-to/12-AD3-night-display.jpg">
   <link rel="preload" as="image" href="images/sagvaag-senior-garden/06-apt-sagvaag.jpg">
   <script>
-    if (sessionStorage.getItem('fromProject') === '1') {
-      document.documentElement.classList.add('from-project');
-    }
-    if (sessionStorage.getItem('introSeen') === '1') {
-      document.documentElement.classList.add('intro-seen');
-    }
+    (function () {
+      var fromProject = sessionStorage.getItem('fromProject') === '1';
+      var introSeen   = sessionStorage.getItem('introSeen')   === '1';
+
+      if (fromProject) document.documentElement.classList.add('from-project');
+      if (introSeen)   document.documentElement.classList.add('intro-seen');
+
+      // Inject exact logo height before first paint so there is no flash.
+      // Only needed on a plain refresh (intro already seen, not a back-nav).
+      if (introSeen && !fromProject) {
+        var h   = parseFloat(sessionStorage.getItem('savedLogoH'));
+        var css = 'body{visibility:hidden}';
+        if (h > 0) {
+          css += '.index-logo{height:' + h + 'px}' +
+                 '#carousel{margin-top:' + (h + 40) + 'px}';
+        }
+        var s = document.createElement('style');
+        s.id  = 'pre-render-fix';
+        s.textContent = css;
+        document.head.appendChild(s);
+      }
+    }());
   </script>
 </head>
 
