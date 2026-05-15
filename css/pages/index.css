@@ -1,3 +1,30 @@
+/* ============================================================
+   INTRO — logo splash screen
+============================================================ */
+
+.intro-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 999;
+    transition: opacity 0.4s ease;
+}
+
+.intro-logo {
+    width: 260px;
+    transform: scale(6);
+    transform-origin: center center;
+}
+
+
+/* ============================================================
+   INDEX LOGO (header)
+============================================================ */
+
 .index-logo {
     height: 160px;
 }
