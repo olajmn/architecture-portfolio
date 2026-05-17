@@ -31,6 +31,7 @@ body.menu-open .ticker-track span {
 
 @media (max-width: 768px) {
     .ticker-track span {
-        font-size: 8px;
+        font-size: 7px;
+        letter-spacing: 0.10em;
     }
 }

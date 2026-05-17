@@ -9,6 +9,9 @@ export function initIndexScroll() {
 
   if (!logo || !carousel || !tickerEl) return;
 
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const LOGO_MAX = isMobile ? 36 : 160;
+
   const fromProject  = sessionStorage.getItem('fromProject')  === '1';
   const introPlaying = sessionStorage.getItem('introPlaying') === '1';
   const savedLogoH   = parseFloat(sessionStorage.getItem('savedLogoH'));
@@ -60,6 +63,22 @@ export function initIndexScroll() {
     }
   }
 
+  // On mobile: skip scroll animation — logo stays fixed at 36px
+  if (isMobile) {
+    if (fromProject) {
+      applyLogoSize(40);
+      setTimeout(() => { tickerEl.scrollIntoView({ behavior: 'instant' }); }, 0);
+    } else {
+      applyLogoSize(LOGO_MAX);
+    }
+    setTimeout(() => {
+      updateTicker();
+      document.getElementById('pre-render-fix')?.remove();
+    }, 0);
+    return;
+  }
+
+  // Desktop: scroll-based logo animation
   let tickerScrollY = 0;
 
   if (fromProject) {
