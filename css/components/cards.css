@@ -74,4 +74,13 @@
     .index-projects {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .index-card-text {
+        opacity: 1;
+        justify-content: flex-end;
+        align-items: flex-start;
+        padding: 0 10px 10px;
+        background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 60%);
+        text-align: left;
+    }
 }

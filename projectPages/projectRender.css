@@ -158,6 +158,21 @@ body {
         padding: 0 24px 120px;
     }
 
+    .project-title {
+        font-size: 22px;
+        letter-spacing: 0.04em;
+        margin-bottom: 28px;
+    }
+
+    .project-facts {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .project-facts dt {
+        margin-top: 14px;
+    }
+
     .img-wide, .img-narrow, .img-small {
         padding: 0 24px 60px;
     }
