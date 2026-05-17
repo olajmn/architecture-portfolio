@@ -75,6 +75,7 @@ export function initIndexScroll() {
       updateTicker();
       document.getElementById('pre-render-fix')?.remove();
     }, 0);
+    window.addEventListener('scroll', updateTicker);
     return;
   }
 
