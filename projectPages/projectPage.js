@@ -1,9 +1,10 @@
 import { projects } from "../js/data.js";
 import { renderProject } from "./projectRender.js";
+import { setFromProject } from "../js/appState.js";
 
 export function initProjectPage() {
   window.addEventListener('pagehide', () => {
-    sessionStorage.setItem('fromProject', '1');
+    setFromProject();
   });
 
   const slug = new URLSearchParams(window.location.search).get("slug");

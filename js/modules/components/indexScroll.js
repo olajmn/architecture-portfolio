@@ -2,6 +2,8 @@
    3. LOGO — skalerer fra 160px (topp) til 40px (ved tickeren)
    TICKER — festes under headeren når den treffer toppen
 ============================================================ */
+import { isFromProject, isIntroPlaying, getSavedLogoH, setSavedLogoH, clearFromProject, clearIntroPlaying, clearSavedLogoH } from "../../appState.js";
+
 export function initIndexScroll() {
   const logo = document.querySelector('.index-logo');
   const carousel = document.getElementById('carousel');
@@ -12,18 +14,18 @@ export function initIndexScroll() {
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
   const LOGO_MAX = isMobile ? 36 : 160;
 
-  const fromProject  = sessionStorage.getItem('fromProject')  === '1';
-  const introPlaying = sessionStorage.getItem('introPlaying') === '1';
-  const savedLogoH   = parseFloat(sessionStorage.getItem('savedLogoH'));
+  const fromProject  = isFromProject();
+  const introPlaying = isIntroPlaying();
+  const savedLogoH   = getSavedLogoH();
 
-  if (fromProject)  sessionStorage.removeItem('fromProject');
-  if (introPlaying) sessionStorage.removeItem('introPlaying');
-  sessionStorage.removeItem('savedLogoH');
+  if (fromProject)  clearFromProject();
+  if (introPlaying) clearIntroPlaying();
+  clearSavedLogoH();
 
   // Save exact logo height just before teardown so refresh can restore it
   // instantly — avoids the 160px flash while the correct size is computed.
   window.addEventListener('pagehide', () => {
-    sessionStorage.setItem('savedLogoH', logo.offsetHeight);
+    setSavedLogoH(logo.offsetHeight);
   });
 
   history.scrollRestoration = (fromProject || introPlaying) ? 'manual' : 'auto';

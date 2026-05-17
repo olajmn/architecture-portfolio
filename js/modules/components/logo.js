@@ -1,6 +1,8 @@
 /* ============================================================
    4. LOGO-KNAPP — scroll til toppen
 ============================================================ */
+import { setFromProject } from "../../appState.js";
+
 export function initLogo() {
   const btn = document.querySelector('.index-logo-btn');
   if (!btn) return;
@@ -8,7 +10,7 @@ export function initLogo() {
   const handlers = {
     index: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
     project: () => {
-      sessionStorage.setItem('fromProject', '1');
+      setFromProject();
       window.location.href = '../index.html';
     }
   };

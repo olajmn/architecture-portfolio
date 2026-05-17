@@ -1,3 +1,5 @@
+import { isFromProject, isIntroSeen, setIntroSeen, setIntroPlaying } from "../../appState.js";
+
 export function initIntro() {
   const overlay     = document.getElementById('introOverlay');
   const overlayLogo = document.getElementById('introLogo');
@@ -6,14 +8,14 @@ export function initIntro() {
 
   if (!overlay || !overlayLogo || !realLogo) return;
 
-  if (sessionStorage.getItem('fromProject') === '1' || sessionStorage.getItem('introSeen') === '1') {
+  if (isFromProject() || isIntroSeen()) {
     overlay.remove();
     overlayLogo.remove();
     return;
   }
 
-  sessionStorage.setItem('introSeen',    '1');
-  sessionStorage.setItem('introPlaying', '1');
+  setIntroSeen();
+  setIntroPlaying();
 
   realLogo.style.opacity = '0';
 
