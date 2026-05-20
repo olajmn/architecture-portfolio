@@ -20,7 +20,7 @@ export const projects = [
 
     facts: {
       Location: "Ústí nad Labem, Czech Republic",
-      Type:   "Academic project",
+      Type:   "Academic",
       Program:  "Cultural Architecture",
       Year:     "2023"
     },
@@ -142,7 +142,7 @@ export const projects = [
 
     facts: {
       Location: "Prague, Czech Republic",
-      Status:   "Academic Project",
+      Status:   "Academic",
       Program:  "Kindergarten",
       Year:     "2020"
     },
@@ -210,6 +210,53 @@ export const projects = [
       { src: "17-shed-sagvaag.jpg",     size: "wide", paddingBottom: "180px" },
       { src: "18-shed-sagvaag.jpg",     size: "wide", paddingBottom: "180px" },                                                            
       { src: "19-shed-sagvaag.jpg",     size: "small", paddingBottom: "180px" }  
+    ],
+  },
+
+  { // 6
+    slug: "passage",
+    folder: "passage",
+    displayImage: "01-AD5-cover.jpg",
+    gridType: "Academic",
+    carouselImages: [
+      "",
+    ],
+
+    title: "Passage",
+    year: 2021,
+    desc: 
+    `
+    <p>Řepy is a residential district on the western edge of Prague, bordered by Zlíčín along a dividing train line. The
+  area combines industrial facilities with a well-connected residential fabric, offering access to public transport,
+  sports facilities, and local amenities. The metropolitan plan further anticipates urban transformation in the area,
+  proposing to reroute and underground the existing tram line, signaling a shift in the site's long-term role within the
+  city.</p>
+    <p>The project responds to the spatial gap between Řepy and Zlíčín by introducing a public facility that functions as
+  both a destination and a connector. The program brings together a climbing hall, gym, and dining spaces, while
+  integrating the existing train stop into the building's ground level. A passage runs through the structure and
+  continues as a tunnel beneath the rail line, physically linking the two districts. The surrounding open space is
+  organized as a landscape of parks, cycling paths, and recreational areas, establishing a new active threshold between
+  the two neighborhoods.</p>
+    <p></p>
+    `,
+
+
+    facts: {
+      Location: "Prague, Czech Republic",
+      Status:   "Academic",
+      Program:  "Center",
+      Year:     "2021"
+    },
+
+    images: [
+      { src: "01-AD5-cover.jpg",  size: "wide" },
+      { src: "02-AD5-axo.jpg",    size: "wide",   paddingBottom: "180px" }, 
+      { src: "03-AD5.jpg",        size: "wide", paddingBottom: "180px" }, 
+      // { src: "04-AD5-section.jpg",size: "wide", paddingBottom: "180px" }, 
+      { src: "05-AD5.jpg",        size: "narrow", paddingBottom: "180px" }, 
+      { src: "06-AD5.jpg",        size: "small", paddingBottom: "180px" }, 
+      { src: "07-AD5.jpg",        size: "small", paddingBottom: "180px" },                                                          
+   
     ],
   },
 ];
