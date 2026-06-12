@@ -37,7 +37,7 @@
 .index-burger span {
     display: block;
     width: 22px;
-    height: 1.5px;
+    height: 1px;
     background: var(--black);
     transition: background 0.3s ease;
 }

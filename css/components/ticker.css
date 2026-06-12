@@ -3,7 +3,7 @@
     white-space: nowrap;
     padding: 6px 0 2px 0;
     width: calc(100% - 12px);
-    margin: 0 6px;
+    margin: 80px 6px 0;
     position: relative;
     z-index: 85;
     background: var(--white);

@@ -131,7 +131,7 @@ export const projects = [
     ],
 
     title: "Lean-to",
-    year: 2022,
+    year: 2020,
     desc: 
     `
     <p>Prague’s university hospital was founded in the 1790s and has played a central role in the city’s medical history. The project explores the introduction of a kindergarten within this context, addressing the need for childcare facilities connected to a healthcare environment. By integrating a new program into the hospital setting, the proposal aims to support both staff and families through a more holistic and socially responsive infrastructure.</p>
@@ -218,9 +218,7 @@ export const projects = [
     folder: "passage",
     displayImage: "01-AD5-cover.jpg",
     gridType: "Academic",
-    carouselImages: [
-      "",
-    ],
+    carouselImages: [],
 
     title: "Passage",
     year: 2021,

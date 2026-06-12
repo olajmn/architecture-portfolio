@@ -35,16 +35,23 @@ export function initCarousel() {
   slides.forEach(s => s.classList.remove("active"));
   slides[current].classList.add("active");
 
-  setInterval(() => {
+  function advance() {
     slides[current].classList.remove("active");
     queueIndex++;
     if (queueIndex >= queue.length) {
       do { shuffle(queue); } while (queue[0] === current);
       queueIndex = 0;
     }
-
     current = queue[queueIndex];
     slides[current].classList.add("active");
-  }, 4000);
+  }
+
+  let timer = setInterval(advance, 4000);
+
+  container.addEventListener('click', () => {
+    advance();
+    clearInterval(timer);
+    timer = setInterval(advance, 4000);
+  });
 }
 

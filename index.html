@@ -18,24 +18,8 @@
     (function () {
       var fromProject = sessionStorage.getItem('fromProject') === '1';
       var introSeen   = sessionStorage.getItem('introSeen')   === '1';
-
       if (fromProject) document.documentElement.classList.add('from-project');
       if (introSeen)   document.documentElement.classList.add('intro-seen');
-
-      // Inject exact logo height before first paint so there is no flash.
-      // Only needed on a plain refresh (intro already seen, not a back-nav).
-      if (introSeen && !fromProject) {
-        var h   = parseFloat(sessionStorage.getItem('savedLogoH'));
-        var css = 'body{visibility:hidden}';
-        if (h > 0) {
-          css += '.index-logo{height:' + h + 'px}' +
-                 '#carousel{margin-top:' + (h + 40) + 'px}';
-        }
-        var s = document.createElement('style');
-        s.id  = 'pre-render-fix';
-        s.textContent = css;
-        document.head.appendChild(s);
-      }
     }());
   </script>
 </head>
@@ -66,9 +50,6 @@
     <div id="menuLinks"></div>
   </nav>
 
-  <!-- ================= CAROUSEL ================= -->
-  <section class="carousel" id="carousel"></section>
-
   <!-- ================= TICKER ================= -->
   <div class="ticker">
     <div class="ticker-track">
@@ -82,9 +63,9 @@
     <!-- JS lager cards her -->
   </main>
 
-  <!-- ================= INTRO ================= -->
-  <div class="intro-overlay" id="introOverlay"></div>
-  <img src="images/architecture-portfolio.svg" class="intro-logo" id="introLogo" alt="" />
+  <!-- ================= CAROUSEL ================= -->
+  <section class="carousel" id="carousel"></section>
+
 
   <!-- ================= JS ================= -->
   <script type="module" src="js/main.js"></script>
