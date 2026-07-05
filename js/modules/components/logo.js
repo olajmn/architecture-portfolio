@@ -1,5 +1,5 @@
 /* ============================================================
-   4. LOGO-KNAPP — scroll til toppen
+   4. LOGO BUTTON — scroll to top
 ============================================================ */
 import { setFromProject } from "../../appState.js";
 
