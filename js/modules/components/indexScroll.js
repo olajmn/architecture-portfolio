@@ -3,5 +3,4 @@ export function initIndexScroll() {
   if (!logo) return;
 
   history.scrollRestoration = 'auto';
-  logo.style.height = '40px';
 }
