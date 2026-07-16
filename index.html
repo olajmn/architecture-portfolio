@@ -20,6 +20,14 @@
       var introSeen   = sessionStorage.getItem('introSeen')   === '1';
       if (fromProject) document.documentElement.classList.add('from-project');
       if (introSeen)   document.documentElement.classList.add('intro-seen');
+
+      var tickerStart = sessionStorage.getItem('tickerStart');
+      var tickerWidth = sessionStorage.getItem('tickerWidth');
+      if (tickerStart && tickerWidth) {
+        var elapsed = ((Date.now() - tickerStart) / 1000) % 50;
+        document.documentElement.style.setProperty('--ticker-delay', '-' + elapsed + 's');
+        document.documentElement.style.setProperty('--ticker-end', '-' + tickerWidth + 'px');
+      }
     }());
   </script>
 </head>

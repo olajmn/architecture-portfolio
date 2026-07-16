@@ -13,6 +13,12 @@
     display: inline-block;
     font-size: 0;
     animation: ticker 50s linear infinite;
+    animation-delay: var(--ticker-delay, 0s);
+}
+
+@keyframes ticker {
+    from { transform: translateX(100vw); }
+    to   { transform: translateX(var(--ticker-end, -100%)); }
 }
 
 .ticker-track span {
@@ -23,6 +29,10 @@
     white-space: pre;
     cursor: default;
     transition: color 0.3s ease;
+}
+
+.ticker-track span:first-child {
+    margin-right: 100vw;
 }
 
 body.menu-open .ticker-track span {
