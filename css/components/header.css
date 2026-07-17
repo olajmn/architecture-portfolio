@@ -20,7 +20,12 @@
 
 .index-logo {
     width: auto;
+    height: 56px;
     display: block;
+}
+
+html.from-project .index-logo {
+    height: 56px;
 }
 
 .index-burger {
@@ -44,4 +49,10 @@
 
 .index-burger:hover span {
     background: #d8d8d8;
+}
+
+@media (max-width: 768px) {
+    .index-logo {
+        height: 36px;
+    }
 }
