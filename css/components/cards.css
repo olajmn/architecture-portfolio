@@ -16,6 +16,10 @@
     position: relative;
 }
 
+html:not(.intro-seen):not(.from-project) .index-projects {
+    animation: gridGapIn 0.5s cubic-bezier(0.16, 0.16, 0.16, 0.16) forwards;
+}
+
 html:not(.intro-seen):not(.from-project) .index-card {
     opacity: 0;
     animation: cardFadeIn 0.5s cubic-bezier(0.16, 0.16, 0.16, 0.16) forwards;
@@ -91,8 +95,13 @@ html:not(.intro-seen):not(.from-project) .index-card {
 }
 
 @keyframes cardFadeIn {
-    from { opacity: 0; transform: scale(1.04); }
-    to   { opacity: 1; transform: scale(1); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes gridGapIn {
+    from { gap: 0; }
+    to   { gap: 6px; }
 }
 
 
