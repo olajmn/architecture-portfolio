@@ -10,8 +10,8 @@ initBurgerMenu();
 initCarousel();
 initLogo();
 initTicker();
-initIndexScroll();
 initProjectsGrid();
+initIndexScroll();
 
 
 // PROJECT PAGE // 

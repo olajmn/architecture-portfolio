@@ -16,6 +16,11 @@
   <link rel="preload" as="image" href="images/sagvaag-senior-garden/06-apt-sagvaag.jpg">
   <script>
     (function () {
+      history.scrollRestoration = 'manual';
+
+      var scrollY = parseFloat(sessionStorage.getItem('scrollY'));
+      if (scrollY > 0) document.documentElement.classList.add('restoring-scroll');
+
       var fromProject = sessionStorage.getItem('fromProject') === '1';
       var introSeen   = sessionStorage.getItem('introSeen')   === '1';
       if (fromProject) document.documentElement.classList.add('from-project');
