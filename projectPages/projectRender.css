@@ -6,10 +6,6 @@ body {
     padding-top: 80px;
 }
 
-.index-logo {
-    height: 40px;
-}
-
 #projectContent {
     padding-top: 36px;
 }
@@ -143,11 +139,6 @@ body {
 @media (max-width: 768px) {
     body {
         padding-top: 68px;
-    }
-
-    .index-logo {
-        height: 28px;
-        max-width: 160px;
     }
 
     .project-ticker {
