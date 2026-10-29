@@ -129,11 +129,19 @@
     transform: translateX(4px);
 }
 
+/* Grayscale until hovered, matching the homepage grid cards (cards.css) */
 .project-next-img {
     display: block;
     width: clamp(200px, 20vw, 340px);
     height: auto;
     margin-top: 14px;
+    filter: grayscale(100%);
+    transition: filter 0.7s ease;
+}
+
+.project-next:hover .project-next-img,
+.project-next:focus-visible .project-next-img {
+    filter: grayscale(0%);
 }
 
 @media (max-width: 768px) {
