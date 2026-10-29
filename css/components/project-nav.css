@@ -39,8 +39,10 @@
         transition: none;
     }
 
-    .project-nav-prev { left: 0; }
-    .project-nav-next { right: 0; }
+    /* view-transition-name keeps each arrow in place while the page
+       changes under it (see PAGE TRANSITION in css/pages/project.css) */
+    .project-nav-prev { left: 0;  view-transition-name: project-nav-prev; }
+    .project-nav-next { right: 0; view-transition-name: project-nav-next; }
 
     /* Scales with the window, but never below a size that still reads as
        a confident arrow — below that it overlaps the image instead.
