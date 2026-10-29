@@ -44,6 +44,7 @@ body {
     background: none;
     border: none;
     font-family: var(--font);
+    color: var(--black); /* buttons default to blue in iOS Safari */
     cursor: pointer;
     padding: 0;
     transition: color 0.3s ease;
