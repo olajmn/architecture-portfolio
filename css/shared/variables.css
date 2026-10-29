@@ -10,7 +10,7 @@
        white, lets a faint blurred glow of images show through. Solid
        white where backdrop-filter is unsupported (see @supports below). */
     --frosted-bg: var(--white);
-    --frosted-filter: blur(40px) saturate(1.9);
+    --frosted-filter: blur(18px) saturate(1.9);
 }
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
