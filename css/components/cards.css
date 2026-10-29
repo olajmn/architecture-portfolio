@@ -3,7 +3,7 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 6px;
     width: calc(100% - 12px);
-    margin: 6px 6px calc(100vh - 20vw - 100px);
+    margin: 6px;
 }
 
 .index-card {

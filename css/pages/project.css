@@ -1,5 +1,5 @@
 /* ============================================================
-   BASE — prosjektsidespesifikt
+   BASE — project-page specific
 ============================================================ */
 
 body {
@@ -12,7 +12,7 @@ body {
 
 
 /* ============================================================
-   TICKER — prosjektnavn øverst
+   TICKER — project title, fixed at top
 ============================================================ */
 
 .project-ticker {
@@ -39,7 +39,7 @@ body {
 }
 
 .project-ticker.scrolled .project-ticker-btn {
-    color: #d8d8d8;
+    color: var(--gray-hover);
 }
 
 .project-ticker.scrolled .project-ticker-btn:hover {
@@ -48,7 +48,7 @@ body {
 
 
 /* ============================================================
-   INTRO-BLOKK (beskrivelse + fakta)
+   INTRO BLOCK (description + facts)
 ============================================================ */
 
 .project-intro-block {
@@ -99,21 +99,26 @@ body {
 }
 
 /* ============================================================
-   BILDEKLASSER
+   GALLERY IMAGES
+   One consistent gap between images — driven entirely by CSS.
+   (The old version set this per image as an inline style, which
+   also meant it silently beat the mobile media query below, since
+   an inline style always wins over a class rule regardless of
+   @media. There is no per-image override anymore.)
 ============================================================ */
 
-.img-wide,
-.img-narrow,
+.img-large,
+.img-medium,
 .img-small {
-    padding: 0 60px 80px;
+    padding: 0 60px 180px;
 }
 
-.img-wide img   { width: 80%; }
-.img-narrow img { width: 55%; }
+.img-large img  { width: 80%; }
+.img-medium img { width: 55%; }
 .img-small img  { width: 40%; }
 
-.img-wide img,
-.img-narrow img,
+.img-large img,
+.img-medium img,
 .img-small img {
     display: block;
     margin: 0 auto;
@@ -127,13 +132,13 @@ body {
     color: var(--gray);
     line-height: 2;
     max-width: 750px;
-    margin: 16px auto 180px;
+    margin: 16px auto 0;
     padding: 0 60px;
 }
 
 
 /* ============================================================
-   RESPONSIV — mobil
+   RESPONSIVE — mobile
 ============================================================ */
 
 @media (max-width: 768px) {
@@ -164,11 +169,11 @@ body {
         margin-top: 14px;
     }
 
-    .img-wide, .img-narrow, .img-small {
+    .img-large, .img-medium, .img-small {
         padding: 0 24px 60px;
     }
 
-    .img-wide img, .img-narrow img, .img-small img {
+    .img-large img, .img-medium img, .img-small img {
         width: 100%;
     }
 
@@ -179,7 +184,7 @@ body {
 
 
 /* ============================================================
-   TOP-KNAPP
+   TOP BUTTON
 ============================================================ */
 
 .project-top-btn-wrap {
@@ -195,7 +200,7 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    color: #d8d8d8;
+    color: var(--gray-hover);
     transition: color 0.3s ease;
 }
 

@@ -48,7 +48,7 @@ html.from-project .index-logo {
 }
 
 .index-burger:hover span {
-    background: #d8d8d8;
+    background: var(--gray-hover);
 }
 
 @media (max-width: 768px) {

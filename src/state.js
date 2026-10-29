@@ -14,7 +14,7 @@ export const getTickerStart = () => parseFloat(sessionStorage.getItem(KEYS.TICKE
 export const getScrollY     = () => parseFloat(sessionStorage.getItem(KEYS.SCROLL_Y));
 
 export const setFromProject = ()  => sessionStorage.setItem(KEYS.FROM_PROJECT, '1');
-export const setIntroSeen   = ()  => sessionStorage.setItem(KEYS.INTRO_SEEN,   '1');
+export const markIntroSeen  = ()  => sessionStorage.setItem(KEYS.INTRO_SEEN,   '1');
 export const setTickerStart = (t) => sessionStorage.setItem(KEYS.TICKER_START, t);
 export const setTickerWidth = (w) => sessionStorage.setItem(KEYS.TICKER_WIDTH, w);
 export const setScrollY     = (y) => sessionStorage.setItem(KEYS.SCROLL_Y,     y);

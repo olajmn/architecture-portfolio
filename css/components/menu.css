@@ -35,7 +35,7 @@
 }
 
 .menu-overlay a:hover {
-    color: #d8d8d8;
+    color: var(--gray-hover);
 }
 
 .menu-overlay.open a {
@@ -62,14 +62,14 @@
 }
 
 .menu-close:hover {
-    color: #d8d8d8;
+    color: var(--gray-hover);
 }
 
 .menu-overlay .menu-label {
     font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #d8d8d8;
+    color: var(--gray-hover);
     margin-bottom: 40px;
     margin-top: -12px;
 }

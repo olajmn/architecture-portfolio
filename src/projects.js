@@ -1,0 +1,36 @@
+// Thin data-access layer over data/projects.js.
+//
+// The raw array is data; everything that *reads* it in a particular way
+// (find by slug, pick a cover image, build the image URL) lives here so
+// components never reach into the data shape directly.
+
+import { projects } from "../data/projects.js";
+
+export function getAllProjects() {
+  return projects;
+}
+
+export function getProjectBySlug(slug) {
+  return projects.find((project) => project.slug === slug);
+}
+
+// The first image in a project's list is its cover — used as the
+// project-page hero.
+export function getCoverImage(project) {
+  return project.images[0];
+}
+
+// The image shown on the grid card. Uses the
+// project's optional `thumbnail` (an image src) and falls back to the cover.
+export function getThumbnailImage(project) {
+  return project.images.find((image) => image.src === project.thumbnail)
+    ?? getCoverImage(project);
+}
+
+export function getGalleryImages(project) {
+  return project.images.slice(1);
+}
+
+export function imageUrl(project, image) {
+  return `images/${project.slug}/${image.src}`;
+}

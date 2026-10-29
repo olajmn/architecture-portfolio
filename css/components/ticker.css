@@ -36,7 +36,7 @@
 }
 
 body.menu-open .ticker-track span {
-    color: #d8d8d8;
+    color: var(--gray-hover);
 }
 
 @media (max-width: 768px) {

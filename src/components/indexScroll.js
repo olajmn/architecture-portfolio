@@ -1,4 +1,8 @@
-import { getScrollY, setScrollY } from "../../appState.js";
+// Restores the homepage's scroll position after a reload, and reveals
+// the page (see the `restoring-scroll` class set by index.html's inline
+// <head> script, which hides <body> until this has run).
+
+import { getScrollY, setScrollY } from "../state.js";
 
 export function initIndexScroll() {
   const logo = document.querySelector('.index-logo');

@@ -1,15 +1,16 @@
-import { projects } from "../js/data.js";
-import { renderProject } from "./projectRender.js";
-import { setFromProject } from "../js/appState.js";
+// Controller for the project page: read the slug, find the project,
+// hand it to the (pure) view, wire up the one piece of page-specific
+// interaction (ticker color on scroll).
+
+import { getProjectBySlug } from "../projects.js";
+import { renderProject } from "./render.js";
+import { setFromProject } from "../state.js";
 
 export function initProjectPage() {
-  window.addEventListener('pagehide', () => {
-    setFromProject();
-  });
+  window.addEventListener('pagehide', setFromProject);
 
   const slug = new URLSearchParams(window.location.search).get("slug");
-
-  const project = projects.find(p => p.slug === slug);
+  const project = getProjectBySlug(slug);
 
   if (!project) {
     console.error("Project not found:", slug);
@@ -28,4 +29,3 @@ export function initProjectPage() {
     });
   }
 }
-
