@@ -22,7 +22,7 @@
         bottom: 0;
         width: 12vw;
         z-index: 80;
-        color: #e8e8e8;
+        color: #f3f3f3;
         opacity: 0;
         transition: opacity 0.3s ease;
     }
@@ -58,7 +58,7 @@
 
     /* Firmer when pointed at directly, not just when the band is entered */
     .project-nav svg:hover {
-        color: #bdbdbd;
+        color: #dedede;
     }
 
     .project-nav-next svg {
