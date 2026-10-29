@@ -35,10 +35,6 @@
     margin-right: 100vw;
 }
 
-body.menu-open .ticker-track span {
-    color: var(--gray-hover);
-}
-
 @media (max-width: 768px) {
     .ticker-track span {
         font-size: 7px;

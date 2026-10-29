@@ -35,7 +35,7 @@ src/
                               projectNav)
 css/
   shared/                   Reset, variables, typography, base styles
-  components/               Per-component styles (header, menu, ticker, cards,
+  components/               Per-component styles (header, ticker, cards,
                               project-nav)
   pages/                    Page-specific styles (project.css)
 images/

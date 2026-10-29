@@ -79,13 +79,12 @@ function keepArrowAfterClick() {
 }
 
 // ← / → go to the previous / next project. Left alone when a modifier is
-// held (browser shortcuts such as Alt+← for "back"), while typing in a
-// field, or while the menu overlay is open.
+// held (browser shortcuts such as Alt+← for "back") or while typing in a
+// field.
 function listenForArrowKeys({ prev, next }) {
   document.addEventListener("keydown", (e) => {
     if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
     if (e.target.closest("input, textarea, select, [contenteditable]")) return;
-    if (document.body.classList.contains("menu-open")) return;
 
     if (e.key === "ArrowLeft")  window.location.href = projectUrl(prev);
     if (e.key === "ArrowRight") window.location.href = projectUrl(next);
