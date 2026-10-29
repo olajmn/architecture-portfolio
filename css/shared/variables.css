@@ -6,11 +6,21 @@
     --light-gray: #f0f0f0;
     --font: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 
-    /* Frosted header and project title bar: reads as plain white over
-       white, lets a faint blurred glow of images show through. Solid
-       white where backdrop-filter is unsupported (see @supports below). */
+    /* Where page content starts below the fixed header on project pages
+       (the project title bar sits just under it) */
+    --header-offset: 80px;
+
+    /* Frosted header and project title bar: plain white over white;
+       images and text scrolling under it show through softly blurred.
+       Solid white where backdrop-filter is unsupported (@supports below). */
     --frosted-bg: var(--white);
     --frosted-filter: blur(14px) saturate(1.9);
+}
+
+@media (max-width: 768px) {
+    :root {
+        --header-offset: 68px;
+    }
 }
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {

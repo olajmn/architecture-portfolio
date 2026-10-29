@@ -3,7 +3,7 @@
 ============================================================ */
 
 body {
-    padding-top: 80px;
+    padding-top: var(--header-offset);
 }
 
 #projectContent {
@@ -26,7 +26,7 @@ body {
 }
 
 .project-ticker {
-    padding: 86px 0 2px 0;
+    padding: calc(var(--header-offset) + 6px) 0 2px 0;
     width: 100%;
     position: fixed;
     top: 0;
@@ -155,14 +155,6 @@ body {
 ============================================================ */
 
 @media (max-width: 768px) {
-    body {
-        padding-top: 68px;
-    }
-
-    .project-ticker {
-        padding-top: 74px;
-    }
-
     .project-intro-block {
         padding: 0 24px 120px;
     }
