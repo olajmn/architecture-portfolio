@@ -1,8 +1,9 @@
 // Pure view: Project -> HTML string. No side effects beyond writing to
 // #projectContent, no data lookup — the caller (projectPage.js) hands
-// it a resolved Project.
+// it a resolved Project and its { prev, next } neighbours.
 
 import { getGalleryImages, getCoverImage, imageUrl } from "../projects.js";
+import { edgeArrowsHTML } from "./projectNav.js";
 
 const EMPHASIS_CLASS = {
   large:  "img-large",
@@ -14,7 +15,7 @@ function imageClass(image) {
   return EMPHASIS_CLASS[image.emphasis] || EMPHASIS_CLASS.large;
 }
 
-export function renderProject(project) {
+export function renderProject(project, adjacent) {
   const container = document.getElementById("projectContent");
   if (!container) return;
 
@@ -42,6 +43,8 @@ export function renderProject(project) {
         ${project.title}
       </button>
     </div>
+
+    ${edgeArrowsHTML(adjacent)}
 
     <div class="img-large">
       <img src="${imageUrl(project, hero)}" alt="${hero.alt}">

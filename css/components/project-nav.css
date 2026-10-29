@@ -1,0 +1,39 @@
+/* ============================================================
+   PROJECT NAV — prev/next arrows at the screen edges
+   Only on devices that can hover; touch devices get their own
+   navigation instead.
+============================================================ */
+
+.project-nav {
+    display: none;
+}
+
+@media (hover: hover) {
+    .project-nav {
+        display: block;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 80;
+        height: 25vh;
+        color: var(--gray-hover);
+    }
+
+    .project-nav-prev { left: 3vw; }
+    .project-nav-next { right: 3vw; }
+
+    .project-nav svg {
+        display: block;
+        height: 100%;
+        width: auto;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .project-nav-next svg {
+        transform: scaleX(-1);
+    }
+}

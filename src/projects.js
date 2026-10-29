@@ -31,6 +31,17 @@ export function getGalleryImages(project) {
   return project.images.slice(1);
 }
 
+// The projects before and after this one in data order, looping at
+// both ends — the single source of order for project-to-project navigation.
+export function getAdjacentProjects(project) {
+  const i = projects.indexOf(project);
+  const n = projects.length;
+  return {
+    prev: projects[(i - 1 + n) % n],
+    next: projects[(i + 1) % n],
+  };
+}
+
 export function imageUrl(project, image) {
   return `images/${project.slug}/${image.src}`;
 }

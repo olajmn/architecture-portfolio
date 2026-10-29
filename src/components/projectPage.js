@@ -2,7 +2,7 @@
 // hand it to the (pure) view, wire up the one piece of page-specific
 // interaction (ticker color on scroll).
 
-import { getProjectBySlug } from "../projects.js";
+import { getProjectBySlug, getAdjacentProjects } from "../projects.js";
 import { renderProject } from "./render.js";
 import { setFromProject } from "../state.js";
 
@@ -18,7 +18,7 @@ export function initProjectPage() {
   }
 
   document.title = project.title;
-  renderProject(project);
+  renderProject(project, getAdjacentProjects(project));
 
   const ticker = document.querySelector('.project-ticker');
   if (ticker) {
