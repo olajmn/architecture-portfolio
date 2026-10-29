@@ -47,7 +47,7 @@ export function nextProjectHTML(next) {
   return `
     <a class="project-next" href="${projectUrl(next)}">
       <span class="project-next-label">Next project</span>
-      <span class="project-next-title">${next.title}</span>
+      <span class="project-next-title">${next.title} <span class="project-next-arrow" aria-hidden="true">→</span></span>
       <img class="project-next-img" src="${imageUrl(next, image)}" alt="" />
     </a>`;
 }

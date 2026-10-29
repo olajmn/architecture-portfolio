@@ -118,6 +118,17 @@
     color: var(--black);
 }
 
+/* Nudges right on hover, so the block reads as a link */
+.project-next-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.project-next:hover .project-next-arrow,
+.project-next:focus-visible .project-next-arrow {
+    transform: translateX(4px);
+}
+
 .project-next-img {
     display: block;
     width: clamp(200px, 20vw, 340px);
