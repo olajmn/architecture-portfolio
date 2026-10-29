@@ -19,8 +19,9 @@ export function initProjectPage() {
   }
 
   document.title = project.title;
-  renderProject(project, getAdjacentProjects(project));
-  initProjectNav();
+  const adjacent = getAdjacentProjects(project);
+  renderProject(project, adjacent);
+  initProjectNav(adjacent);
 
   const ticker = document.querySelector('.project-ticker');
   if (ticker) {

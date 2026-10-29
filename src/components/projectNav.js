@@ -12,9 +12,11 @@ const CHEVRON_SVG = `
     <path d="M32 8 L8 60 L32 112" />
   </svg>`;
 
+const projectUrl = (project) => `project.html?slug=${project.slug}`;
+
 function edgeArrowHTML(project, direction, label) {
   return `
-    <a class="project-nav project-nav-${direction}" href="project.html?slug=${project.slug}"
+    <a class="project-nav project-nav-${direction}" href="${projectUrl(project)}"
        aria-label="${label} project: ${project.title}">
       ${CHEVRON_SVG}
     </a>`;
@@ -25,8 +27,23 @@ export function edgeArrowsHTML({ prev, next }) {
   return edgeArrowHTML(prev, "prev", "Previous") + edgeArrowHTML(next, "next", "Next");
 }
 
-export function initProjectNav() {
+export function initProjectNav(adjacent) {
   showHintOnce();
+  listenForArrowKeys(adjacent);
+}
+
+// ← / → go to the previous / next project. Left alone when a modifier is
+// held (browser shortcuts such as Alt+← for "back"), while typing in a
+// field, or while the menu overlay is open.
+function listenForArrowKeys({ prev, next }) {
+  document.addEventListener("keydown", (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (document.body.classList.contains("menu-open")) return;
+
+    if (e.key === "ArrowLeft")  window.location.href = projectUrl(prev);
+    if (e.key === "ArrowRight") window.location.href = projectUrl(next);
+  });
 }
 
 // The edge arrows are hidden until hovered, so on the first project page
