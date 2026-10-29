@@ -31,10 +31,12 @@ src/
   state.js                  sessionStorage helpers
   projects.js                Data-access: getProjectBySlug, getCoverImage, imageUrl, ...
   components/                One file per UI concern (header, ticker,
-                              projectGrid, indexScroll, projectPage, render)
+                              projectGrid, indexScroll, projectPage, render,
+                              projectNav)
 css/
   shared/                   Reset, variables, typography, base styles
-  components/               Per-component styles (header, menu, ticker, cards)
+  components/               Per-component styles (header, menu, ticker, cards,
+                              project-nav)
   pages/                    Page-specific styles (project.css)
 images/
   <slug>/                   One folder per project, filenames referenced by data/projects.js
@@ -50,3 +52,19 @@ derives what it needs from that one array:
 
 Adding or editing a project means touching `data/projects.js` and its `images/<slug>/`
 folder — nothing else.
+
+## Moving between projects
+
+Project pages link to their neighbours in the order of `data/projects.js`, looping
+from the last project back to the first (`getAdjacentProjects` in `src/projects.js`).
+Everything else lives in `src/components/projectNav.js` and
+`css/components/project-nav.css`:
+
+- **Desktop** (devices that can hover): large chevrons at the left and right screen
+  edges, hidden until the mouse reaches that edge. They flash once on the first
+  project page of a session so visitors learn they are there. The ← / → keys do
+  the same.
+- **Touch devices**: a slim bar at the bottom naming the previous and next project,
+  shown while scrolling up.
+- **Every device**: a "Next project" block at the bottom of the page, with a small
+  preview image.
