@@ -5,8 +5,9 @@
 import { getScrollY, setScrollY } from "../state.js";
 
 export function initIndexScroll() {
-  const logo = document.querySelector('.index-logo');
-  if (!logo) return;
+  // Homepage only — project pages share the header markup, so checking
+  // for an element is not enough to tell the pages apart
+  if (document.body.dataset.page !== 'index') return;
 
   const y = getScrollY();
   if (y) window.scrollTo({ top: y, behavior: 'instant' });
