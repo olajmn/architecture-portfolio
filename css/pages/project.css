@@ -13,16 +13,27 @@ body {
 
 /* ============================================================
    TICKER — project title, fixed at top
+   On project pages the title bar is the one frosted surface for the
+   whole top area: it starts at the very top (padding pushes the title
+   below the logo) and the header above it is transparent. Two
+   separately blurred surfaces would show a seam where they overlap.
 ============================================================ */
 
+.index-hero {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
 .project-ticker {
-    padding: 6px 0 2px 0;
-    width: calc(100% - 12px);
-    margin: 0 6px;
+    padding: 86px 0 2px 0;
+    width: 100%;
     position: fixed;
-    top: 80px;
+    top: 0;
     z-index: 85;
-    background: var(--white);
+    background: var(--frosted-bg);
+    -webkit-backdrop-filter: var(--frosted-filter);
+    backdrop-filter: var(--frosted-filter);
     text-align: center;
 }
 
@@ -147,7 +158,7 @@ body {
     }
 
     .project-ticker {
-        top: 68px;
+        padding-top: 74px;
     }
 
     .project-intro-block {

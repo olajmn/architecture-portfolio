@@ -4,7 +4,9 @@
     left: 0;
     right: 0;
     z-index: 90;
-    background: var(--white);
+    background: var(--frosted-bg);
+    -webkit-backdrop-filter: var(--frosted-filter);
+    backdrop-filter: var(--frosted-filter);
     padding: 20px 10px;
     display: flex;
     justify-content: center;

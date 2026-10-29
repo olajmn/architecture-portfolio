@@ -5,4 +5,16 @@
     --gray-hover: #d8d8d8;
     --light-gray: #f0f0f0;
     --font: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+    /* Frosted header and project title bar: reads as plain white over
+       white, lets a faint blurred glow of images show through. Solid
+       white where backdrop-filter is unsupported (see @supports below). */
+    --frosted-bg: var(--white);
+    --frosted-filter: blur(40px) saturate(1.4);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    :root {
+        --frosted-bg: rgba(255, 255, 255, 0.92);
+    }
 }
