@@ -49,16 +49,10 @@
         stroke-linecap: round;
         stroke-linejoin: round;
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
-        transition: color 0.3s ease;
     }
 
     .project-nav path {
         vector-effect: non-scaling-stroke;
-    }
-
-    /* Firmer when pointed at directly, not just when the band is entered */
-    .project-nav svg:hover {
-        color: #dedede;
     }
 
     .project-nav-next svg {
