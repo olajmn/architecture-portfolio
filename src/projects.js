@@ -1,7 +1,7 @@
 // Thin data-access layer over data/projects.js.
 //
 // The raw array is data; everything that *reads* it in a particular way
-// (find by slug, pick a cover image, build the image URL) lives here so
+// (find by slug, pick a cover image, build page and image URLs) lives here so
 // components never reach into the data shape directly.
 
 import { projects } from "../data/projects.js";
@@ -40,6 +40,10 @@ export function getAdjacentProjects(project) {
     prev: projects[(i - 1 + n) % n],
     next: projects[(i + 1) % n],
   };
+}
+
+export function projectUrl(project) {
+  return `project.html?slug=${project.slug}`;
 }
 
 export function imageUrl(project, image) {

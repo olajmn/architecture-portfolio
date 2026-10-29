@@ -4,7 +4,7 @@
 // getAdjacentProjects (projects.js). initProjectNav() wires up the
 // behaviour once the page is rendered.
 
-import { getThumbnailImage, imageUrl } from "../projects.js";
+import { getThumbnailImage, imageUrl, projectUrl } from "../projects.js";
 import { getNavHintSeen, markNavHintSeen, setNavArrival, takeNavArrival } from "../state.js";
 
 // Chevron pointing left; the "next" arrow is the same shape mirrored in CSS
@@ -12,8 +12,6 @@ const CHEVRON_SVG = `
   <svg viewBox="0 0 40 120" aria-hidden="true">
     <path d="M32 8 L8 60 L32 112" />
   </svg>`;
-
-const projectUrl = (project) => `project.html?slug=${project.slug}`;
 
 function edgeArrowHTML(project, direction, label) {
   return `

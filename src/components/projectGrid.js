@@ -1,7 +1,7 @@
 // Homepage project grid. Each card shows a project's thumbnail image
 // (via getThumbnailImage — the optional `thumbnail`, else images[0]).
 
-import { getAllProjects, getThumbnailImage, imageUrl } from "../projects.js";
+import { getAllProjects, getThumbnailImage, imageUrl, projectUrl } from "../projects.js";
 
 export function initProjectGrid() {
   const grid = document.getElementById("projectsGrid");
@@ -10,7 +10,7 @@ export function initProjectGrid() {
   grid.innerHTML = getAllProjects().map((project) => {
     const thumbnail = getThumbnailImage(project);
     return `
-    <a class="index-card" href="project.html?slug=${project.slug}">
+    <a class="index-card" href="${projectUrl(project)}">
       <img src="${imageUrl(project, thumbnail)}" alt="${thumbnail.alt}"
            ${thumbnail.focalPoint ? `style="object-position: ${thumbnail.focalPoint}"` : ""} />
       <div class="index-card-text">

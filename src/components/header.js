@@ -2,7 +2,7 @@
 // Both pieces act on the same DOM region and share no state, so they
 // live in one file rather than two.
 
-import { getAllProjects } from "../projects.js";
+import { getAllProjects, projectUrl } from "../projects.js";
 import { setFromProject } from "../state.js";
 
 export function initHeader() {
@@ -34,7 +34,7 @@ function initMenu() {
 
   if (menuLinks) {
     menuLinks.innerHTML = getAllProjects()
-      .map((project) => `<a href="project.html?slug=${project.slug}">${project.title}</a>`)
+      .map((project) => `<a href="${projectUrl(project)}">${project.title}</a>`)
       .join('');
   }
 
