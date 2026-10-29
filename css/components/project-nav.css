@@ -22,7 +22,7 @@
         bottom: 0;
         width: 12vw;
         z-index: 80;
-        color: var(--gray-hover);
+        color: #e8e8e8;
         opacity: 0;
         transition: opacity 0.3s ease;
     }
@@ -36,16 +36,29 @@
     .project-nav-next { right: 0; }
 
     /* Scales with the window, but never below a size that still reads as
-       a confident arrow — below that it overlaps the image instead */
+       a confident arrow — below that it overlaps the image instead.
+       Thick, very light line at a fixed 7.5px whatever the size, with a
+       soft shadow so it reads on white and on images alike. */
     .project-nav svg {
         display: block;
         height: clamp(110px, min(25vh, 16vw), 280px);
         width: auto;
         fill: none;
         stroke: currentColor;
-        stroke-width: 3;
+        stroke-width: 7.5px;
         stroke-linecap: round;
         stroke-linejoin: round;
+        filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
+        transition: color 0.3s ease;
+    }
+
+    .project-nav path {
+        vector-effect: non-scaling-stroke;
+    }
+
+    /* Firmer when pointed at directly, not just when the band is entered */
+    .project-nav svg:hover {
+        color: #bdbdbd;
     }
 
     .project-nav-next svg {
@@ -74,7 +87,7 @@
 
 /* Narrow windows: images and text run full width, so the band shrinks
    to the arrow itself (to keep text near the edge selectable), and the
-   arrow needs a soft shadow to stay visible on pale images */
+   arrow needs a stronger shadow to stay visible on pale images */
 @media (hover: hover) and (max-width: 768px) {
     .project-nav {
         width: 56px;
