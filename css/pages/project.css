@@ -49,8 +49,10 @@ body {
     transition: color 0.3s ease;
 }
 
+/* Medium gray rather than --gray-hover: the title sits on the frosted
+   surface, where the lightest gray would vanish over images */
 .scrolling-down .project-ticker-btn {
-    color: var(--gray-hover);
+    color: var(--gray);
 }
 
 .scrolling-down .project-ticker-btn:hover {
