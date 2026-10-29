@@ -29,16 +29,15 @@ export function edgeArrowsHTML({ prev, next }) {
 }
 
 // Invitation to the next project at the bottom of the page: label, title
-// and a cropped strip of its thumbnail. The image is decorative — the
-// link text already names the project.
+// and a small, uncropped preview of its thumbnail. The image is
+// decorative — the link text already names the project.
 export function nextProjectHTML(next) {
   const image = getThumbnailImage(next);
   return `
     <a class="project-next" href="${projectUrl(next)}">
       <span class="project-next-label">Next project</span>
       <span class="project-next-title">${next.title}</span>
-      <img class="project-next-img" src="${imageUrl(next, image)}" alt=""
-           ${image.focalPoint ? `style="object-position: ${image.focalPoint}"` : ""} />
+      <img class="project-next-img" src="${imageUrl(next, image)}" alt="" />
     </a>`;
 }
 

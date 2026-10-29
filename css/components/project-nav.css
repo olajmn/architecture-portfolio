@@ -88,8 +88,9 @@
 
 /* ============================================================
    NEXT PROJECT — invitation at the bottom of the page
-   Label and title in the same quiet style as the "Top" button;
-   the image strip lines up with the gallery's large images.
+   Label and title in the same quiet style as the "Top" button,
+   with a small preview of the next project at its own proportions
+   (never cropped).
 ============================================================ */
 
 .project-next {
@@ -119,17 +120,9 @@
 
 .project-next-img {
     display: block;
-    width: 80%;
-    height: 22vh;
+    width: clamp(200px, 20vw, 340px);
+    height: auto;
     margin-top: 14px;
-    object-fit: cover;
-    opacity: 0.85;
-    transition: opacity 0.3s ease;
-}
-
-.project-next:hover .project-next-img,
-.project-next:focus-visible .project-next-img {
-    opacity: 1;
 }
 
 @media (max-width: 768px) {
@@ -138,7 +131,6 @@
     }
 
     .project-next-img {
-        width: 100%;
-        height: 18vh;
+        width: 60%;
     }
 }

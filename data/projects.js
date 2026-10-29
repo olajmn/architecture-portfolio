@@ -12,9 +12,8 @@
 //                    ("large" | "medium" | "small"). Controls visual
 //                    weight/composition, not literal pixel size.
 // Image.focalPoint — optional. Only meaningful where an image is
-//                    cropped (object-fit: cover) — the grid card and the
-//                    "Next project" strip, both of which show the
-//                    thumbnail. Ignored everywhere else.
+//                    cropped (object-fit: cover) — the grid card.
+//                    Ignored everywhere else.
 
 export const projects = [
 
