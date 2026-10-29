@@ -3,7 +3,7 @@
 // it a resolved Project and its { prev, next } neighbours.
 
 import { getGalleryImages, getCoverImage, imageUrl } from "../projects.js";
-import { edgeArrowsHTML, nextProjectHTML } from "./projectNav.js";
+import { edgeArrowsHTML, mobileBarHTML, nextProjectHTML } from "./projectNav.js";
 
 const EMPHASIS_CLASS = {
   large:  "img-large",
@@ -45,6 +45,7 @@ export function renderProject(project, adjacent) {
     </div>
 
     ${edgeArrowsHTML(adjacent)}
+    ${mobileBarHTML(adjacent)}
 
     <div class="img-large">
       <img src="${imageUrl(project, hero)}" alt="${hero.alt}">

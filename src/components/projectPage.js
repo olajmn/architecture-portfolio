@@ -23,12 +23,21 @@ export function initProjectPage() {
   renderProject(project, adjacent);
   initProjectNav(adjacent);
 
-  const ticker = document.querySelector('.project-ticker');
-  if (ticker) {
-    let lastScrollY = window.scrollY;
-    window.addEventListener('scroll', () => {
-      ticker.classList.toggle('scrolled', window.scrollY > lastScrollY);
-      lastScrollY = window.scrollY;
-    });
-  }
+  trackScrollDirection();
+}
+
+// One shared scroll listener for the page: marks <html> with
+// `scrolling-down` or `scrolling-up` so CSS can react — the ticker dims
+// while scrolling down, the mobile project bar shows while scrolling up.
+function trackScrollDirection() {
+  const root = document.documentElement;
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y === lastScrollY) return;
+    root.classList.toggle('scrolling-down', y > lastScrollY);
+    root.classList.toggle('scrolling-up',   y < lastScrollY);
+    lastScrollY = y;
+  }, { passive: true });
 }

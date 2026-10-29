@@ -38,11 +38,11 @@ body {
     transition: color 0.3s ease;
 }
 
-.project-ticker.scrolled .project-ticker-btn {
+.scrolling-down .project-ticker-btn {
     color: var(--gray-hover);
 }
 
-.project-ticker.scrolled .project-ticker-btn:hover {
+.scrolling-down .project-ticker-btn:hover {
     color: var(--black);
 }
 

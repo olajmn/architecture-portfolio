@@ -134,3 +134,48 @@
         width: 60%;
     }
 }
+
+
+/* ============================================================
+   PROJECT BAR — prev/next by name, for touch devices
+   Hidden below the screen; slides up while scrolling up
+   (`scrolling-up` on <html>, set by projectPage.js).
+============================================================ */
+
+.project-bar {
+    display: none;
+}
+
+@media (hover: none) {
+    .project-bar {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 80;
+        padding: 14px 24px calc(14px + env(safe-area-inset-bottom));
+        background: var(--white);
+        border-top: 1px solid var(--light-gray);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+    }
+
+    .scrolling-up .project-bar {
+        transform: translateY(0);
+    }
+
+    .project-bar a {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--black);
+    }
+}

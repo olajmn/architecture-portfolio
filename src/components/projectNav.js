@@ -28,6 +28,17 @@ export function edgeArrowsHTML({ prev, next }) {
   return edgeArrowHTML(prev, "prev", "Previous") + edgeArrowHTML(next, "next", "Next");
 }
 
+// Slim bar for touch devices: previous and next project by name. CSS
+// shows it only while scrolling up (the `scrolling-up` class that
+// projectPage.js sets on <html>).
+export function mobileBarHTML({ prev, next }) {
+  return `
+    <nav class="project-bar" aria-label="Other projects">
+      <a href="${projectUrl(prev)}"><span aria-hidden="true">←</span> ${prev.title}</a>
+      <a href="${projectUrl(next)}">${next.title} <span aria-hidden="true">→</span></a>
+    </nav>`;
+}
+
 // Invitation to the next project at the bottom of the page: label, title
 // and a small, uncropped preview of its thumbnail. The image is
 // decorative — the link text already names the project.
