@@ -87,7 +87,7 @@
 
 
 /* ============================================================
-   NEXT PROJECT — invitation at the bottom of the page
+   NEXT PROJECT — invitation at the very end of the page, below "Top"
    Label and title in the same quiet style as the "Top" button,
    with a small preview of the next project at its own proportions
    (never cropped).
@@ -98,7 +98,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 0 60px;
+    padding: 0 60px 120px;
     text-decoration: none;
     color: inherit;
 }
@@ -146,7 +146,7 @@
 
 @media (max-width: 768px) {
     .project-next {
-        padding: 0 24px;
+        padding: 0 24px 100px;
     }
 
     .project-next-img {
