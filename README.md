@@ -34,11 +34,13 @@ src/
                               projectGrid, indexScroll, projectPage, render,
                               projectNav)
 css/
+  main.css                  Entry point: imports every shared and component stylesheet
   shared/                   Reset, variables, typography, base styles
   components/               Per-component styles (header, ticker, cards,
                               project-nav)
   pages/                    Page-specific styles (project.css)
 images/
+  architecture-portfolio.svg  The logo
   <slug>/                   One folder per project, filenames referenced by data/projects.js
 ```
 
