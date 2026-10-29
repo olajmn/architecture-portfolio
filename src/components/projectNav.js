@@ -4,6 +4,7 @@
 // getAdjacentProjects (projects.js). initProjectNav() wires up the
 // behaviour once the page is rendered.
 
+import { getThumbnailImage, imageUrl } from "../projects.js";
 import { getNavHintSeen, markNavHintSeen } from "../state.js";
 
 // Chevron pointing left; the "next" arrow is the same shape mirrored in CSS
@@ -25,6 +26,20 @@ function edgeArrowHTML(project, direction, label) {
 // Prev/next arrows fixed at the screen edges
 export function edgeArrowsHTML({ prev, next }) {
   return edgeArrowHTML(prev, "prev", "Previous") + edgeArrowHTML(next, "next", "Next");
+}
+
+// Invitation to the next project at the bottom of the page: label, title
+// and a cropped strip of its thumbnail. The image is decorative — the
+// link text already names the project.
+export function nextProjectHTML(next) {
+  const image = getThumbnailImage(next);
+  return `
+    <a class="project-next" href="${projectUrl(next)}">
+      <span class="project-next-label">Next project</span>
+      <span class="project-next-title">${next.title}</span>
+      <img class="project-next-img" src="${imageUrl(next, image)}" alt=""
+           ${image.focalPoint ? `style="object-position: ${image.focalPoint}"` : ""} />
+    </a>`;
 }
 
 export function initProjectNav(adjacent) {

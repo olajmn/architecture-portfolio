@@ -3,7 +3,7 @@
 // it a resolved Project and its { prev, next } neighbours.
 
 import { getGalleryImages, getCoverImage, imageUrl } from "../projects.js";
-import { edgeArrowsHTML } from "./projectNav.js";
+import { edgeArrowsHTML, nextProjectHTML } from "./projectNav.js";
 
 const EMPHASIS_CLASS = {
   large:  "img-large",
@@ -57,6 +57,8 @@ export function renderProject(project, adjacent) {
     </div>
 
     ${galleryHTML}
+
+    ${nextProjectHTML(adjacent.next)}
 
     <div class="project-top-btn-wrap">
       <button class="project-top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">

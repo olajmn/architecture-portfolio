@@ -84,3 +84,61 @@
         filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.35));
     }
 }
+
+
+/* ============================================================
+   NEXT PROJECT — invitation at the bottom of the page
+   Label and title in the same quiet style as the "Top" button;
+   the image strip lines up with the gallery's large images.
+============================================================ */
+
+.project-next {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0 60px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.project-next-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-hover);
+}
+
+.project-next-title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--black);
+}
+
+.project-next-img {
+    display: block;
+    width: 80%;
+    height: 22vh;
+    margin-top: 14px;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+}
+
+.project-next:hover .project-next-img,
+.project-next:focus-visible .project-next-img {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .project-next {
+        padding: 0 24px;
+    }
+
+    .project-next-img {
+        width: 100%;
+        height: 18vh;
+    }
+}
