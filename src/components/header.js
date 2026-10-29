@@ -3,7 +3,6 @@
 // live in one file rather than two.
 
 import { getAllProjects, projectUrl } from "../projects.js";
-import { setFromProject } from "../state.js";
 
 export function initHeader() {
   initLogo();
@@ -17,8 +16,8 @@ function initLogo() {
   const page = document.body.dataset.page;
 
   btn.addEventListener('click', () => {
+    // Leaving a project page records "from project" itself (projectPage.js, pagehide)
     if (page === 'project') {
-      setFromProject();
       window.location.href = 'index.html';
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
