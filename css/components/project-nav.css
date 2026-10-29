@@ -9,22 +9,37 @@
 }
 
 @media (hover: hover) {
+    /* Each link is an invisible full-height band along the edge; the
+       chevron inside fades in when the band is hovered or focused.
+       The header and ticker sit above it (higher z-index), so hovering
+       them does not trigger it. */
     .project-nav {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 0;
+        bottom: 0;
+        width: 12vw;
         z-index: 80;
-        height: 25vh;
         color: var(--gray-hover);
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
-    .project-nav-prev { left: 3vw; }
-    .project-nav-next { right: 3vw; }
+    .project-nav:hover,
+    .project-nav:focus-visible {
+        opacity: 1;
+    }
 
+    .project-nav-prev { left: 0; }
+    .project-nav-next { right: 0; }
+
+    /* Scales with the window, but never below a size that still reads as
+       a confident arrow — below that it overlaps the image instead */
     .project-nav svg {
         display: block;
-        height: 100%;
+        height: clamp(110px, min(25vh, 16vw), 280px);
         width: auto;
         fill: none;
         stroke: currentColor;
@@ -35,5 +50,18 @@
 
     .project-nav-next svg {
         transform: scaleX(-1);
+    }
+}
+
+/* Narrow windows: images and text run full width, so the band shrinks
+   to the arrow itself (to keep text near the edge selectable), and the
+   arrow needs a soft shadow to stay visible on pale images */
+@media (hover: hover) and (max-width: 768px) {
+    .project-nav {
+        width: 56px;
+    }
+
+    .project-nav svg {
+        filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.35));
     }
 }
