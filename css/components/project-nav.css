@@ -33,6 +33,12 @@
         opacity: 1;
     }
 
+    /* Just clicked through from the previous page: already in place, so
+       no fade-in. Removing the class still fades out (base transition). */
+    .project-nav.arrived {
+        transition: none;
+    }
+
     .project-nav-prev { left: 0; }
     .project-nav-next { right: 0; }
 
