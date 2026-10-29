@@ -12,25 +12,6 @@ body {
 
 
 /* ============================================================
-   PAGE TRANSITION — project to project
-   Cross-document view transition: the browser crossfades between
-   project pages instead of cutting, and keeps named elements (the
-   edge arrows, project-nav.css) in place. Only project pages load
-   this file, so the homepage is unaffected. Browsers without
-   support simply navigate as before.
-============================================================ */
-
-@view-transition {
-    navigation: auto;
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-    animation-duration: 0.3s;
-}
-
-
-/* ============================================================
    TICKER — project title, fixed at top
 ============================================================ */
 

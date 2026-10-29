@@ -24,20 +24,6 @@ export function initProjectPage() {
   initProjectNav(adjacent);
 
   trackScrollDirection();
-  limitPageTransitionToProjects();
-}
-
-// The project → project crossfade (css/pages/project.css § PAGE
-// TRANSITION) only makes sense when the next page is a project too;
-// leaving for the homepage would otherwise start and then abort it.
-function limitPageTransitionToProjects() {
-  window.addEventListener('pageswap', (e) => {
-    if (!e.viewTransition) return;
-    const next = e.activation?.entry?.url;
-    if (!next || !new URL(next).pathname.endsWith('/project.html')) {
-      e.viewTransition.skipTransition();
-    }
-  });
 }
 
 // One shared scroll listener for the page: marks <html> with
