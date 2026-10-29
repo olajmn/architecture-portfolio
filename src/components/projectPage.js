@@ -1,9 +1,10 @@
 // Controller for the project page: read the slug, find the project,
-// hand it to the (pure) view, wire up the one piece of page-specific
-// interaction (ticker color on scroll).
+// hand it to the (pure) view, wire up page-specific interaction
+// (ticker color on scroll, project-to-project navigation).
 
 import { getProjectBySlug, getAdjacentProjects } from "../projects.js";
 import { renderProject } from "./render.js";
+import { initProjectNav } from "./projectNav.js";
 import { setFromProject } from "../state.js";
 
 export function initProjectPage() {
@@ -19,6 +20,7 @@ export function initProjectPage() {
 
   document.title = project.title;
   renderProject(project, getAdjacentProjects(project));
+  initProjectNav();
 
   const ticker = document.querySelector('.project-ticker');
   if (ticker) {

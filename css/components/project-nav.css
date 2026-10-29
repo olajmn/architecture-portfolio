@@ -51,6 +51,25 @@
     .project-nav-next svg {
         transform: scaleX(-1);
     }
+
+    /* Load hint (set once per session by projectNav.js): fade in, hold,
+       fade out — so visitors learn the hidden arrows are there */
+    .project-nav.hint {
+        animation: projectNavHint 2.4s ease 0.6s;
+    }
+
+    @keyframes projectNavHint {
+        0%   { opacity: 0; }
+        20%  { opacity: 1; }
+        75%  { opacity: 1; }
+        100% { opacity: 0; }
+    }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+    .project-nav.hint {
+        animation: none;
+    }
 }
 
 /* Narrow windows: images and text run full width, so the band shrinks
