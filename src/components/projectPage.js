@@ -1,6 +1,7 @@
 // Controller for the project page: read the slug, find the project,
 // hand it to the (pure) view, wire up page-specific interaction
-// (ticker color on scroll, project-to-project navigation).
+// (scroll-to-top buttons, ticker color on scroll, project-to-project
+// navigation).
 
 import { getProjectBySlug, getAdjacentProjects } from "../projects.js";
 import { renderProject } from "./render.js";
@@ -23,7 +24,15 @@ export function initProjectPage() {
   renderProject(project, adjacent);
   initProjectNav(adjacent);
 
+  listenForScrollTop();
   trackScrollDirection();
+}
+
+// Buttons marked `data-scroll-top` by render.js (the ticker title and "Top")
+function listenForScrollTop() {
+  document.querySelectorAll('[data-scroll-top]').forEach((btn) => {
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  });
 }
 
 // One shared scroll listener for the page: marks <html> with

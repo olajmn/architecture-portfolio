@@ -39,7 +39,7 @@ export function renderProject(project, adjacent) {
 
   container.innerHTML = `
     <div class="project-ticker">
-      <button class="project-ticker-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+      <button class="project-ticker-btn" data-scroll-top>
         ${project.title}
       </button>
     </div>
@@ -60,7 +60,7 @@ export function renderProject(project, adjacent) {
     ${galleryHTML}
 
     <div class="project-top-btn-wrap">
-      <button class="project-top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+      <button class="project-top-btn" data-scroll-top>
         Top
       </button>
     </div>
