@@ -9,6 +9,7 @@ const KEYS = {
   TICKER_WIDTH: 'tickerWidth',
   SCROLL_Y:     'scrollY',
   NAV_HINT:     'navHintSeen',
+  NAV_ARRIVAL:  'navArrival',
 };
 
 export const getTickerStart = () => parseFloat(sessionStorage.getItem(KEYS.TICKER_START));
@@ -21,3 +22,11 @@ export const setTickerStart = (t) => sessionStorage.setItem(KEYS.TICKER_START, t
 export const setTickerWidth = (w) => sessionStorage.setItem(KEYS.TICKER_WIDTH, w);
 export const setScrollY     = (y) => sessionStorage.setItem(KEYS.SCROLL_Y,     y);
 export const markNavHintSeen = () => sessionStorage.setItem(KEYS.NAV_HINT,     '1');
+export const setNavArrival   = (d) => sessionStorage.setItem(KEYS.NAV_ARRIVAL,  d);
+
+// Read once: the value only describes the page load right after the click
+export const takeNavArrival = () => {
+  const d = sessionStorage.getItem(KEYS.NAV_ARRIVAL);
+  sessionStorage.removeItem(KEYS.NAV_ARRIVAL);
+  return d;
+};

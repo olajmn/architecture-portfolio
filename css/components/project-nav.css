@@ -28,7 +28,8 @@
     }
 
     .project-nav:hover,
-    .project-nav:focus-visible {
+    .project-nav:focus-visible,
+    .project-nav.arrived {
         opacity: 1;
     }
 

@@ -5,7 +5,7 @@
 // behaviour once the page is rendered.
 
 import { getThumbnailImage, imageUrl } from "../projects.js";
-import { getNavHintSeen, markNavHintSeen } from "../state.js";
+import { getNavHintSeen, markNavHintSeen, setNavArrival, takeNavArrival } from "../state.js";
 
 // Chevron pointing left; the "next" arrow is the same shape mirrored in CSS
 const CHEVRON_SVG = `
@@ -17,7 +17,7 @@ const projectUrl = (project) => `project.html?slug=${project.slug}`;
 
 function edgeArrowHTML(project, direction, label) {
   return `
-    <a class="project-nav project-nav-${direction}" href="${projectUrl(project)}"
+    <a class="project-nav project-nav-${direction}" data-direction="${direction}" href="${projectUrl(project)}"
        aria-label="${label} project: ${project.title}">
       ${CHEVRON_SVG}
     </a>`;
@@ -54,7 +54,30 @@ export function nextProjectHTML(next) {
 
 export function initProjectNav(adjacent) {
   showHintOnce();
+  keepArrowAfterClick();
   listenForArrowKeys(adjacent);
+}
+
+// A freshly loaded page has no hover state until the mouse moves, so the
+// arrow just clicked would vanish under a still cursor. Remember which
+// edge was clicked and keep that arrow shown on the next page until the
+// mouse is somewhere else.
+function keepArrowAfterClick() {
+  document.querySelectorAll(".project-nav").forEach((arrow) => {
+    arrow.addEventListener("click", () => setNavArrival(arrow.dataset.direction));
+  });
+
+  const direction = takeNavArrival();
+  const arrow = direction && document.querySelector(`.project-nav-${direction}`);
+  if (!arrow) return;
+
+  arrow.classList.add("arrived");
+  const release = (e) => {
+    if (arrow.contains(e.target)) return;
+    arrow.classList.remove("arrived");
+    document.removeEventListener("mousemove", release);
+  };
+  document.addEventListener("mousemove", release);
 }
 
 // ← / → go to the previous / next project. Left alone when a modifier is
