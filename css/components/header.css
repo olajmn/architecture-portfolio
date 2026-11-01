@@ -1,3 +1,12 @@
+/* The fixed, frosted header with the logo, on both pages. */
+
+/* Contents
+ *
+ * 1. Header
+ */
+
+/* 1. Header */
+
 .index-hero {
     position: fixed;
     top: 0;

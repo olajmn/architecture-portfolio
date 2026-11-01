@@ -1,8 +1,16 @@
-/* ============================================================
-   PROJECT NAV — prev/next arrows at the screen edges
-   Only on devices that can hover; touch devices get their own
-   navigation instead.
-============================================================ */
+/* Project-to-project navigation: edge arrows, the "Next project" block and the touch bar; projectNav.js builds the markup. */
+
+/* Contents
+ *
+ * 1. Edge Arrows
+ * 2. Next Project
+ * 3. Project Bar
+ */
+
+/* 1. Edge Arrows */
+
+/* Prev/next arrows at the screen edges. Only on devices that can hover;
+   touch devices get their own navigation instead. */
 
 .project-nav {
     display: none;
@@ -99,13 +107,11 @@
     }
 }
 
+/* 2. Next Project */
 
-/* ============================================================
-   NEXT PROJECT — invitation at the very end of the page, below "Top"
-   Label and title in the same quiet style as the "Top" button,
-   with a small preview of the next project at its own proportions
-   (never cropped).
-============================================================ */
+/* Invitation at the very end of the page, below "Top". Label and title
+   in the same quiet style as the "Top" button, with a small preview of
+   the next project at its own proportions (never cropped). */
 
 .project-next {
     display: flex;
@@ -168,12 +174,10 @@
     }
 }
 
+/* 3. Project Bar */
 
-/* ============================================================
-   PROJECT BAR — prev/next by name, for touch devices
-   Hidden below the screen; slides up while scrolling up
-   (`scrolling-up` on <html>, set by projectPage.js).
-============================================================ */
+/* Prev/next by name, for touch devices. Hidden below the screen; slides
+   up while scrolling up (`scrolling-up` on <html>, set by projectPage.js). */
 
 .project-bar {
     display: none;
