@@ -15,6 +15,13 @@
 //                    cropped (object-fit: cover) — the grid card.
 //                    Ignored everywhere else.
 
+// Contents
+//
+// 1. Projects
+//    - projects
+
+// 1. Projects
+
 export const projects = [
 
   {
