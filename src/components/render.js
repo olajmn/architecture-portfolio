@@ -2,18 +2,23 @@
 // #projectContent, no data lookup — the caller (projectPage.js) hands
 // it a resolved Project and its { prev, next } neighbours.
 
+// Contents
+//
+// 1. Project Page
+//    - EMPHASIS_CLASS
+//    - renderProject()
+//    - imageClass()
+
 import { getGalleryImages, getCoverImage, imageUrl } from "../projects.js";
 import { edgeArrowsHTML, mobileBarHTML, nextProjectHTML } from "./projectNav.js";
+
+// 1. Project Page
 
 const EMPHASIS_CLASS = {
   large:  "img-large",
   medium: "img-medium",
   small:  "img-small",
 };
-
-function imageClass(image) {
-  return EMPHASIS_CLASS[image.emphasis] || EMPHASIS_CLASS.large;
-}
 
 export function renderProject(project, adjacent) {
   const container = document.getElementById("projectContent");
@@ -67,4 +72,8 @@ export function renderProject(project, adjacent) {
 
     ${nextProjectHTML(adjacent.next)}
   `;
+}
+
+function imageClass(image) {
+  return EMPHASIS_CLASS[image.emphasis] || EMPHASIS_CLASS.large;
 }

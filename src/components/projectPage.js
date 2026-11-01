@@ -3,10 +3,21 @@
 // (scroll-to-top buttons, ticker color on scroll, project-to-project
 // navigation).
 
+// Contents
+//
+// 1. Page
+//    - initProjectPage()
+//
+// 2. Scrolling
+//    - listenForScrollTop()
+//    - trackScrollDirection()
+
 import { getProjectBySlug, getAdjacentProjects } from "../projects.js";
 import { renderProject } from "./render.js";
 import { initProjectNav } from "./projectNav.js";
 import { setFromProject } from "../state.js";
+
+// 1. Page
 
 export function initProjectPage() {
   window.addEventListener('pagehide', setFromProject);
@@ -27,6 +38,8 @@ export function initProjectPage() {
   listenForScrollTop();
   trackScrollDirection();
 }
+
+// 2. Scrolling
 
 // Buttons marked `data-scroll-top` by render.js (the ticker title and "Top")
 function listenForScrollTop() {

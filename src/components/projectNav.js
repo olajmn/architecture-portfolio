@@ -4,22 +4,31 @@
 // getAdjacentProjects (projects.js). initProjectNav() wires up the
 // behaviour once the page is rendered.
 
+// Contents
+//
+// 1. Markup
+//    - CHEVRON_SVG
+//    - edgeArrowsHTML()
+//    - mobileBarHTML()
+//    - nextProjectHTML()
+//    - edgeArrowHTML()
+//
+// 2. Behaviour
+//    - initProjectNav()
+//    - showHintOnce()
+//    - keepArrowAfterClick()
+//    - listenForArrowKeys()
+
 import { getThumbnailImage, imageUrl, projectUrl } from "../projects.js";
 import { getNavHintSeen, markNavHintSeen, setNavArrival, takeNavArrival } from "../state.js";
+
+// 1. Markup
 
 // Chevron pointing left; the "next" arrow is the same shape mirrored in CSS
 const CHEVRON_SVG = `
   <svg viewBox="0 0 40 120" aria-hidden="true">
     <path d="M32 8 L8 60 L32 112" />
   </svg>`;
-
-function edgeArrowHTML(project, direction, label) {
-  return `
-    <a class="project-nav project-nav-${direction}" data-direction="${direction}" href="${projectUrl(project)}"
-       aria-label="${label} project: ${project.title}">
-      ${CHEVRON_SVG}
-    </a>`;
-}
 
 // Prev/next arrows fixed at the screen edges
 export function edgeArrowsHTML({ prev, next }) {
@@ -50,10 +59,32 @@ export function nextProjectHTML(next) {
     </a>`;
 }
 
+function edgeArrowHTML(project, direction, label) {
+  return `
+    <a class="project-nav project-nav-${direction}" data-direction="${direction}" href="${projectUrl(project)}"
+       aria-label="${label} project: ${project.title}">
+      ${CHEVRON_SVG}
+    </a>`;
+}
+
+// 2. Behaviour
+
 export function initProjectNav(adjacent) {
   showHintOnce();
   keepArrowAfterClick();
   listenForArrowKeys(adjacent);
+}
+
+// The edge arrows are hidden until hovered, so on the first project page
+// of a session they flash briefly to show that they exist
+function showHintOnce() {
+  if (getNavHintSeen() || !window.matchMedia("(hover: hover)").matches) return;
+  markNavHintSeen();
+
+  document.querySelectorAll(".project-nav").forEach((arrow) => {
+    arrow.classList.add("hint");
+    arrow.addEventListener("animationend", () => arrow.classList.remove("hint"), { once: true });
+  });
 }
 
 // A freshly loaded page has no hover state until the mouse moves, so the
@@ -88,17 +119,5 @@ function listenForArrowKeys({ prev, next }) {
 
     if (e.key === "ArrowLeft")  window.location.href = projectUrl(prev);
     if (e.key === "ArrowRight") window.location.href = projectUrl(next);
-  });
-}
-
-// The edge arrows are hidden until hovered, so on the first project page
-// of a session they flash briefly to show that they exist
-function showHintOnce() {
-  if (getNavHintSeen() || !window.matchMedia("(hover: hover)").matches) return;
-  markNavHintSeen();
-
-  document.querySelectorAll(".project-nav").forEach((arrow) => {
-    arrow.classList.add("hint");
-    arrow.addEventListener("animationend", () => arrow.classList.remove("hint"), { once: true });
   });
 }

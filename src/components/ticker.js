@@ -1,7 +1,14 @@
 // Homepage ticker — seamless scrolling text loop that resumes its
 // position correctly after a reload (timing state lives in state.js).
 
+// Contents
+//
+// 1. Ticker
+//    - initTicker()
+
 import { getTickerStart, setTickerStart, setTickerWidth } from "../state.js";
+
+// 1. Ticker
 
 export function initTicker() {
   const tickerTrack = document.querySelector('.ticker-track');

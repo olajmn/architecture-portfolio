@@ -1,7 +1,18 @@
 // Homepage project grid. Each card shows a project's thumbnail image
 // (via getThumbnailImage — the optional `thumbnail`, else images[0]).
 
+// Contents
+//
+// 1. Grid
+//    - initProjectGrid()
+//
+// 2. Marquee
+//    - updateMarquees()
+//    - removeMarquee()
+
 import { getAllProjects, getThumbnailImage, imageUrl, projectUrl } from "../projects.js";
+
+// 1. Grid
 
 export function initProjectGrid() {
   const grid = document.getElementById("projectsGrid");
@@ -36,6 +47,8 @@ export function initProjectGrid() {
     resizeTimer = setTimeout(() => updateMarquees(grid), 150);
   });
 }
+
+// 2. Marquee
 
 function updateMarquees(grid) {
   grid.querySelectorAll(".index-card").forEach((card) => {

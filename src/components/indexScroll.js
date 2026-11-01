@@ -2,7 +2,14 @@
 // the page (see the `restoring-scroll` class set by index.html's inline
 // <head> script, which hides <body> until this has run).
 
+// Contents
+//
+// 1. Scroll Restore
+//    - initIndexScroll()
+
 import { getScrollY, setScrollY } from "../state.js";
+
+// 1. Scroll Restore
 
 export function initIndexScroll() {
   // Homepage only — project pages share the header markup, so checking
