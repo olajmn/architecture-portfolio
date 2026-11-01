@@ -1,3 +1,5 @@
+/* Entry stylesheet for both pages: imports the shared and component styles. css/pages/project.css is linked by project.html itself. */
+
 /* Shared */
 @import url('./shared/typography.css');
 @import url('./shared/reset.css');

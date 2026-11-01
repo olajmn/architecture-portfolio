@@ -1,3 +1,12 @@
+/* Removes default margins and padding, and sizes every box by its border. */
+
+/* Contents
+ *
+ * 1. Reset
+ */
+
+/* 1. Reset */
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
