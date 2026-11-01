@@ -1,6 +1,16 @@
-/* ============================================================
-   BASE — project-page specific
-============================================================ */
+/* Styles used only on project.html: title bar, intro, gallery and the Top button. */
+
+/* Contents
+ *
+ * 1. Base
+ * 2. Title Bar
+ * 3. Intro
+ * 4. Gallery
+ * 5. Mobile
+ * 6. Top Button
+ */
+
+/* 1. Base */
 
 body {
     padding-top: var(--header-offset);
@@ -10,14 +20,13 @@ body {
     padding-top: 36px;
 }
 
+/* 2. Title Bar */
 
-/* ============================================================
-   TICKER — project title, fixed at top
-   On project pages the title bar is the one frosted surface for the
-   whole top area: it starts at the very top (padding pushes the title
-   below the logo) and the header above it is transparent. Two
-   separately blurred surfaces would show a seam where they overlap.
-============================================================ */
+/* The project title, fixed at the top. On project pages the title bar is
+   the one frosted surface for the whole top area: it starts at the very
+   top (padding pushes the title below the logo) and the header above it
+   is transparent. Two separately blurred surfaces would show a seam
+   where they overlap. */
 
 .index-hero {
     background: none;
@@ -60,10 +69,9 @@ body {
     color: var(--black);
 }
 
+/* 3. Intro */
 
-/* ============================================================
-   INTRO BLOCK (description + facts)
-============================================================ */
+/* Title, description and facts. */
 
 .project-intro-block {
     padding: 0 60px 180px;
@@ -112,14 +120,10 @@ body {
     margin: 0;
 }
 
-/* ============================================================
-   GALLERY IMAGES
-   One consistent gap between images — driven entirely by CSS.
-   (The old version set this per image as an inline style, which
-   also meant it silently beat the mobile media query below, since
-   an inline style always wins over a class rule regardless of
-   @media. There is no per-image override anymore.)
-============================================================ */
+/* 4. Gallery */
+
+/* One consistent gap between images, set only here, so the mobile media
+   query below can change it; an inline style per image would override it. */
 
 .img-large,
 .img-medium,
@@ -150,10 +154,7 @@ body {
     padding: 0 60px;
 }
 
-
-/* ============================================================
-   RESPONSIVE — mobile
-============================================================ */
+/* 5. Mobile */
 
 @media (max-width: 768px) {
     .project-intro-block {
@@ -188,10 +189,7 @@ body {
     }
 }
 
-
-/* ============================================================
-   TOP BUTTON
-============================================================ */
+/* 6. Top Button */
 
 .project-top-btn-wrap {
     text-align: center;
