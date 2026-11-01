@@ -21,6 +21,7 @@
 .ticker-track {
     display: inline-block;
     font-size: 0;
+    /* 50s is repeated in index.html's inline script; change both together */
     animation: ticker 50s linear infinite;
     animation-delay: var(--ticker-delay, 0s);
 }

@@ -22,6 +22,7 @@
       var tickerStart = sessionStorage.getItem('tickerStart');
       var tickerWidth = sessionStorage.getItem('tickerWidth');
       if (tickerStart && tickerWidth) {
+        // 50 = the ticker's animation duration in css/components/ticker.css; change both together
         var elapsed = ((Date.now() - tickerStart) / 1000) % 50;
         document.documentElement.style.setProperty('--ticker-delay', '-' + elapsed + 's');
         document.documentElement.style.setProperty('--ticker-end', '-' + tickerWidth + 'px');
