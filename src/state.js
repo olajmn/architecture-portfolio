@@ -2,6 +2,30 @@
 // NOTE: index.html's inline <head> script cannot import modules and
 // reads these keys directly — that is intentional and expected.
 
+// Contents
+//
+// 1. Keys
+//    - KEYS
+//
+// 2. Reading
+//    - getTickerStart()
+//    - getScrollY()
+//    - getNavHintSeen()
+//
+// 3. Writing
+//    - setFromProject()
+//    - markIntroSeen()
+//    - setTickerStart()
+//    - setTickerWidth()
+//    - setScrollY()
+//    - markNavHintSeen()
+//    - setNavArrival()
+//
+// 4. Read Once
+//    - takeNavArrival()
+
+// 1. Keys
+
 const KEYS = {
   FROM_PROJECT: 'fromProject',
   INTRO_SEEN:   'introSeen',
@@ -12,9 +36,13 @@ const KEYS = {
   NAV_ARRIVAL:  'navArrival',
 };
 
+// 2. Reading
+
 export const getTickerStart = () => parseFloat(sessionStorage.getItem(KEYS.TICKER_START));
 export const getScrollY     = () => parseFloat(sessionStorage.getItem(KEYS.SCROLL_Y));
 export const getNavHintSeen = () => sessionStorage.getItem(KEYS.NAV_HINT) === '1';
+
+// 3. Writing
 
 export const setFromProject = ()  => sessionStorage.setItem(KEYS.FROM_PROJECT, '1');
 export const markIntroSeen  = ()  => sessionStorage.setItem(KEYS.INTRO_SEEN,   '1');
@@ -23,6 +51,8 @@ export const setTickerWidth = (w) => sessionStorage.setItem(KEYS.TICKER_WIDTH, w
 export const setScrollY     = (y) => sessionStorage.setItem(KEYS.SCROLL_Y,     y);
 export const markNavHintSeen = () => sessionStorage.setItem(KEYS.NAV_HINT,     '1');
 export const setNavArrival   = (d) => sessionStorage.setItem(KEYS.NAV_ARRIVAL,  d);
+
+// 4. Read Once
 
 // Read once: the value only describes the page load right after the click
 export const takeNavArrival = () => {
