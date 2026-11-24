@@ -55,6 +55,10 @@ derives what it needs from that one array:
 Adding or editing a project means touching `data/projects.js` and its `images/<slug>/`
 folder — nothing else.
 
+## How this project is worked on
+
+The way of working is in `workflow/`: the plan in `workflow/TODO.md`, the documentation in `workflow/docs/` (start with `00-brief.md`), and the rules in `workflow/CONVENTIONS.md` and `workflow/COLLABORATION.md`.
+
 ## Moving between projects
 
 Project pages link to their neighbours in the order of `data/projects.js`, looping
